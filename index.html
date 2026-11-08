@@ -6,50 +6,216 @@
 <title>Agent Office — Live Monitor</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: #0A0A0A; color: #E8E8E8; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  body { padding: 14px 12px 28px; max-width: 720px; margin: 0 auto; }
-  header { text-align: center; padding: 10px 0 4px; }
-  header h1 { font-size: 20px; letter-spacing: 1px; color: #FFD700; }
-  header .sub { font-size: 12px; color: #888; margin-top: 4px; }
-  #clock { font-size: 13px; color: #00F5FF; margin-top: 6px; }
-  #updated { font-size: 11px; color: #666; text-align: center; margin: 6px 0 14px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
-  .card { border: 1px solid #222; border-radius: 12px; padding: 12px; background: #111; }
-  .card .top { display: flex; align-items: center; gap: 10px; }
-  .avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border: 2px solid; flex-shrink: 0; }
-  .card .name { font-size: 15px; font-weight: bold; }
-  .card .role { font-size: 11px; color: #999; }
-  .status { margin-left: auto; display: flex; align-items: center; gap: 5px; font-size: 11px; }
-  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
-  .dot.online { background: #39FF14; box-shadow: 0 0 6px #39FF14; }
-  .dot.offline { background: #FF2D2D; box-shadow: 0 0 6px #FF2D2D; }
-  .dot.standby { background: #888; }
-  .dot.unknown { background: #555; }
-  .talk { font-size: 11px; color: #39FF14; margin-top: 8px; }
-  .activity { font-size: 12px; color: #DDD; margin-top: 8px; line-height: 1.45; word-break: break-word; min-height: 32px; }
-  .meta { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.6; }
-  .meta b { color: #AAA; font-weight: normal; }
-  h2 { font-size: 14px; color: #FFD700; margin: 18px 0 10px; letter-spacing: 1px; }
-  .feed { display: flex; flex-direction: column; gap: 8px; }
-  .bubble { background: #151515; border: 1px solid #222; border-left: 3px solid #888; border-radius: 8px; padding: 9px 11px; }
-  .bubble .fh { font-size: 11px; color: #999; margin-bottom: 4px; }
-  .bubble .fh b { font-size: 12px; }
-  .bubble .ft { font-size: 12px; line-height: 1.5; word-break: break-word; white-space: pre-wrap; }
+  html, body { background: #0b0b14; color: #E8E8E8; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  body { padding: 0 0 28px; max-width: 720px; margin: 0 auto; }
+  /* ---- header gelap ---- */
+  .appbar { background: #101736; padding: 14px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #232a52; }
+  .appbar .x { font-size: 22px; color: #cfd4ff; line-height: 1; }
+  .appbar h1 { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: .3px; flex: 1; }
+  .appbar .chev { font-size: 18px; color: #cfd4ff; }
+  .livepill { border: 1px solid #3a4670; color: #dfe4ff; border-radius: 999px; padding: 5px 12px; font-size: 12px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px; }
+  .livepill .dot { width: 8px; height: 8px; border-radius: 50%; background: #39FF14; box-shadow: 0 0 8px #39FF14; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  /* ---- judul kantor ---- */
+  .office-head { background: linear-gradient(180deg, #171d42, #12172f); padding: 16px 16px 10px; display: flex; align-items: flex-start; justify-content: space-between; }
+  .office-head h2 { font-size: 26px; font-weight: 800; color: #fff; }
+  .office-head .upd { font-size: 13px; color: #9aa3c7; margin-top: 4px; }
+  /* ---- papan kinerja ---- */
+  .board { background: #12172f; padding: 4px 16px 16px; }
+  .board .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .board .label { font-size: 13px; letter-spacing: 2px; color: #8b93b8; font-weight: 700; }
+  .board .liveclock { font-size: 14px; color: #3ddc84; font-weight: 700; display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+  .board .liveclock .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: pulse 1.6s infinite; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
+  .stat .k { font-size: 12px; color: #9aa3c7; margin-bottom: 3px; }
+  .stat .v { font-size: 24px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+  .stat .v.good { color: #2ee59d; }
+  .stat .v.bad { color: #ff6b7a; }
+  .stat .v.dim { color: #c9cfe8; font-size: 18px; }
+  /* ---- scene kantor isometrik ---- */
+  .scene-wrap { position: relative; background: #b9b4e6; overflow: hidden; }
+  .scene-wrap svg { display: block; width: 100%; height: auto; }
+  .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; }
+  .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+  .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
+  .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  .robot { animation: bob 2.6s ease-in-out infinite; }
+  .robot.r2 { animation-delay: .5s; }
+  .robot.r3 { animation-delay: 1s; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  .screen { animation: blink 2.2s infinite; }
+  /* ---- feed ---- */
+  h2.feed-h { font-size: 13px; color: #FFD700; margin: 18px 16px 10px; letter-spacing: 1px; }
+  .feed { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
+  .fb { background: #151515; border: 1px solid #222; border-left: 3px solid #888; border-radius: 8px; padding: 9px 11px; }
+  .fb .fh { font-size: 11px; color: #999; margin-bottom: 4px; }
+  .fb .fh b { font-size: 12px; }
+  .fb .ft { font-size: 12px; line-height: 1.5; word-break: break-word; white-space: pre-wrap; color: #ddd; }
   .empty { color: #666; font-size: 12px; text-align: center; padding: 14px; }
-  #err { display: none; text-align: center; font-size: 12px; color: #FF6B6B; margin: 8px 0; }
+  #err { display: none; text-align: center; font-size: 12px; color: #FF6B6B; margin: 8px 16px; }
+  #clock { font-size: 12px; color: #00F5FF; }
 </style>
 </head>
 <body>
-<header>
-  <h1>Agent Office — Live Monitor</h1>
-  <div class="sub">Mark V &middot; Leviathan &middot; Azhazel &middot; Mira</div>
-  <div id="clock">--:--:-- WIB</div>
-</header>
-<div id="updated">memuat data&hellip;</div>
+<div class="appbar">
+  <span class="x">&#10005;</span>
+  <h1>Agent Office</h1>
+  <span class="chev">&#8964;</span>
+  <span class="chev">&#8942;</span>
+</div>
+
+<div class="office-head">
+  <div>
+    <h2>Kantor Agent</h2>
+    <div class="upd" id="updline">Diperbarui --:--</div>
+  </div>
+  <span class="livepill"><span class="dot"></span>LIVE</span>
+</div>
+
+<div class="board">
+  <div class="row1">
+    <span class="label">PAPAN KINERJA</span>
+    <span class="liveclock"><span class="dot"></span>LIVE <span id="liveclock">--:--:--</span></span>
+  </div>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="scene-wrap" id="scene">
+  <svg viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kantor Agent">
+    <!-- dinding -->
+    <polygon points="20,320 360,200 360,80 20,200" fill="#c9c4ef"/>
+    <polygon points="360,200 700,320 700,200 360,80" fill="#b3aee4"/>
+    <!-- lantai -->
+    <polygon points="360,200 700,320 360,440 20,320" fill="#a49ee0"/>
+    <!-- grid lantai -->
+    <g stroke="#8f88cf" stroke-width="1" opacity=".55">
+      <line x1="190" y1="260" x2="530" y2="400"/><line x1="530" y1="260" x2="190" y2="400"/>
+      <line x1="275" y1="230" x2="615" y2="370"/><line x1="445" y1="230" x2="105" y2="370"/>
+      <line x1="360" y1="200" x2="360" y2="440"/>
+      <line x1="105" y1="290" x2="615" y2="290"/>
+    </g>
+    <!-- jendela kiri + bar chart -->
+    <polygon points="80,240 270,172 270,252 80,320" fill="#bfe0f7" stroke="#7d76b8" stroke-width="2"/>
+    <line x1="175" y1="206" x2="175" y2="286" stroke="#7d76b8" stroke-width="2"/>
+    <g fill="#6f7fc9">
+      <polygon points="100,300 118,294 118,262 100,268"/>
+      <polygon points="128,292 146,286 146,240 128,246"/>
+      <polygon points="156,284 174,278 174,222 156,228"/>
+      <polygon points="196,272 214,266 214,246 196,252"/>
+      <polygon points="224,264 242,258 242,214 224,220"/>
+    </g>
+    <!-- lukisan kecil dinding kiri -->
+    <g stroke="#6a63a0" stroke-width="1.5">
+      <polygon points="60,180 110,162 110,190 60,208" fill="#8fd0a0"/>
+      <polygon points="125,158 175,140 175,168 125,186" fill="#f2c14e"/>
+      <polygon points="190,136 240,118 240,146 190,164" fill="#7fb3e8"/>
+    </g>
+    <!-- chart dinding kanan -->
+    <g stroke="#4a4480" stroke-width="1.5">
+      <polygon points="420,150 500,180 500,214 420,184" fill="#1d2140"/>
+      <polygon points="520,190 600,220 600,254 520,224" fill="#1d2140"/>
+      <polygon points="620,150 680,172 680,206 620,184" fill="#1d2140"/>
+    </g>
+    <g stroke="#2ee59d" stroke-width="2"><polyline points="430,200 450,186 470,194 490,178" fill="none"/></g>
+    <g stroke="#ff6b7a" stroke-width="2"><polyline points="530,240 550,226 570,234 590,218" fill="none"/></g>
+    <g stroke="#2ee59d" stroke-width="2"><polyline points="630,196 650,182 670,190" fill="none"/></g>
+    <!-- jam dinding -->
+    <circle cx="560" cy="140" r="20" fill="#fff" stroke="#4a4480" stroke-width="2"/>
+    <line x1="560" y1="140" x2="560" y2="126" stroke="#333" stroke-width="2"/>
+    <line x1="560" y1="140" x2="570" y2="144" stroke="#333" stroke-width="2"/>
+    <!-- teks dinding -->
+    <text x="400" y="118" font-size="15" fill="#6a63a0" font-weight="700" transform="skewX(-12)">AGENT OFFICE</text>
+    <text x="400" y="134" font-size="9" fill="#7d76b8" transform="skewX(-12)">Mark V · Leviathan · Azhazel</text>
+    <!-- rak buku kiri -->
+    <g>
+      <polygon points="30,330 110,300 110,400 30,430" fill="#8a6a44"/>
+      <polygon points="110,300 140,315 140,415 110,400" fill="#6e5334"/>
+      <g>
+        <polygon points="40,340 52,336 52,366 40,370" fill="#e85d5d"/><polygon points="56,335 68,331 68,361 56,365" fill="#f2c14e"/>
+        <polygon points="72,330 84,326 84,356 72,360" fill="#2ee59d"/><polygon points="88,325 100,321 100,351 88,355" fill="#7fb3e8"/>
+        <polygon points="40,378 52,374 52,404 40,408" fill="#b678e8"/><polygon points="56,373 68,369 68,399 56,403" fill="#e87fb8"/>
+        <polygon points="72,368 84,364 84,394 72,398" fill="#5dd6e8"/><polygon points="88,363 100,359 100,389 88,393" fill="#f28c4e"/>
+      </g>
+    </g>
+    <!-- tanaman -->
+    <g>
+      <circle cx="150" cy="360" r="26" fill="#2e9e5b"/>
+      <polygon points="132,380 168,380 162,404 138,404" fill="#4a4480"/>
+      <circle cx="620" cy="390" r="22" fill="#2e9e5b"/>
+      <polygon points="604,406 636,406 631,426 609,426" fill="#4a4480"/>
+    </g>
+    <!-- MEJA 1 : Leviathan (kiri) -->
+    <g>
+      <polygon points="150,360 290,360 290,392 150,392" fill="#f4f2ff"/>
+      <polygon points="150,392 290,392 290,404 150,404" fill="#d9d4f5"/>
+      <polygon points="290,360 310,350 310,382 290,392" fill="#c9c4ef"/>
+      <polygon points="170,392 170,430 180,430 180,392" fill="#b9b4e6"/>
+      <polygon points="270,392 270,430 280,430 280,392" fill="#b9b4e6"/>
+      <polygon points="195,330 255,330 255,360 195,360" fill="#232a52"/>
+      <polygon points="255,330 268,324 268,354 255,360" fill="#171b33"/>
+      <polygon class="screen" points="200,334 250,334 250,356 200,356" fill="#39FF14" opacity=".85"/>
+    </g>
+    <!-- MEJA 2 : Mark V (tengah, belakang) -->
+    <g>
+      <polygon points="300,270 420,270 420,300 300,300" fill="#f4f2ff"/>
+      <polygon points="300,300 420,300 420,312 300,312" fill="#d9d4f5"/>
+      <polygon points="420,270 438,261 438,291 420,300" fill="#c9c4ef"/>
+      <polygon points="318,300 318,334 327,334 327,300" fill="#b9b4e6"/>
+      <polygon points="393,300 393,334 402,334 402,300" fill="#b9b4e6"/>
+      <polygon points="335,242 385,242 385,270 335,270" fill="#232a52"/>
+      <polygon points="385,242 396,237 396,265 385,270" fill="#171b33"/>
+      <polygon class="screen" points="339,246 381,246 381,266 339,266" fill="#FFD700" opacity=".85"/>
+    </g>
+    <!-- MEJA 3 : Azhazel (kanan) -->
+    <g>
+      <polygon points="440,360 580,360 580,392 440,392" fill="#f4f2ff"/>
+      <polygon points="440,392 580,392 580,404 440,404" fill="#d9d4f5"/>
+      <polygon points="580,360 600,350 600,382 580,392" fill="#c9c4ef"/>
+      <polygon points="460,392 460,430 470,430 470,392" fill="#b9b4e6"/>
+      <polygon points="550,392 550,430 560,430 560,392" fill="#b9b4e6"/>
+      <polygon points="485,330 545,330 545,360 485,360" fill="#232a52"/>
+      <polygon points="545,330 558,324 558,354 545,360" fill="#171b33"/>
+      <polygon class="screen" points="490,334 540,334 540,356 490,356" fill="#FF00FF" opacity=".85"/>
+    </g>
+    <!-- ROBOT Leviathan -->
+    <g transform="translate(220,318)"><g class="robot">
+      <rect x="-26" y="0" width="52" height="34" rx="10" fill="#39FF14"/>
+      <circle cx="0" cy="-16" r="20" fill="#2bd60e"/>
+      <circle cx="-8" cy="-18" r="3.5" fill="#0b2b00"/><circle cx="8" cy="-18" r="3.5" fill="#0b2b00"/>
+      <rect x="-12" y="-8" width="24" height="4" rx="2" fill="#0b2b00"/>
+      <rect x="-30" y="6" width="8" height="20" rx="4" fill="#1fa808"/>
+      <rect x="22" y="6" width="8" height="20" rx="4" fill="#1fa808"/>
+    </g></g>
+    <!-- ROBOT Mark V -->
+    <g transform="translate(360,228)"><g class="robot r2">
+      <rect x="-26" y="0" width="52" height="34" rx="10" fill="#FFD700"/>
+      <circle cx="0" cy="-16" r="20" fill="#eab800"/>
+      <circle cx="-8" cy="-18" r="3.5" fill="#3a2c00"/><circle cx="8" cy="-18" r="3.5" fill="#3a2c00"/>
+      <rect x="-12" y="-8" width="24" height="4" rx="2" fill="#3a2c00"/>
+      <rect x="-30" y="6" width="8" height="20" rx="4" fill="#c79a00"/>
+      <rect x="22" y="6" width="8" height="20" rx="4" fill="#c79a00"/>
+    </g></g>
+    <!-- ROBOT Azhazel -->
+    <g transform="translate(510,318)"><g class="robot r3">
+      <rect x="-26" y="0" width="52" height="34" rx="10" fill="#FF00FF"/>
+      <circle cx="0" cy="-16" r="20" fill="#d600d6"/>
+      <circle cx="-8" cy="-18" r="3.5" fill="#2b002b"/><circle cx="8" cy="-18" r="3.5" fill="#2b002b"/>
+      <rect x="-12" y="-8" width="24" height="4" rx="2" fill="#2b002b"/>
+      <rect x="-30" y="6" width="8" height="20" rx="4" fill="#b300b3"/>
+      <rect x="22" y="6" width="8" height="20" rx="4" fill="#b300b3"/>
+    </g></g>
+  </svg>
+  <div class="bubble" id="bub-leviathan" style="left:30%;top:56%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
+  <div class="bubble" id="bub-mark_v" style="left:50%;top:40%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
+  <div class="bubble" id="bub-azhazel" style="left:71%;top:56%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="desklab" style="left:30%;top:88%">Leviathan · Builder Agent</div>
+  <div class="desklab" style="left:50%;top:63%">Mark V · Operator</div>
+  <div class="desklab" style="left:71%;top:88%">Azhazel · Master Bot</div>
+</div>
+
+<h2 class="feed-h">FEED AKTIVITAS</h2>
 <div id="err">data live belum bisa dimuat, menampilkan data terakhir</div>
-<div class="grid" id="cards"></div>
-<h2>FEED AKTIVITAS</h2>
 <div class="feed" id="feed"></div>
 
 <script>
@@ -57,13 +223,8 @@
   if (window.Telegram && window.Telegram.WebApp) {
     try { window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand(); } catch (e) {}
   }
-
   var COLORS = { leviathan: '#39FF14', azhazel: '#FF00FF', mark_v: '#FFD700', mira: '#00F5FF' };
-
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function parseTime(v) {
     if (!v) return null;
     var s = String(v).trim().replace(' ', 'T');
@@ -74,114 +235,86 @@
     }
     return isNaN(d.getTime()) ? null : d;
   }
-
+  function fmtClock(v) {
+    var d = parseTime(v); if (!d) return '--:--';
+    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
   function fmtWIB(v) {
-    var d = parseTime(v);
-    if (!d) return 'tidak diketahui';
+    var d = parseTime(v); if (!d) return 'tidak diketahui';
+    var hh = String(d.getHours()).padStart(2,'0'), mm = String(d.getMinutes()).padStart(2,'0'), ss = String(d.getSeconds()).padStart(2,'0');
     var now = new Date();
-    var sameDay = d.toDateString() === now.toDateString();
-    var hh = String(d.getHours()).padStart(2, '0');
-    var mm = String(d.getMinutes()).padStart(2, '0');
-    var ss = String(d.getSeconds()).padStart(2, '0');
-    if (sameDay) return hh + ':' + mm + ':' + ss + ' WIB';
-    var dd = String(d.getDate()).padStart(2, '0');
-    var mo = String(d.getMonth() + 1).padStart(2, '0');
-    return dd + '/' + mo + ' ' + hh + ':' + mm + ' WIB';
+    if (d.toDateString() === now.toDateString()) return hh + ':' + mm + ':' + ss + ' WIB';
+    return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + ' ' + hh + ':' + mm + ' WIB';
   }
-
-  function statusLabel(s) {
-    s = (s || 'unknown').toLowerCase();
-    if (s === 'online') return ['online', 'ONLINE'];
-    if (s === 'offline') return ['offline', 'OFFLINE'];
-    if (s === 'standby') return ['standby', 'STANDBY'];
-    return ['unknown', 'UNKNOWN'];
+  function shortAct(a) {
+    var t = (a && a.activity) ? String(a.activity) : 'tidak diketahui';
+    t = t.replace(/\s+/g, ' ').trim();
+    return t.length > 42 ? t.slice(0, 42) + '…' : t;
   }
-
   function render(data) {
-    var cardsEl = document.getElementById('cards');
-    var feedEl = document.getElementById('feed');
-    var updEl = document.getElementById('updated');
     var agents = (data && data.agents) || [];
-    var html = '';
-    agents.forEach(function (a) {
-      var color = a.color || COLORS[a.id] || '#888';
-      var st = statusLabel(a.status);
-      var initial = (a.name || '?').charAt(0).toUpperCase();
-      var act = a.activity || 'tidak diketahui';
-      var up = a.uptime == null ? 'tidak diketahui' : String(a.uptime);
-      html += '<div class="card">'
-        + '<div class="top">'
-        + '<div class="avatar" style="color:' + color + ';border-color:' + color + '">' + esc(initial) + '</div>'
-        + '<div><div class="name" style="color:' + color + '">' + esc(a.name || a.id) + '</div>'
-        + '<div class="role">' + esc(a.role || '') + '</div></div>'
-        + '<div class="status"><span class="dot ' + st[0] + '"></span>' + st[1] + '</div>'
-        + '</div>'
-        + (a.is_talking ? '<div class="talk">&#9679; lagi ngobrol</div>' : '')
-        + '<div class="activity">' + esc(act) + '</div>'
-        + '<div class="meta"><b>terakhir aktif:</b> ' + esc(fmtWIB(a.last_active)) + '<br><b>uptime:</b> ' + esc(up) + '</div>'
-        + '</div>';
-    });
-    cardsEl.innerHTML = html || '<div class="empty">belum ada data agent</div>';
-
+    var byId = {};
+    agents.forEach(function (a) { byId[a.id] = a; });
+    // papan kinerja (data nyata)
+    var online = agents.filter(function (a) { return (a.status||'').toLowerCase() === 'online'; }).length;
     var feed = (data && data.feed) || [];
+    var lastFeed = feed.length ? feed[feed.length - 1] : null;
+    function st(id) {
+      var a = byId[id]; if (!a) return ['-', 'dim'];
+      var s = (a.status||'').toLowerCase();
+      if (s === 'online') return ['ONLINE', 'good'];
+      if (s === 'offline') return ['OFFLINE', 'bad'];
+      if (s === 'standby') return ['STANDBY', 'dim'];
+      return [s.toUpperCase(), 'dim'];
+    }
+    var lv = st('leviathan'), az = st('azhazel'), mv = st('mark_v');
+    document.getElementById('stats').innerHTML =
+        '<div class="stat"><div class="k">Agent online</div><div class="v">' + online + '/' + agents.length + '</div></div>'
+      + '<div class="stat"><div class="k">Event feed</div><div class="v">' + feed.length + '</div></div>'
+      + '<div class="stat"><div class="k">Event terakhir</div><div class="v dim">' + (lastFeed ? fmtWIB(lastFeed.time) : '-') + '</div></div>'
+      + '<div class="stat"><div class="k">Leviathan</div><div class="v ' + lv[1] + '">' + lv[0] + '</div></div>'
+      + '<div class="stat"><div class="k">Azhazel</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
+      + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>';
+    document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
+    // speech bubble = aktivitas terakhir tiap agen
+    ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
+      var el = document.getElementById('bub-' + id);
+      if (el) el.querySelector('.btxt').textContent = shortAct(byId[id]);
+    });
+    // feed
+    var feedEl = document.getElementById('feed');
     var fhtml = '';
-    feed.slice(0, 8).forEach(function (f) {
+    feed.slice(-8).reverse().forEach(function (f) {
       var who = f.agent || 'unknown';
       var color = COLORS[who] || '#888';
       var name = who.charAt(0).toUpperCase() + who.slice(1).replace('_', ' ');
-      fhtml += '<div class="bubble" style="border-left-color:' + color + '">'
+      fhtml += '<div class="fb" style="border-left-color:' + color + '">'
         + '<div class="fh"><b style="color:' + color + '">' + esc(name) + '</b> &middot; ' + esc(fmtWIB(f.time)) + '</div>'
-        + '<div class="ft">' + esc(f.text || '') + '</div>'
-        + '</div>';
+        + '<div class="ft">' + esc(f.text || '') + '</div></div>';
     });
     feedEl.innerHTML = fhtml || '<div class="empty">belum ada aktivitas</div>';
-
-    updEl.textContent = data && data.generated_at
-      ? 'data diperbarui: ' + fmtWIB(data.generated_at)
-      : 'data diperbarui: tidak diketahui';
   }
-
   function tickClock() {
     var now = new Date();
-    var hh = String(now.getHours()).padStart(2, '0');
-    var mm = String(now.getMinutes()).padStart(2, '0');
-    var ss = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clock').textContent = hh + ':' + mm + ':' + ss + ' WIB';
+    document.getElementById('liveclock').textContent =
+      String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
   }
-  tickClock();
-  setInterval(tickClock, 1000);
-
+  tickClock(); setInterval(tickClock, 1000);
   var lastGood = null;
   function load() {
     var bust = '_=' + Date.now();
-    fetch('data/status.json?' + bust).then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    }).then(function (data) {
-      lastGood = data;
-      document.getElementById('err').style.display = 'none';
-      render(data);
-    }).catch(function () {
-      fetch('status.json?' + bust).then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      }).then(function (data) {
-        lastGood = data;
-        document.getElementById('err').style.display = 'none';
-        render(data);
-      }).catch(function () {
-        if (lastGood) {
-          document.getElementById('err').style.display = 'block';
-          render(lastGood);
-        } else {
-          document.getElementById('err').style.display = 'block';
-          document.getElementById('updated').textContent = 'data belum bisa dimuat';
-        }
+    fetch('data/status.json?' + bust).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); })
+    .catch(function () {
+      fetch('status.json?' + bust).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); })
+      .catch(function () {
+        if (lastGood) { document.getElementById('err').style.display = 'block'; render(lastGood); }
+        else { document.getElementById('err').style.display = 'block'; document.getElementById('updline').textContent = 'Diperbarui --:--'; }
       });
     });
   }
-  load();
-  setInterval(load, 60000);
+  load(); setInterval(load, 60000);
 })();
 </script>
 </body>
