@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Agent Office — Live Monitor</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #0A0A0A; color: #E8E8E8; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  body { padding: 14px 12px 28px; max-width: 720px; margin: 0 auto; }
+  header { text-align: center; padding: 10px 0 4px; }
+  header h1 { font-size: 20px; letter-spacing: 1px; color: #FFD700; }
+  header .sub { font-size: 12px; color: #888; margin-top: 4px; }
+  #clock { font-size: 13px; color: #00F5FF; margin-top: 6px; }
+  #updated { font-size: 11px; color: #666; text-align: center; margin: 6px 0 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .card { border: 1px solid #222; border-radius: 12px; padding: 12px; background: #111; }
+  .card .top { display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border: 2px solid; flex-shrink: 0; }
+  .card .name { font-size: 15px; font-weight: bold; }
+  .card .role { font-size: 11px; color: #999; }
+  .status { margin-left: auto; display: flex; align-items: center; gap: 5px; font-size: 11px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .dot.online { background: #39FF14; box-shadow: 0 0 6px #39FF14; }
+  .dot.offline { background: #FF2D2D; box-shadow: 0 0 6px #FF2D2D; }
+  .dot.standby { background: #888; }
+  .dot.unknown { background: #555; }
+  .talk { font-size: 11px; color: #39FF14; margin-top: 8px; }
+  .activity { font-size: 12px; color: #DDD; margin-top: 8px; line-height: 1.45; word-break: break-word; min-height: 32px; }
+  .meta { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.6; }
+  .meta b { color: #AAA; font-weight: normal; }
+  h2 { font-size: 14px; color: #FFD700; margin: 18px 0 10px; letter-spacing: 1px; }
+  .feed { display: flex; flex-direction: column; gap: 8px; }
+  .bubble { background: #151515; border: 1px solid #222; border-left: 3px solid #888; border-radius: 8px; padding: 9px 11px; }
+  .bubble .fh { font-size: 11px; color: #999; margin-bottom: 4px; }
+  .bubble .fh b { font-size: 12px; }
+  .bubble .ft { font-size: 12px; line-height: 1.5; word-break: break-word; white-space: pre-wrap; }
+  .empty { color: #666; font-size: 12px; text-align: center; padding: 14px; }
+  #err { display: none; text-align: center; font-size: 12px; color: #FF6B6B; margin: 8px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Agent Office — Live Monitor</h1>
+  <div class="sub">Mark V &middot; Leviathan &middot; Azhazel &middot; Mira</div>
+  <div id="clock">--:--:-- WIB</div>
+</header>
+<div id="updated">memuat data&hellip;</div>
+<div id="err">data live belum bisa dimuat, menampilkan data terakhir</div>
+<div class="grid" id="cards"></div>
+<h2>FEED AKTIVITAS</h2>
+<div class="feed" id="feed"></div>
+
+<script>
+(function () {
+  if (window.Telegram && window.Telegram.WebApp) {
+    try { window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand(); } catch (e) {}
+  }
+
+  var COLORS = { leviathan: '#39FF14', azhazel: '#FF00FF', mark_v: '#FFD700', mira: '#00F5FF' };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function parseTime(v) {
+    if (!v) return null;
+    var s = String(v).trim().replace(' ', 'T');
+    var d = new Date(s);
+    if (isNaN(d.getTime())) {
+      var m = s.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+      if (m) d = new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+    }
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function fmtWIB(v) {
+    var d = parseTime(v);
+    if (!d) return 'tidak diketahui';
+    var now = new Date();
+    var sameDay = d.toDateString() === now.toDateString();
+    var hh = String(d.getHours()).padStart(2, '0');
+    var mm = String(d.getMinutes()).padStart(2, '0');
+    var ss = String(d.getSeconds()).padStart(2, '0');
+    if (sameDay) return hh + ':' + mm + ':' + ss + ' WIB';
+    var dd = String(d.getDate()).padStart(2, '0');
+    var mo = String(d.getMonth() + 1).padStart(2, '0');
+    return dd + '/' + mo + ' ' + hh + ':' + mm + ' WIB';
+  }
+
+  function statusLabel(s) {
+    s = (s || 'unknown').toLowerCase();
+    if (s === 'online') return ['online', 'ONLINE'];
+    if (s === 'offline') return ['offline', 'OFFLINE'];
+    if (s === 'standby') return ['standby', 'STANDBY'];
+    return ['unknown', 'UNKNOWN'];
+  }
+
+  function render(data) {
+    var cardsEl = document.getElementById('cards');
+    var feedEl = document.getElementById('feed');
+    var updEl = document.getElementById('updated');
+    var agents = (data && data.agents) || [];
+    var html = '';
+    agents.forEach(function (a) {
+      var color = a.color || COLORS[a.id] || '#888';
+      var st = statusLabel(a.status);
+      var initial = (a.name || '?').charAt(0).toUpperCase();
+      var act = a.activity || 'tidak diketahui';
+      var up = a.uptime == null ? 'tidak diketahui' : String(a.uptime);
+      html += '<div class="card">'
+        + '<div class="top">'
+        + '<div class="avatar" style="color:' + color + ';border-color:' + color + '">' + esc(initial) + '</div>'
+        + '<div><div class="name" style="color:' + color + '">' + esc(a.name || a.id) + '</div>'
+        + '<div class="role">' + esc(a.role || '') + '</div></div>'
+        + '<div class="status"><span class="dot ' + st[0] + '"></span>' + st[1] + '</div>'
+        + '</div>'
+        + (a.is_talking ? '<div class="talk">&#9679; lagi ngobrol</div>' : '')
+        + '<div class="activity">' + esc(act) + '</div>'
+        + '<div class="meta"><b>terakhir aktif:</b> ' + esc(fmtWIB(a.last_active)) + '<br><b>uptime:</b> ' + esc(up) + '</div>'
+        + '</div>';
+    });
+    cardsEl.innerHTML = html || '<div class="empty">belum ada data agent</div>';
+
+    var feed = (data && data.feed) || [];
+    var fhtml = '';
+    feed.slice(0, 8).forEach(function (f) {
+      var who = f.agent || 'unknown';
+      var color = COLORS[who] || '#888';
+      var name = who.charAt(0).toUpperCase() + who.slice(1).replace('_', ' ');
+      fhtml += '<div class="bubble" style="border-left-color:' + color + '">'
+        + '<div class="fh"><b style="color:' + color + '">' + esc(name) + '</b> &middot; ' + esc(fmtWIB(f.time)) + '</div>'
+        + '<div class="ft">' + esc(f.text || '') + '</div>'
+        + '</div>';
+    });
+    feedEl.innerHTML = fhtml || '<div class="empty">belum ada aktivitas</div>';
+
+    updEl.textContent = data && data.generated_at
+      ? 'data diperbarui: ' + fmtWIB(data.generated_at)
+      : 'data diperbarui: tidak diketahui';
+  }
+
+  function tickClock() {
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2, '0');
+    var mm = String(now.getMinutes()).padStart(2, '0');
+    var ss = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = hh + ':' + mm + ':' + ss + ' WIB';
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  var lastGood = null;
+  function load() {
+    var bust = '_=' + Date.now();
+    fetch('data/status.json?' + bust).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (data) {
+      lastGood = data;
+      document.getElementById('err').style.display = 'none';
+      render(data);
+    }).catch(function () {
+      fetch('status.json?' + bust).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      }).then(function (data) {
+        lastGood = data;
+        document.getElementById('err').style.display = 'none';
+        render(data);
+      }).catch(function () {
+        if (lastGood) {
+          document.getElementById('err').style.display = 'block';
+          render(lastGood);
+        } else {
+          document.getElementById('err').style.display = 'block';
+          document.getElementById('updated').textContent = 'data belum bisa dimuat';
+        }
+      });
+    });
+  }
+  load();
+  setInterval(load, 60000);
+})();
+</script>
+</body>
+</html>

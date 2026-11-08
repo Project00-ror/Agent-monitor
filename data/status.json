@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-11-08T18:40:11.341353+07:00",
+  "agents": [
+    {
+      "id": "leviathan",
+      "name": "Leviathan",
+      "role": "Builder Agent",
+      "color": "#39FF14",
+      "status": "online",
+      "activity": "menggunakan model: glm-4.5-flash",
+      "last_active": "2026-11-08T08:52:23.208Z",
+      "uptime": "tidak diketahui",
+      "is_talking": false
+    },
+    {
+      "id": "azhazel",
+      "name": "Azhazel",
+      "role": "Master Bot",
+      "color": "#FF00FF",
+      "status": "online",
+      "activity": "relay terakhir: User (hazel) nanya mana mini app-nya. Prioritas se... [2026-11-08 15:17:25]",
+      "last_active": "2026-11-08 15:17:25",
+      "uptime": "tidak diketahui",
+      "is_talking": false
+    },
+    {
+      "id": "mark_v",
+      "name": "Mark V",
+      "role": "Operator",
+      "color": "#FFD700",
+      "status": "online",
+      "activity": "menjalankan monitor",
+      "last_active": "2026-11-08T18:40:11.340460+07:00",
+      "uptime": "tidak diketahui",
+      "is_talking": true
+    },
+    {
+      "id": "mira",
+      "name": "Mira",
+      "role": "Animation Only",
+      "color": "#00F5FF",
+      "status": "standby",
+      "activity": "belum ada agent Mira \u2014 hanya ada di animasi",
+      "last_active": null,
+      "uptime": null,
+      "is_talking": false
+    }
+  ],
+  "feed": [
+    {
+      "time": "2026-11-08T03:24:21+07:00",
+      "agent": "azhazel",
+      "text": "# Brief: Apinex research (read-only)\n\n## Task\nResearch Apinex (https://apinex.bond) and report back. READ-ONLY: do NOT s"
+    },
+    {
+      "time": "2026-11-08T03:40:45+07:00",
+      "agent": "leviathan",
+      "text": "Konfirmasi otak baru: sebutkan model utama + semua fallback model kamu dari config yang aktif sekarang. Jawab singkat, s"
+    },
+    {
+      "time": "2026-11-08T03:41:21+07:00",
+      "agent": "leviathan",
+      "text": "Cek lagi dari config yang baru di-load: sebutkan model utama kamu SEKARANG (bukan yang lama). Kalau masih gemma, bilang "
+    },
+    {
+      "time": "2026-11-08T04:41:06+07:00",
+      "agent": "leviathan",
+      "text": "ping test, balas AZHAZEL_OK saja"
+    },
+    {
+      "time": "2026-11-08T14:52:54+07:00",
+      "agent": "azhazel",
+      "text": "# BRIEF: Live Agent Monitor (mini app Azhazel)\n\nUntuk: Leviathan (builder). Dari: Mark V. User: hazel (master).\nTujuan: "
+    },
+    {
+      "time": "2026-11-08T15:02:08+07:00",
+      "agent": "azhazel",
+      "text": "# BRIEF FIX 1: collect-status.py \u2014 feed + aktivitas Azhazel\n\nUntuk: Leviathan. Dari: Mark V (verifikasi).\nStatus: collec"
+    },
+    {
+      "time": "2026-11-08T15:05:49+07:00",
+      "agent": "azhazel",
+      "text": "# BRIEF FIX 2: collect-status.py \u2014 jam feed +7 jam (timezone)\n\nUntuk: Leviathan. Dari: Mark V (verifikasi).\nStatus: feed"
+    },
+    {
+      "time": "2026-11-08T15:17:25+07:00",
+      "agent": "azhazel",
+      "text": "User (hazel) nanya mana mini app-nya. Prioritas sekarang: kirim index.html versi pertama SECEPATNYA \u2014 yang penting tampi"
+    }
+  ]
+}
