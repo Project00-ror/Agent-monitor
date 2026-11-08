@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-08T23:00:12.552840+07:00",
+  "generated_at": "2026-11-08T23:05:10.750952+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "menjalankan monitor",
-      "last_active": "2026-11-08T23:00:12.551382+07:00",
+      "last_active": "2026-11-08T23:05:10.749995+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
