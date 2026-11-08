@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T04:36:47.554014+07:00",
+  "generated_at": "2026-11-09T04:37:47.297433+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -10,7 +10,7 @@
       "activity": "menggunakan model: free-kimi-k3",
       "last_active": "2026-11-08T21:27:13.649Z",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "azhazel",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: Cek progres Squads. Udah ~30 menit sejak lo mulai ... [2026-11-09 04:27:04]",
       "last_active": "2026-11-09 04:27:04",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T04:36:47.552907+07:00",
+      "last_active": "2026-11-09T04:37:47.296376+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
