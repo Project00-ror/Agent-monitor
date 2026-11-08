@@ -216,10 +216,10 @@
   var lastGood = null;
   function load() {
     var bust = '_=' + Date.now();
-    fetch('data/status.json?' + bust).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    fetch('data/status.json?' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); })
     .catch(function () {
-      fetch('status.json?' + bust).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      fetch('status.json?' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); })
       .catch(function () {
         if (lastGood) { document.getElementById('err').style.display = 'block'; render(lastGood); }
@@ -227,7 +227,7 @@
       });
     });
   }
-  load(); setInterval(load, 60000);
+  load(); setInterval(load, 15000);
 })();
 </script>
 </body>
