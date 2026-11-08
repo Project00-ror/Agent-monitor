@@ -40,6 +40,13 @@
   .bubble.b3 { animation-delay: 1.4s; }
   .bubble.fading { opacity: 0; }
   @keyframes bubbleFloat { 0%,100% { transform: translate(-50%, -100%) translateY(0); } 50% { transform: translate(-50%, -100%) translateY(-6px); } }
+  /* indikator "lagi ngetik" — 3 titik mantul di atas laptop tiap robot */
+  .typing { position: absolute; transform: translate(-50%, 0); background: rgba(23,27,51,.92); border: 1px solid #3a4066; border-radius: 999px; padding: 5px 9px; z-index: 3; display: flex; gap: 4px; align-items: center; }
+  .typing .tdot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: typingBounce 1.2s infinite; }
+  .typing .tdot:nth-child(2) { animation-delay: .15s; }
+  .typing .tdot:nth-child(3) { animation-delay: .3s; }
+  @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); opacity: .35; } 30% { transform: translateY(-4px); opacity: 1; } }
+  .cursor { display: inline-block; width: 2px; height: 13px; background: #fff; margin-left: 1px; vertical-align: -1px; animation: blink 1s step-end infinite; }
   .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
@@ -90,6 +97,9 @@
   <div class="bubble" id="bub-leviathan" style="left:24%;top:57%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
   <div class="bubble b2" id="bub-mark_v" style="left:58%;top:45%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
   <div class="bubble b3" id="bub-azhazel" style="left:80%;top:55%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="typing" id="typ-leviathan" style="left:24%;top:63%"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>
+  <div class="typing" id="typ-mark_v" style="left:58%;top:51%"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>
+  <div class="typing" id="typ-azhazel" style="left:80%;top:61%"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>
   <div class="desklab" style="left:24%;top:93%">Leviathan · Builder Agent</div>
   <div class="desklab" style="left:58%;top:85%">Mark V · Operator</div>
   <div class="desklab" style="left:84%;top:93%">Azhazel · Master Bot</div>
@@ -158,16 +168,31 @@
       + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>';
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
-    // Bubble tetap gerak lewat animasi float; teks hanya berubah saat data
-    // baru datang, dengan fade. Tidak ada lagi rotasi riwayat.
+    // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
+    // jadi kelihatan agent-nya lagi ngetik beneran. Indikator 3 titik
+    // di bawah bubble nunjukin agent online = lagi kerja.
     ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
       var el = document.getElementById('bub-' + id);
+      var typ = document.getElementById('typ-' + id);
+      var a = byId[id];
+      if (typ) typ.style.display = (a && (a.status || '').toLowerCase() === 'online') ? 'flex' : 'none';
       if (!el) return;
-      var txt = shortAct(byId[id]);
+      var txt = shortAct(a);
       var btxt = el.querySelector('.btxt');
-      if (btxt.textContent !== txt) {
-        el.classList.add('fading');
-        setTimeout(function () { btxt.textContent = txt; el.classList.remove('fading'); }, 450);
+      if (btxt.getAttribute('data-full') !== txt) {
+        btxt.setAttribute('data-full', txt);
+        if (btxt._tw) clearInterval(btxt._tw);
+        var i = 0;
+        var cur = document.createElement('span');
+        cur.className = 'cursor';
+        btxt.textContent = '';
+        btxt.appendChild(cur);
+        btxt._tw = setInterval(function () {
+          i++;
+          btxt.textContent = txt.slice(0, i);
+          btxt.appendChild(cur);
+          if (i >= txt.length) { clearInterval(btxt._tw); btxt._tw = null; cur.remove(); }
+        }, 28);
       }
     });
     // feed
