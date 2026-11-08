@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T03:05:11.481386+07:00",
+  "generated_at": "2026-11-09T03:10:11.300078+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: # BRIEF \u2014 Bug Bounty Web3 (Leviathan, entri 1\u201327)\n... [2026-11-09 02:57:35]",
       "last_active": "2026-11-09 02:57:35",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -29,21 +29,10 @@
       "role": "Operator",
       "color": "#FFD700",
       "status": "online",
-      "activity": "menjalankan monitor",
-      "last_active": "2026-11-09T03:05:11.480391+07:00",
+      "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
+      "last_active": "2026-11-09T03:10:11.299023+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
-    },
-    {
-      "id": "mira",
-      "name": "Mira",
-      "role": "Animation Only",
-      "color": "#00F5FF",
-      "status": "standby",
-      "activity": "belum ada agent Mira \u2014 hanya ada di animasi",
-      "last_active": null,
-      "uptime": null,
-      "is_talking": false
     }
   ],
   "feed": [
