@@ -33,7 +33,7 @@
   .stat .v.bad { color: #ff6b7a; }
   .stat .v.dim { color: #c9cfe8; font-size: 18px; }
   /* ---- scene kantor isometrik ---- */
-  .scene-wrap { position: relative; background: #b9b4e6; overflow: hidden; }
+  .scene-wrap { position: relative; background: #9a94da; overflow: hidden; }
   .scene-wrap svg { display: block; width: 100%; height: auto; }
   .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; }
   .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
@@ -102,14 +102,26 @@
       <linearGradient id="bodyMagenta" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#ff4dff"/><stop offset="100%" stop-color="#a800a8"/>
       </linearGradient>
+      <linearGradient id="wallLeft" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#cfcbf2"/><stop offset="100%" stop-color="#b3aee4"/>
+      </linearGradient>
+      <linearGradient id="wallRight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#bdb8ea"/><stop offset="100%" stop-color="#9d97d8"/>
+      </linearGradient>
+      <linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#a8a2e0"/><stop offset="100%" stop-color="#8b85cc"/>
+      </linearGradient>
     </defs>
     <!-- dinding -->
-    <polygon points="20,320 360,200 360,80 20,200" fill="#c9c4ef"/>
-    <polygon points="360,200 700,320 700,200 360,80" fill="#b3aee4"/>
+    <polygon points="20,320 360,200 360,80 20,200" fill="url(#wallLeft)"/>
+    <polygon points="360,200 700,320 700,200 360,80" fill="url(#wallRight)"/>
     <!-- lantai -->
-    <polygon points="360,200 700,320 360,440 20,320" fill="#a49ee0"/>
+    <polygon points="360,200 700,320 360,440 20,320" fill="url(#floorGrad)"/>
+    <!-- bayangan sudut dinding-lantai -->
+    <polygon points="20,320 360,200 360,214 20,334" fill="#000" opacity=".06"/>
+    <polygon points="360,200 700,320 700,334 360,214" fill="#000" opacity=".08"/>
     <!-- grid lantai -->
-    <g stroke="#8f88cf" stroke-width="1" opacity=".55">
+    <g stroke="#ffffff" stroke-width="1.2" opacity=".45">
       <line x1="190" y1="260" x2="530" y2="400"/><line x1="530" y1="260" x2="190" y2="400"/>
       <line x1="275" y1="230" x2="615" y2="370"/><line x1="445" y1="230" x2="105" y2="370"/>
       <line x1="360" y1="200" x2="360" y2="440"/>
