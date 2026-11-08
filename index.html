@@ -35,7 +35,11 @@
   /* ---- scene kantor isometrik ---- */
   .scene-wrap { position: relative; overflow: hidden; background: #8b85cc; }
   .scene-wrap img.scene-img { display: block; width: 100%; height: auto; }
-  .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; }
+  .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
+  .bubble.b2 { animation-delay: .7s; }
+  .bubble.b3 { animation-delay: 1.4s; }
+  .bubble.fading { opacity: 0; }
+  @keyframes bubbleFloat { 0%,100% { margin-top: 0; } 50% { margin-top: -6px; } }
   .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
@@ -84,8 +88,8 @@
 <div class="scene-wrap" id="scene">
   <img class="scene-img" src="office-3d.webp" alt="Kantor Agent">
   <div class="bubble" id="bub-leviathan" style="left:24%;top:57%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
-  <div class="bubble" id="bub-mark_v" style="left:58%;top:45%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
-  <div class="bubble" id="bub-azhazel" style="left:80%;top:55%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="bubble b2" id="bub-mark_v" style="left:58%;top:45%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
+  <div class="bubble b3" id="bub-azhazel" style="left:80%;top:55%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
   <div class="desklab" style="left:24%;top:93%">Leviathan · Builder Agent</div>
   <div class="desklab" style="left:58%;top:85%">Mark V · Operator</div>
   <div class="desklab" style="left:84%;top:93%">Azhazel · Master Bot</div>
@@ -100,7 +104,7 @@
   if (window.Telegram && window.Telegram.WebApp) {
     try { window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand(); } catch (e) {}
   }
-  var COLORS = { leviathan: '#39FF14', azhazel: '#FF00FF', mark_v: '#FFD700', mira: '#00F5FF' };
+  var COLORS = { leviathan: '#39FF14', azhazel: '#FF00FF', mark_v: '#FFD700' };
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function parseTime(v) {
     if (!v) return null;
@@ -153,11 +157,43 @@
       + '<div class="stat"><div class="k">Azhazel</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
       + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>';
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
-    // speech bubble = aktivitas terakhir tiap agen
+    // speech bubble = aktivitas terakhir tiap agen, ROTASI tiap 6 detik lewat
+    // aktivitas terbaru mereka di feed (fade out -> ganti teks -> fade in),
+    // jadi bubble selalu gerak walau status.json cuma refresh tiap 5 menit.
+    var feedList = (data && data.feed) || [];
+    window.__bubLists = {};
+    window.__bubIdx = window.__bubIdx || {};
     ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
+      var items = [];
+      var cur = shortAct(byId[id]);
+      if (cur && cur !== 'tidak diketahui') items.push(cur);
+      feedList.slice().reverse().forEach(function (f) {
+        if ((f.agent || '') === id) {
+          var t = String(f.text || '').replace(/\s+/g, ' ').trim();
+          if (t.length > 42) t = t.slice(0, 42) + '…';
+          if (t && items.indexOf(t) === -1) items.push(t);
+        }
+      });
+      if (!items.length) items.push('tidak diketahui');
+      window.__bubLists[id] = items;
+      if (window.__bubIdx[id] == null || window.__bubIdx[id] >= items.length) window.__bubIdx[id] = 0;
       var el = document.getElementById('bub-' + id);
-      if (el) el.querySelector('.btxt').textContent = shortAct(byId[id]);
+      if (el) el.querySelector('.btxt').textContent = items[window.__bubIdx[id]];
     });
+    if (!window.__bubTimer) {
+      window.__bubTimer = setInterval(function () {
+        ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
+          var items = window.__bubLists[id]; if (!items || items.length < 2) return;
+          var el = document.getElementById('bub-' + id); if (!el) return;
+          window.__bubIdx[id] = (window.__bubIdx[id] + 1) % items.length;
+          el.classList.add('fading');
+          setTimeout(function () {
+            el.querySelector('.btxt').textContent = items[window.__bubIdx[id]];
+            el.classList.remove('fading');
+          }, 450);
+        });
+      }, 6000);
+    }
     // feed
     var feedEl = document.getElementById('feed');
     var fhtml = '';
