@@ -39,7 +39,7 @@
   .bubble.b2 { animation-delay: .7s; }
   .bubble.b3 { animation-delay: 1.4s; }
   .bubble.fading { opacity: 0; }
-  @keyframes bubbleFloat { 0%,100% { margin-top: 0; } 50% { margin-top: -6px; } }
+  @keyframes bubbleFloat { 0%,100% { transform: translate(-50%, -100%) translateY(0); } 50% { transform: translate(-50%, -100%) translateY(-6px); } }
   .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
@@ -157,43 +157,19 @@
       + '<div class="stat"><div class="k">Azhazel</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
       + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>';
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
-    // speech bubble = aktivitas terakhir tiap agen, ROTASI tiap 6 detik lewat
-    // aktivitas terbaru mereka di feed (fade out -> ganti teks -> fade in),
-    // jadi bubble selalu gerak walau status.json cuma refresh tiap 5 menit.
-    var feedList = (data && data.feed) || [];
-    window.__bubLists = {};
-    window.__bubIdx = window.__bubIdx || {};
+    // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
+    // Bubble tetap gerak lewat animasi float; teks hanya berubah saat data
+    // baru datang, dengan fade. Tidak ada lagi rotasi riwayat.
     ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
-      var items = [];
-      var cur = shortAct(byId[id]);
-      if (cur && cur !== 'tidak diketahui') items.push(cur);
-      feedList.slice().reverse().forEach(function (f) {
-        if ((f.agent || '') === id) {
-          var t = String(f.text || '').replace(/\s+/g, ' ').trim();
-          if (t.length > 42) t = t.slice(0, 42) + '…';
-          if (t && items.indexOf(t) === -1) items.push(t);
-        }
-      });
-      if (!items.length) items.push('tidak diketahui');
-      window.__bubLists[id] = items;
-      if (window.__bubIdx[id] == null || window.__bubIdx[id] >= items.length) window.__bubIdx[id] = 0;
       var el = document.getElementById('bub-' + id);
-      if (el) el.querySelector('.btxt').textContent = items[window.__bubIdx[id]];
+      if (!el) return;
+      var txt = shortAct(byId[id]);
+      var btxt = el.querySelector('.btxt');
+      if (btxt.textContent !== txt) {
+        el.classList.add('fading');
+        setTimeout(function () { btxt.textContent = txt; el.classList.remove('fading'); }, 450);
+      }
     });
-    if (!window.__bubTimer) {
-      window.__bubTimer = setInterval(function () {
-        ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
-          var items = window.__bubLists[id]; if (!items || items.length < 2) return;
-          var el = document.getElementById('bub-' + id); if (!el) return;
-          window.__bubIdx[id] = (window.__bubIdx[id] + 1) % items.length;
-          el.classList.add('fading');
-          setTimeout(function () {
-            el.querySelector('.btxt').textContent = items[window.__bubIdx[id]];
-            el.classList.remove('fading');
-          }, 450);
-        });
-      }, 6000);
-    }
     // feed
     var feedEl = document.getElementById('feed');
     var fhtml = '';
