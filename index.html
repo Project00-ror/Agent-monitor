@@ -83,6 +83,26 @@
 
 <div class="scene-wrap" id="scene">
   <svg viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kantor Agent">
+    <defs>
+      <radialGradient id="headGreen" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#b8ff9e"/><stop offset="55%" stop-color="#39FF14"/><stop offset="100%" stop-color="#1a9e05"/>
+      </radialGradient>
+      <radialGradient id="headGold" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#fff3a0"/><stop offset="55%" stop-color="#FFD700"/><stop offset="100%" stop-color="#c79a00"/>
+      </radialGradient>
+      <radialGradient id="headMagenta" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#ff9dff"/><stop offset="55%" stop-color="#FF00FF"/><stop offset="100%" stop-color="#a800a8"/>
+      </radialGradient>
+      <linearGradient id="bodyGreen" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#6dff3d"/><stop offset="100%" stop-color="#1fa808"/>
+      </linearGradient>
+      <linearGradient id="bodyGold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffe14d"/><stop offset="100%" stop-color="#c79a00"/>
+      </linearGradient>
+      <linearGradient id="bodyMagenta" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ff4dff"/><stop offset="100%" stop-color="#a800a8"/>
+      </linearGradient>
+    </defs>
     <!-- dinding -->
     <polygon points="20,320 360,200 360,80 20,200" fill="#c9c4ef"/>
     <polygon points="360,200 700,320 700,200 360,80" fill="#b3aee4"/>
@@ -178,32 +198,56 @@
       <polygon points="545,330 558,324 558,354 545,360" fill="#171b33"/>
       <polygon class="screen" points="490,334 540,334 540,356 490,356" fill="#FF00FF" opacity=".85"/>
     </g>
-    <!-- ROBOT Leviathan -->
+    <!-- ROBOT Leviathan (3D) -->
     <g transform="translate(220,318)"><g class="robot">
-      <rect x="-26" y="0" width="52" height="34" rx="10" fill="#39FF14"/>
-      <circle cx="0" cy="-16" r="20" fill="#2bd60e"/>
-      <circle cx="-8" cy="-18" r="3.5" fill="#0b2b00"/><circle cx="8" cy="-18" r="3.5" fill="#0b2b00"/>
-      <rect x="-12" y="-8" width="24" height="4" rx="2" fill="#0b2b00"/>
-      <rect x="-30" y="6" width="8" height="20" rx="4" fill="#1fa808"/>
-      <rect x="22" y="6" width="8" height="20" rx="4" fill="#1fa808"/>
+      <ellipse cx="0" cy="38" rx="30" ry="6" fill="rgba(0,0,0,.18)"/>
+      <rect x="-34" y="4" width="10" height="24" rx="5" fill="#1fa808" transform="rotate(12 -34 16)"/>
+      <rect x="24" y="4" width="10" height="24" rx="5" fill="#1a8a06" transform="rotate(-12 29 16)"/>
+      <rect x="-26" y="0" width="52" height="36" rx="14" fill="url(#bodyGreen)"/>
+      <ellipse cx="-8" cy="10" rx="10" ry="5" fill="#fff" opacity=".28"/>
+      <rect x="-6" y="22" width="12" height="4" rx="2" fill="#0b2b00" opacity=".35"/>
+      <circle cx="-24" cy="-16" r="5" fill="#1fa808"/>
+      <circle cx="24" cy="-16" r="5" fill="#1a8a06"/>
+      <circle cx="0" cy="-18" r="23" fill="url(#headGreen)"/>
+      <ellipse cx="-8" cy="-26" rx="8" ry="5" fill="#fff" opacity=".45"/>
+      <rect x="-15" y="-26" width="30" height="17" rx="8" fill="#1a1033"/>
+      <rect x="-9" y="-22" width="3" height="9" rx="1.5" fill="#ff7ee2"/>
+      <rect x="-1.5" y="-24" width="3" height="13" rx="1.5" fill="#b967ff"/>
+      <rect x="6" y="-22" width="3" height="9" rx="1.5" fill="#ff7ee2"/>
     </g></g>
-    <!-- ROBOT Mark V -->
+    <!-- ROBOT Mark V (3D) -->
     <g transform="translate(360,228)"><g class="robot r2">
-      <rect x="-26" y="0" width="52" height="34" rx="10" fill="#FFD700"/>
-      <circle cx="0" cy="-16" r="20" fill="#eab800"/>
-      <circle cx="-8" cy="-18" r="3.5" fill="#3a2c00"/><circle cx="8" cy="-18" r="3.5" fill="#3a2c00"/>
-      <rect x="-12" y="-8" width="24" height="4" rx="2" fill="#3a2c00"/>
-      <rect x="-30" y="6" width="8" height="20" rx="4" fill="#c79a00"/>
-      <rect x="22" y="6" width="8" height="20" rx="4" fill="#c79a00"/>
+      <ellipse cx="0" cy="38" rx="30" ry="6" fill="rgba(0,0,0,.18)"/>
+      <rect x="-34" y="4" width="10" height="24" rx="5" fill="#c79a00" transform="rotate(12 -34 16)"/>
+      <rect x="24" y="4" width="10" height="24" rx="5" fill="#a88200" transform="rotate(-12 29 16)"/>
+      <rect x="-26" y="0" width="52" height="36" rx="14" fill="url(#bodyGold)"/>
+      <ellipse cx="-8" cy="10" rx="10" ry="5" fill="#fff" opacity=".35"/>
+      <rect x="-6" y="22" width="12" height="4" rx="2" fill="#3a2c00" opacity=".35"/>
+      <circle cx="-24" cy="-16" r="5" fill="#c79a00"/>
+      <circle cx="24" cy="-16" r="5" fill="#a88200"/>
+      <circle cx="0" cy="-18" r="23" fill="url(#headGold)"/>
+      <ellipse cx="-8" cy="-26" rx="8" ry="5" fill="#fff" opacity=".5"/>
+      <rect x="-15" y="-26" width="30" height="17" rx="8" fill="#1a1033"/>
+      <rect x="-9" y="-22" width="3" height="9" rx="1.5" fill="#ff7ee2"/>
+      <rect x="-1.5" y="-24" width="3" height="13" rx="1.5" fill="#b967ff"/>
+      <rect x="6" y="-22" width="3" height="9" rx="1.5" fill="#ff7ee2"/>
     </g></g>
-    <!-- ROBOT Azhazel -->
+    <!-- ROBOT Azhazel (3D) -->
     <g transform="translate(510,318)"><g class="robot r3">
-      <rect x="-26" y="0" width="52" height="34" rx="10" fill="#FF00FF"/>
-      <circle cx="0" cy="-16" r="20" fill="#d600d6"/>
-      <circle cx="-8" cy="-18" r="3.5" fill="#2b002b"/><circle cx="8" cy="-18" r="3.5" fill="#2b002b"/>
-      <rect x="-12" y="-8" width="24" height="4" rx="2" fill="#2b002b"/>
-      <rect x="-30" y="6" width="8" height="20" rx="4" fill="#b300b3"/>
-      <rect x="22" y="6" width="8" height="20" rx="4" fill="#b300b3"/>
+      <ellipse cx="0" cy="38" rx="30" ry="6" fill="rgba(0,0,0,.18)"/>
+      <rect x="-34" y="4" width="10" height="24" rx="5" fill="#b300b3" transform="rotate(12 -34 16)"/>
+      <rect x="24" y="4" width="10" height="24" rx="5" fill="#8f0090" transform="rotate(-12 29 16)"/>
+      <rect x="-26" y="0" width="52" height="36" rx="14" fill="url(#bodyMagenta)"/>
+      <ellipse cx="-8" cy="10" rx="10" ry="5" fill="#fff" opacity=".3"/>
+      <rect x="-6" y="22" width="12" height="4" rx="2" fill="#2b002b" opacity=".35"/>
+      <circle cx="-24" cy="-16" r="5" fill="#b300b3"/>
+      <circle cx="24" cy="-16" r="5" fill="#8f0090"/>
+      <circle cx="0" cy="-18" r="23" fill="url(#headMagenta)"/>
+      <ellipse cx="-8" cy="-26" rx="8" ry="5" fill="#fff" opacity=".45"/>
+      <rect x="-15" y="-26" width="30" height="17" rx="8" fill="#1a1033"/>
+      <rect x="-9" y="-22" width="3" height="9" rx="1.5" fill="#ff7ee2"/>
+      <rect x="-1.5" y="-24" width="3" height="13" rx="1.5" fill="#b967ff"/>
+      <rect x="6" y="-22" width="3" height="9" rx="1.5" fill="#ff7ee2"/>
     </g></g>
   </svg>
   <div class="bubble" id="bub-leviathan" style="left:30%;top:56%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
