@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T04:04:48.686967+07:00",
+  "generated_at": "2026-11-09T04:05:50.406485+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: LANJUT \u2014 FASE HUNTING. Verifikasi halaman selesai ... [2026-11-09 03:55:23]",
       "last_active": "2026-11-09 03:55:23",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T04:04:48.686009+07:00",
+      "last_active": "2026-11-09T04:05:50.405485+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
