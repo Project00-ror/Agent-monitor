@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T01:40:11.947282+07:00",
+  "generated_at": "2026-11-09T01:45:11.897594+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: glm-4.5-flash",
-      "last_active": "2026-11-08T18:40:00.771Z",
+      "last_active": "2026-11-08T18:40:30.627Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "menjalankan monitor",
-      "last_active": "2026-11-09T01:40:11.946219+07:00",
+      "last_active": "2026-11-09T01:45:11.896458+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
