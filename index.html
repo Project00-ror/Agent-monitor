@@ -35,6 +35,9 @@
   /* ---- scene kantor isometrik ---- */
   .scene-wrap { position: relative; overflow: hidden; background: #8b85cc; }
   .scene-wrap img.scene-img { display: block; width: 100%; height: auto; }
+  /* frame kedua (pose ngetik beda) ditumpuk di atas frame utama; crossfade = robot kelihatan ngetik */
+  .scene-wrap img.scene-img.alt { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .28s ease; z-index: 1; }
+  .scene-wrap img.scene-img.alt.on { opacity: 1; }
   .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
   .bubble.b2 { animation-delay: .7s; }
   .bubble.b3 { animation-delay: 1.4s; }
@@ -88,6 +91,7 @@
 
 <div class="scene-wrap" id="scene">
   <img class="scene-img" src="office-3d.webp" alt="Kantor Agent">
+  <img class="scene-img alt" id="scene-alt" src="office-frame-1.webp" alt="" aria-hidden="true">
   <div class="bubble" id="bub-leviathan" style="left:24%;top:57%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
   <div class="bubble b2" id="bub-mark_v" style="left:58%;top:45%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
   <div class="bubble b3" id="bub-azhazel" style="left:80%;top:55%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
@@ -201,6 +205,17 @@
       String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
   }
   tickClock(); setInterval(tickClock, 1000);
+  // flipbook ngetik: ganti frame pose tiap 700ms (crossfade 280ms) — robot kelihatan ngetik.
+  // Frame 0 = office-3d.webp, frame 1 = office-frame-1.webp (pose ngetik beda, background nyaris identik).
+  (function () {
+    var alt = document.getElementById('scene-alt');
+    if (!alt) return;
+    var on = false;
+    setInterval(function () {
+      on = !on;
+      alt.classList.toggle('on', on);
+    }, 700);
+  })();
   var lastGood = null;
   function load() {
     var bust = '_=' + Date.now();
