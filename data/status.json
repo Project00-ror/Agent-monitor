@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T16:44:20.982162+07:00",
+  "generated_at": "2026-11-09T16:49:08.653270+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T16:44:20.981020+07:00",
+      "last_active": "2026-11-09T16:49:08.652019+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
