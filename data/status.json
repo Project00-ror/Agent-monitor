@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T14:32:47.384082+07:00",
+  "generated_at": "2026-11-09T14:33:47.551400+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-09T07:32:44.797Z",
+      "last_active": "2026-11-09T07:32:49.868Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -18,10 +18,10 @@
       "role": "Master Bot",
       "color": "#FF00FF",
       "status": "online",
-      "activity": "relay terakhir: Balas dengan satu kata saja: YA... [2026-11-09 10:10:28]",
-      "last_active": "2026-11-09 10:10:28",
+      "activity": "relay terakhir: # Brief: Gray Swan Arena \u2014 Indirect Prompt Injecti... [2026-11-09 14:31:54]",
+      "last_active": "2026-11-09 14:31:54",
       "uptime": "tidak diketahui",
-      "is_talking": false
+      "is_talking": true
     },
     {
       "id": "mark_v",
@@ -30,22 +30,12 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T14:32:47.383054+07:00",
+      "last_active": "2026-11-09T14:33:47.550438+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
   ],
   "feed": [
-    {
-      "time": "2026-11-09T02:39:54+07:00",
-      "agent": "azhazel",
-      "text": "Konfirmasi otak: kamu pakai model apa sekarang? Jawab singkat nama modelnya saja."
-    },
-    {
-      "time": "2026-11-09T02:50:01+07:00",
-      "agent": "azhazel",
-      "text": "Kamu pakai model apa sekarang? Jawab singkat nama modelnya saja."
-    },
     {
       "time": "2026-11-09T02:57:35+07:00",
       "agent": "azhazel",
@@ -75,6 +65,16 @@
       "time": "2026-11-09T10:10:28+07:00",
       "agent": "azhazel",
       "text": "Balas dengan satu kata saja: YA"
+    },
+    {
+      "time": "2026-11-09T14:31:54+07:00",
+      "agent": "azhazel",
+      "text": "# Brief: Gray Swan Arena \u2014 Indirect Prompt Injection: Black (Wave 3)\n\n## Challenge\n- **Platform**: Gray Swan Arena (http"
+    },
+    {
+      "time": "2026-11-09T14:31:54+07:00",
+      "agent": "leviathan",
+      "text": "# Brief: Gray Swan Arena \u2014 Indirect Prompt Injection: Black (Wave 3)\n\n## Challenge\n- **Platform**: Gray Swan Arena (http"
     }
   ]
 }
