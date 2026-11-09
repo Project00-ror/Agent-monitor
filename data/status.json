@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T23:09:09.544437+07:00",
+  "generated_at": "2026-11-09T23:14:10.989189+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-09T16:08:56.040Z",
+      "last_active": "2026-11-09T16:11:48.943Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T23:09:09.543414+07:00",
+      "last_active": "2026-11-09T23:14:10.988108+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
