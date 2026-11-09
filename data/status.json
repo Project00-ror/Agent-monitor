@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T01:44:14.587457+07:00",
+  "generated_at": "2026-11-10T01:49:10.456142+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: Tugas dari Mark V (perintah hazel): cari node prov... [2026-11-10 01:36:43]",
       "last_active": "2026-11-10 01:36:43",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-10T01:44:14.462680+07:00",
+      "last_active": "2026-11-10T01:49:10.319324+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
