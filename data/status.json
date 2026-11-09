@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T00:04:11.555292+07:00",
+  "generated_at": "2026-11-10T00:09:14.212105+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -7,8 +7,8 @@
       "role": "Builder Agent",
       "color": "#39FF14",
       "status": "online",
-      "activity": "menggunakan model: step-5",
-      "last_active": "2026-11-09T16:56:44.323Z",
+      "activity": "menggunakan model: glm-4.5-flash",
+      "last_active": "2026-11-09T17:08:41.501Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-10T00:04:11.393193+07:00",
+      "last_active": "2026-11-10T00:09:14.061722+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -43,7 +43,7 @@
       "activity": "menggunakan model: step-5 (nine-router)",
       "last_active": "2026-11-09T16:56:39.244000+00:00",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     }
   ],
   "feed": [
