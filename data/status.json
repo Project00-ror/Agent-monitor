@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T14:41:48.566602+07:00",
+  "generated_at": "2026-11-09T14:42:52.326811+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -10,7 +10,7 @@
       "activity": "menggunakan model: free-kimi-k3",
       "last_active": "2026-11-09T07:32:49.868Z",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "azhazel",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: # Brief: Gray Swan Arena \u2014 Indirect Prompt Injecti... [2026-11-09 14:31:54]",
       "last_active": "2026-11-09 14:31:54",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T14:41:48.565621+07:00",
+      "last_active": "2026-11-09T14:42:52.325832+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
