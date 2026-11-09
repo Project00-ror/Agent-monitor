@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T23:14:10.989189+07:00",
+  "generated_at": "2026-11-09T23:19:10.406311+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -7,8 +7,8 @@
       "role": "Builder Agent",
       "color": "#39FF14",
       "status": "online",
-      "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-09T16:11:48.943Z",
+      "activity": "menggunakan model: step-5",
+      "last_active": "2026-11-09T16:19:03.696Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: # Brief untuk Azhazel \u2014 Lanjutkan Bot #5 \"administ... [2026-11-09 23:05:55]",
       "last_active": "2026-11-09 23:05:55",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-09T23:14:10.988108+07:00",
+      "last_active": "2026-11-09T23:19:10.405154+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
