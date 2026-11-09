@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T00:14:24.253571+07:00",
+  "generated_at": "2026-11-10T00:19:17.083097+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: TUGAS DARI HAZEL (via Mark V) \u2014 Proxy egress buat ... [2026-11-10 00:05:42]",
       "last_active": "2026-11-10 00:05:42",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
@@ -30,7 +30,7 @@
       "color": "#FFD700",
       "status": "online",
       "activity": "koordinasi bug bounty Web3 + vAPI + OKX RigOrb",
-      "last_active": "2026-11-10T00:14:24.114310+07:00",
+      "last_active": "2026-11-10T00:19:16.919714+07:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
