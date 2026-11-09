@@ -112,7 +112,7 @@
   if (window.Telegram && window.Telegram.WebApp) {
     try { window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand(); } catch (e) {}
   }
-  var COLORS = { leviathan: '#39FF14', azhazel: '#FF00FF', mark_v: '#FFD700' };
+  var COLORS = { leviathan: '#39FF14', azhazel: '#FF00FF', mark_v: '#FFD700', administrator: '#00BFFF' };
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function parseTime(v) {
     if (!v) return null;
@@ -156,14 +156,15 @@
       if (s === 'standby') return ['STANDBY', 'dim'];
       return [s.toUpperCase(), 'dim'];
     }
-    var lv = st('leviathan'), az = st('azhazel'), mv = st('mark_v');
+    var lv = st('leviathan'), az = st('azhazel'), mv = st('mark_v'), ad = st('administrator');
     document.getElementById('stats').innerHTML =
         '<div class="stat"><div class="k">Agent online</div><div class="v">' + online + '/' + agents.length + '</div></div>'
       + '<div class="stat"><div class="k">Event feed</div><div class="v">' + feed.length + '</div></div>'
       + '<div class="stat"><div class="k">Event terakhir</div><div class="v dim">' + (lastFeed ? fmtWIB(lastFeed.time) : '-') + '</div></div>'
       + '<div class="stat"><div class="k">Leviathan</div><div class="v ' + lv[1] + '">' + lv[0] + '</div></div>'
       + '<div class="stat"><div class="k">Azhazel</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
-      + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>';
+      + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
+      + '<div class="stat"><div class="k">Administrator</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
     // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
