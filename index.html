@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Agent Office — Live Monitor</title>
+<meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Watch">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>Watch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -225,7 +233,7 @@
       + '<div class="agent"><div class="k">Lucifer</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
       + '<div class="agent"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
       + '<div class="agent"><div class="k">Asmodeus</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
-    document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
+    document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtWIB(data.generated_at) : '--:--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
     // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
     // jadi kelihatan agent-nya lagi ngetik beneran. Tanpa indikator titik.
@@ -349,6 +357,16 @@
     });
   }
   load(); setInterval(load, 15000);
+  /* balik ke aplikasi (layar nyala / tab aktif lagi) -> langsung refresh,
+     jangan nunggu giliran 15 detik berikutnya (browser HP suka nge-pause timer). */
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) load();
+  });
+  window.addEventListener('focus', function () { load(); });
+  /* PWA: daftarkan service worker biar bisa di-install sebagai aplikasi */
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
 })();
 </script>
 </body>
