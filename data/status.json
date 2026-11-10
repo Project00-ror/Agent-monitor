@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-10T18:59:27.911553+07:00",
+  "generated_at": "2026-11-10T19:04:09.489921+07:00",
   "agents": [
     {
       "id": "leviathan",
       "name": "Leviathan",
       "role": "Builder Agent",
       "color": "#39FF14",
-      "status": "online",
+      "status": "offline",
       "activity": "menggunakan model: free-kimi-k3",
       "last_active": "2026-11-10T11:46:11.104Z",
       "uptime": "tidak diketahui",
