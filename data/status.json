@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T19:24:09.118842+07:00",
+  "generated_at": "2026-11-10T19:29:09.574588+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-10T12:24:06.973Z",
+      "last_active": "2026-11-10T12:28:51.346Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: Tes ulang mention: Leviathan udah di HOME BASE dan... [2026-11-10 19:16:58]",
       "last_active": "2026-11-10 19:16:58",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
