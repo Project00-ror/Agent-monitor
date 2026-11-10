@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T18:54:24.911389+07:00",
+  "generated_at": "2026-11-10T18:59:27.911553+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -10,7 +10,7 @@
       "activity": "menggunakan model: free-kimi-k3",
       "last_active": "2026-11-10T11:46:11.104Z",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "azhazel",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: Azhazel, perintah dari hazel: mulai sekarang LU ya... [2026-11-10 18:45:46]",
       "last_active": "2026-11-10 18:45:46",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
