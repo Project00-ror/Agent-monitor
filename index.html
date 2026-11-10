@@ -20,105 +20,63 @@
   html, body { color: #E8E8E8; font-family: "Plus Jakarta Sans", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
   body {
     padding: 0 0 84px; max-width: 720px; margin: 0 auto;
-    background:
-      radial-gradient(420px 260px at 12% -4%, rgba(57,255,20,.07), transparent 70%),
-      radial-gradient(420px 260px at 88% 8%, rgba(255,0,255,.06), transparent 70%),
-      radial-gradient(520px 320px at 50% 108%, rgba(0,191,255,.06), transparent 70%),
-      linear-gradient(180deg, #05050a, #0b0b14 55%, #05050a);
-    background-attachment: fixed;
-    animation: aurora 26s ease-in-out infinite alternate;
+    background: #05050a;
   }
-  @keyframes aurora { from { background-position: 0 0, 0 0, 0 0, 0 0; } to { background-position: 40px 30px, -30px 20px, 20px -30px, 0 0; } }
-  /* ---- judul kantor (hitam, ringkas) ---- */
-  .office-head { background: #000; padding: 12px 16px 6px; display: flex; align-items: flex-start; justify-content: space-between; }
-  .office-head h2 { font-size: 22px; font-weight: 800; color: #fff; }
-  .office-head .upd { font-size: 12px; color: #9aa3c7; margin-top: 3px; }
-  .livepill { border: 1px solid #3a4670; color: #dfe4ff; border-radius: 999px; padding: 5px 12px; font-size: 12px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px; }
-  .crewchip { border: 1px solid #1e5c3a; color: #2ee59d; background: rgba(46,229,157,.08); border-radius: 999px; padding: 5px 10px; font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-left: 6px; white-space: nowrap; }
-  .crewchip.warn { border-color: #6b4d12; color: #ffb020; background: rgba(255,176,32,.08); }
-  .livepill .dot { width: 8px; height: 8px; border-radius: 50%; background: #39FF14; box-shadow: 0 0 8px #39FF14; animation: pulse 1.6s infinite; }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
-  /* ---- jam live kecil di header (board PAPAN KINERJA dihapus v24, ruangan jadi besar) ---- */
-  .liveclock { font-size: 12px; color: #3ddc84; font-weight: 700; display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 6px; font-variant-numeric: tabular-nums; }
-  .liveclock .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: pulse 1.6s infinite; }
-  /* ---- scene kantor 3D v24: ruangan besar sama kayak video MUSE — robot berdiri di lantai ---- */
-  .scene-wrap { position: relative; overflow: hidden; background: #000; aspect-ratio: 60 / 64; }
+  /* ---- scene kantor 3D v25: ruangan FULL LAYAR kayak video MUSE — tanpa header,
+     tanpa strip statistik, tanpa bubble. Robot kubus putih berdiri bebas di lantai. ---- */
+  .scene-wrap { position: relative; overflow: hidden; background: #000; height: calc(100dvh - 84px); }
   .room-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
-  /* meja abu-abu terang ala video (z 5 > robot z 4) — robot berdiri di belakang meja */
+  /* chip live kecil nempel di pojok ruangan (satu-satunya chrome di halaman Kantor) */
+  .livechip { position: absolute; top: 0; left: 0; right: 0; z-index: 8; display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; background: rgba(0,0,0,.55); font-size: 10px; color: #c9cfe8; }
+  .livechip .lc-top { display: flex; align-items: center; gap: 6px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+  .livechip .dot { width: 7px; height: 7px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  .livechip #liveclock { color: #3ddc84; font-variant-numeric: tabular-nums; }
+  .livechip .upd { font-size: 9px; color: #8b93b8; }
+  /* meja abu-abu terang ala video (z 5) */
   .desk { position: absolute; transform: translate(-50%, 0); background: linear-gradient(180deg, #b0b0b9, #8f8f99); border: 1px solid #6f6f7a; border-radius: 4px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,.5); }
   .desk .dtop { position: absolute; left: -8%; right: -8%; top: -30%; height: 34%; background: linear-gradient(135deg, #d8d8de, #bdbdc6); border: 1px solid #8a8a96; border-radius: 3px; transform: skewX(-18deg); }
-  .desk .dmon { position: absolute; left: 50%; top: -62%; transform: translateX(-50%); width: 44%; height: 48%; background: #0b0f1e; border: 1.5px solid #4a4a5a; border-radius: 3px; padding: 1.5px; }
+  .desk .dmon { position: absolute; left: 26%; top: -62%; transform: translateX(-50%); width: 44%; height: 48%; background: #0b0f1e; border: 1.5px solid #4a4a5a; border-radius: 3px; padding: 1.5px; }
   .desk .dmon:after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); width: 26%; height: 22%; background: #4a4a5a; }
+  .desk .dmon2 { position: absolute; left: 74%; top: -62%; transform: translateX(-50%); width: 44%; height: 48%; background: #0b0f1e; border: 1.5px solid #4a4a5a; border-radius: 3px; padding: 1.5px; }
+  .desk .dmon2:after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); width: 26%; height: 22%; background: #4a4a5a; }
   .desk .dscr { width: 100%; height: 100%; background: #0a0a18; border-radius: 2px; overflow: hidden; }
   .desk .dscr.bars { display: flex; align-items: flex-end; gap: 2px; padding: 2px; }
   .desk .dscr.bars i { flex: 1; border-radius: 1px; display: block; }
-  .desk .dscr.vision { display: flex; align-items: center; justify-content: center; }
-  .desk .dscr.vision span { font-size: 6px; font-weight: 800; letter-spacing: 1px; color: #8b93b8; }
+  .desk .dscr.code { padding: 3px 4px; }
+  .desk .dscr.code i { display: block; height: 2px; border-radius: 1px; background: #3ddc84; margin-bottom: 2.5px; opacity: .85; }
+  .desk .dscr.code i:nth-child(2n) { background: #2ea36b; width: 70% !important; }
+  .desk .dscr.code i:nth-child(3n) { background: #7ddba8; width: 45% !important; }
   .desk .dkey { position: absolute; left: 50%; top: -16%; transform: translateX(-50%); width: 52%; height: 9%; background: #1c1c26; border: 1px solid #3a3a4a; border-radius: 2px; }
   .desk .dmug { position: absolute; right: 7%; top: -28%; width: 7%; height: 13%; background: #e07830; border-radius: 2px 2px 1px 1px; }
-  .desk.working .dmon { border-color: var(--c, #888); box-shadow: 0 0 10px var(--c, #888); }
-  .desk.teacher { box-shadow: 0 6px 14px rgba(0,0,0,.6); }
-  /* kursi di depan meja utama (ala video) */
+  /* kursi gelap di depan meja utama (ala video) */
   .chair { position: absolute; transform: translate(-50%, 0); width: 9%; height: 10%; z-index: 3; }
-  .chair .cback { position: absolute; left: 15%; right: 15%; top: 0; height: 45%; background: #8a8a96; border: 1px solid #6f6f7a; border-radius: 4px 4px 2px 2px; }
-  .chair .cseat { position: absolute; left: 8%; right: 8%; top: 48%; height: 22%; background: #9a9aa4; border: 1px solid #6f6f7a; border-radius: 3px; }
-  .chair .cstem { position: absolute; left: 50%; top: 70%; width: 2px; height: 16%; background: #6f6f7a; transform: translateX(-50%); }
-  .chair .cbase { position: absolute; left: 30%; right: 30%; top: 86%; height: 4%; background: #6f6f7a; border-radius: 2px; }
-  .bubble { position: absolute; transform: translate(-50%, -100%); background: rgba(23,27,51,.92); color: #fff; border: 1px solid; border-radius: 999px; padding: 3px 7px; font-size: 9px; font-weight: 700; white-space: nowrap; max-width: 26%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0,0,0,.35); z-index: 5; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
-  .bubble.dim { background: rgba(23,27,51,.55); opacity: .75; }
-  .bubble.b2 { animation-delay: .7s; }
-  .bubble.b3 { animation-delay: 1.4s; }
-  .bubble.b4 { animation-delay: 2.1s; }
-  .bubble.fading { opacity: 0; }
-  @keyframes bubbleFloat { 0%,100% { transform: translate(-50%, -100%) translateY(0); } 50% { transform: translate(-50%, -100%) translateY(-3px); } }
-  .cursor { display: inline-block; width: 2px; height: 9px; background: #fff; margin-left: 1px; vertical-align: -1px; animation: blink 1s step-end infinite; }
-  .bubble .bdot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
-  .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
-  /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
-  .robot { position: absolute; width: 13%; z-index: 4; transform: translate(-50%, -100%); transition: left 1.8s ease-in-out, top 1.8s ease-in-out; }
-  .robot.teacher { width: 15%; }
-  .robot .rtag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); font-size: 7px; font-weight: 800; letter-spacing: 1px; color: var(--c); background: rgba(0,0,0,.7); border: 1px solid var(--c); border-radius: 999px; padding: 1px 5px; white-space: nowrap; z-index: 7; }
+  .chair .cback { position: absolute; left: 15%; right: 15%; top: 0; height: 45%; background: #4a4458; border: 1px solid #37324a; border-radius: 4px 4px 2px 2px; }
+  .chair .cseat { position: absolute; left: 8%; right: 8%; top: 48%; height: 22%; background: #554e68; border: 1px solid #37324a; border-radius: 3px; }
+  .chair .cstem { position: absolute; left: 50%; top: 70%; width: 2px; height: 16%; background: #37324a; transform: translateX(-50%); }
+  .chair .cbase { position: absolute; left: 30%; right: 30%; top: 86%; height: 4%; background: #37324a; border-radius: 2px; }
+  /* ---- robot kubus putih ala video: balok polos, panel wajah gelap, 2 mata kecil,
+     tanpa lengan/kaki/antena/mulut. Name-tag gelap kecil di atas kepala. ---- */
+  .robot { position: absolute; width: 17%; z-index: 4; transform: translate(-50%, -100%); transition: left 1.8s ease-in-out, top 1.8s ease-in-out; }
+  .robot.teacher { width: 18%; }
+  .robot .rtag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); font-size: 7px; font-weight: 800; letter-spacing: 1px; color: #cfd3e0; background: rgba(10,10,16,.85); border: 1px solid #2a2a3a; border-radius: 3px; padding: 1px 5px; white-space: nowrap; z-index: 7; display: flex; align-items: center; gap: 4px; }
+  .robot .rtag .rdot { width: 5px; height: 5px; border-radius: 50%; background: var(--c); flex-shrink: 0; }
   .robot-inner { position: relative; animation: idleFloat 5s ease-in-out infinite; }
   .robot svg { display: block; width: 100%; height: auto; }
   .robot .shadow { position: absolute; left: 50%; bottom: -4%; width: 70%; height: 6%; transform: translateX(-50%); background: rgba(0,0,0,.45); border-radius: 50%; }
   .robot .eye { transform-box: fill-box; transform-origin: center; animation: eyeBlink 4.2s ease-in-out infinite; }
-  .robot .leg { transform-box: fill-box; transform-origin: 50% 0; }
   @keyframes eyeBlink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
   @keyframes idleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2%); } }
   @keyframes walkBob { 0%,100% { transform: translateY(0); } 25% { transform: translateY(-6%); } 75% { transform: translateY(-2%); } }
-  @keyframes legSwingL { 0%,100% { transform: rotate(24deg); } 50% { transform: rotate(-24deg); } }
-  @keyframes legSwingR { 0%,100% { transform: rotate(-24deg); } 50% { transform: rotate(24deg); } }
-  @keyframes armSwingL { 0%,100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }
-  @keyframes armSwingR { 0%,100% { transform: rotate(18deg); } 50% { transform: rotate(-18deg); } }
   .robot.moving .robot-inner { animation: walkBob .45s ease-in-out infinite; }
-  .robot.moving .leg-l { animation: legSwingL .45s ease-in-out infinite; }
-  .robot.moving .leg-r { animation: legSwingR .45s ease-in-out infinite; }
-  .robot.moving .arm-l { animation: armSwingL .45s ease-in-out infinite; }
-  .robot.moving .arm-r { animation: armSwingR .45s ease-in-out infinite; }
-  /* ngobrol: mata berkedip cepat + robot mantul pelan (tanpa mulut, ala video) */
   @keyframes talkEye { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(.3); } }
   @keyframes talkBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4%); } }
   .robot.talking .eye { animation: talkEye .38s ease-in-out infinite; }
   .robot.talking .robot-inner { animation: talkBounce .55s ease-in-out infinite; }
-  /* kerja: lengan ngetik di meja (monitor meja yang nyala, ala video) */
-  .robot.working .arm-l, .robot.working .arm-r { transform-box: fill-box; transform-origin: 50% 0; }
-  .robot.working .arm-l { animation: typeTap .5s ease-in-out infinite; }
-  .robot.working .arm-r { animation: typeTap .5s ease-in-out .25s infinite; }
-  @keyframes typeTap { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(28deg); } }
+  .robot.working .robot-inner { animation: talkBounce .8s ease-in-out infinite; }
   /* idle/offline: redup, diam di tempat */
   .robot.idle { opacity: .5; }
   .robot.idle .robot-inner { animation: idleFloat 8s ease-in-out infinite; }
-  /* ---- strip dashboard bawah ruangan (referensi video) ---- */
-  .dashstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 12px 12px; background: #000; }
-  .dcard { background: #0d1526; border: 1px solid #1c2b4a; border-radius: 10px; padding: 8px 10px; }
-  .dcard .dk { font-size: 10px; color: #8b93b8; letter-spacing: .5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dcard .dv { font-size: 15px; font-weight: 800; color: #fff; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dcard .dv.good { color: #2ee59d; }
-  .dcard .dv.warn { color: #ffb020; }
-  /* ---- bar kesegaran data (habis tiap 15 detik, isi ulang tiap load) ---- */
-  .fresh { height: 3px; background: #1c1c2e; border-radius: 2px; overflow: hidden; }
-  .fresh-bar { height: 100%; width: 100%; background: #2ee59d; }
   /* ---- halaman-halaman monitor (pindah via bottom nav) ---- */
   .view { display: none; }
   .view.active { display: block; }
@@ -150,7 +108,6 @@
   .tabbar .tab .ticon { line-height: 0; }
   .tabbar .tab .ticon svg { width: 23px; height: 23px; display: block; }
   .tabbar .tab.active { color: #dfe3f2; background: rgba(154,163,199,.14); }
-  .logsheet .ls-sub { font-size: 12px; color: #9aa3c7; padding: 10px 16px 0; }
   h2.feed-h { font-size: 13px; color: #FFD700; margin: 18px 16px 10px; letter-spacing: 1px; }
   .feed { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
   .fb { background: #151515; border: 1px solid #222; border-left: 3px solid #888; border-radius: 8px; padding: 9px 11px; }
@@ -165,98 +122,74 @@
 <body>
 
 <div class="view active" id="view-kantor">
-<div class="office-head">
-  <div>
-    <h2>Kantor Agent</h2>
-    <div class="upd" id="updline">Diperbarui --:--</div>
-  </div>
-  <div style="text-align:right">
-    <span class="livepill"><span class="dot"></span>LIVE</span>
-    <span class="crewchip" id="crewchip">CREW 4/4</span>
-    <div class="liveclock"><span class="dot"></span>LIVE <span id="liveclock">--:--:--</span></div>
-  </div>
-</div>
-
 <div class="scene-wrap" id="scene">
-  <!-- ruangan v24: dinding arang, lantai abu, layar dot-matrix, karpet teal besar, HOMELY OFFICE -->
-  <svg class="room-svg" viewBox="0 0 600 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <div class="livechip"><span class="lc-top"><span class="dot"></span>LIVE <span id="liveclock">--:--:--</span></span><span class="upd" id="updline">Diperbarui --:--</span></div>
+  <!-- ruangan v25b: viewBox PORTRAIT 420x760 (aspek layar HP) biar nggak ke-crop kiri-kanan.
+       Referensi: key_office.jpg + key_populated.jpg (video YzUdoSApV6U) -->
+  <svg class="room-svg" viewBox="0 0 420 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs><linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5c5c66"/><stop offset="1" stop-color="#48484f"/></linearGradient></defs>
     <!-- dinding belakang -->
-    <rect x="0" y="0" width="600" height="210" fill="#26262e"/>
+    <rect x="0" y="0" width="420" height="210" fill="#26262e"/>
     <!-- dinding kiri (sisi, lebih gelap) -->
-    <rect x="0" y="0" width="110" height="210" fill="#1d1d24"/>
-    <line x1="110" y1="0" x2="110" y2="210" stroke="#121218" stroke-width="2"/>
-    <rect x="0" y="204" width="600" height="6" fill="#14141a"/>
+    <rect x="0" y="0" width="75" height="210" fill="#1d1d24"/>
+    <line x1="75" y1="0" x2="75" y2="210" stroke="#121218" stroke-width="2"/>
+    <rect x="0" y="204" width="420" height="6" fill="#14141a"/>
     <!-- lantai -->
-    <rect x="0" y="210" width="600" height="430" fill="url(#floorGrad)"/>
-    <ellipse cx="300" cy="420" rx="260" ry="140" fill="#5e5e68" opacity=".45"/>
+    <rect x="0" y="210" width="420" height="550" fill="url(#floorGrad)"/>
+    <ellipse cx="210" cy="480" rx="190" ry="120" fill="#5e5e68" opacity=".45"/>
     <!-- karpet bundar BESAR + cincin teal (referensi video) -->
-    <ellipse cx="300" cy="470" rx="200" ry="70" fill="#15151d"/>
-    <ellipse cx="300" cy="470" rx="200" ry="70" fill="none" stroke="#14b8a6" stroke-width="3" opacity=".9"/>
-    <ellipse cx="300" cy="470" rx="168" ry="56" fill="none" stroke="#3a3a48" stroke-width="1.5" opacity=".7"/>
-    <ellipse cx="300" cy="470" rx="136" ry="42" fill="none" stroke="#14b8a6" stroke-width="1" opacity=".35"/>
-    <!-- papan HOMELY OFFICE -->
-    <rect x="400" y="18" width="180" height="28" rx="4" fill="#101018" stroke="#3a3a55" stroke-width="1.5"/>
-    <text x="490" y="37" text-anchor="middle" font-family="inherit" font-size="13" font-weight="800" fill="#dfe3f2" letter-spacing="2">HOMELY OFFICE</text>
-    <!-- layar dinding besar: dot-matrix kuning + bulan (tanpa teks/bar) -->
-    <rect x="170" y="55" width="270" height="110" rx="4" fill="#05050c" stroke="#262640" stroke-width="2"/>
-    <g fill="#ffd75e" opacity=".85"><circle cx="188" cy="105" r="2"/><circle cx="188" cy="120" r="2"/><circle cx="188" cy="135" r="2"/><circle cx="204" cy="90" r="2"/><circle cx="204" cy="105" r="2"/><circle cx="204" cy="120" r="2"/><circle cx="204" cy="135" r="2"/><circle cx="220" cy="75" r="2"/><circle cx="220" cy="90" r="2"/><circle cx="220" cy="105" r="2"/><circle cx="220" cy="120" r="2"/><circle cx="220" cy="135" r="2"/><circle cx="236" cy="90" r="2"/><circle cx="236" cy="105" r="2"/><circle cx="236" cy="120" r="2"/><circle cx="236" cy="135" r="2"/><circle cx="252" cy="105" r="2"/><circle cx="252" cy="120" r="2"/><circle cx="252" cy="135" r="2"/><circle cx="268" cy="75" r="2"/><circle cx="268" cy="90" r="2"/><circle cx="268" cy="105" r="2"/><circle cx="268" cy="120" r="2"/><circle cx="268" cy="135" r="2"/><circle cx="284" cy="90" r="2"/><circle cx="284" cy="105" r="2"/><circle cx="284" cy="120" r="2"/><circle cx="284" cy="135" r="2"/><circle cx="300" cy="105" r="2"/><circle cx="300" cy="120" r="2"/><circle cx="300" cy="135" r="2"/><circle cx="316" cy="90" r="2"/><circle cx="316" cy="105" r="2"/><circle cx="316" cy="120" r="2"/><circle cx="316" cy="135" r="2"/><circle cx="332" cy="75" r="2"/><circle cx="332" cy="90" r="2"/><circle cx="332" cy="105" r="2"/><circle cx="332" cy="120" r="2"/><circle cx="332" cy="135" r="2"/><circle cx="348" cy="105" r="2"/><circle cx="348" cy="120" r="2"/><circle cx="348" cy="135" r="2"/><circle cx="364" cy="90" r="2"/><circle cx="364" cy="105" r="2"/><circle cx="364" cy="120" r="2"/><circle cx="364" cy="135" r="2"/></g>
-    <circle cx="405" cy="78" r="10" fill="#d8dcea" opacity=".9"/>
-    <!-- papan MUSE -->
-    <rect x="470" y="80" width="80" height="34" rx="4" fill="#101018" stroke="#3a3a55" stroke-width="1.5"/>
-    <text x="510" y="102" text-anchor="middle" font-family="inherit" font-size="15" font-weight="800" fill="#dfe3f2" letter-spacing="2">MUSE</text>
+    <ellipse cx="210" cy="620" rx="155" ry="62" fill="#15151d"/>
+    <ellipse cx="210" cy="620" rx="155" ry="62" fill="none" stroke="#14b8a6" stroke-width="3" opacity=".9"/>
+    <ellipse cx="210" cy="620" rx="128" ry="50" fill="none" stroke="#3a3a48" stroke-width="1.5" opacity=".7"/>
+    <ellipse cx="210" cy="620" rx="100" ry="38" fill="none" stroke="#14b8a6" stroke-width="1" opacity=".35"/>
+    <!-- papan HOMELY OFFICE (atas tengah, teks emas, ala video) -->
+    <rect x="105" y="24" width="210" height="30" rx="4" fill="#101018" stroke="#3a3a55" stroke-width="1.5"/>
+    <text x="210" y="44" text-anchor="middle" font-family="inherit" font-size="13" font-weight="800" fill="#c9a86a" letter-spacing="2">HOMELY OFFICE</text>
+    <!-- layar dinding besar: dot-matrix kuning + bulan + VISION kecil -->
+    <rect x="85" y="66" width="250" height="106" rx="4" fill="#05050c" stroke="#262640" stroke-width="2"/>
+    <g fill="#ffd75e" opacity=".85"><circle cx="102" cy="116" r="2"/><circle cx="102" cy="131" r="2"/><circle cx="102" cy="146" r="2"/><circle cx="117" cy="101" r="2"/><circle cx="117" cy="116" r="2"/><circle cx="117" cy="131" r="2"/><circle cx="117" cy="146" r="2"/><circle cx="132" cy="86" r="2"/><circle cx="132" cy="101" r="2"/><circle cx="132" cy="116" r="2"/><circle cx="132" cy="131" r="2"/><circle cx="132" cy="146" r="2"/><circle cx="147" cy="101" r="2"/><circle cx="147" cy="116" r="2"/><circle cx="147" cy="131" r="2"/><circle cx="147" cy="146" r="2"/><circle cx="161" cy="116" r="2"/><circle cx="161" cy="131" r="2"/><circle cx="161" cy="146" r="2"/><circle cx="176" cy="86" r="2"/><circle cx="176" cy="101" r="2"/><circle cx="176" cy="116" r="2"/><circle cx="176" cy="131" r="2"/><circle cx="176" cy="146" r="2"/><circle cx="191" cy="101" r="2"/><circle cx="191" cy="116" r="2"/><circle cx="191" cy="131" r="2"/><circle cx="191" cy="146" r="2"/><circle cx="206" cy="116" r="2"/><circle cx="206" cy="131" r="2"/><circle cx="206" cy="146" r="2"/><circle cx="221" cy="101" r="2"/><circle cx="221" cy="116" r="2"/><circle cx="221" cy="131" r="2"/><circle cx="221" cy="146" r="2"/><circle cx="236" cy="86" r="2"/><circle cx="236" cy="101" r="2"/><circle cx="236" cy="116" r="2"/><circle cx="236" cy="131" r="2"/><circle cx="236" cy="146" r="2"/><circle cx="250" cy="116" r="2"/><circle cx="250" cy="131" r="2"/><circle cx="250" cy="146" r="2"/><circle cx="265" cy="101" r="2"/><circle cx="265" cy="116" r="2"/><circle cx="265" cy="131" r="2"/><circle cx="265" cy="146" r="2"/></g>
+    <circle cx="305" cy="88" r="10" fill="#d8dcea" opacity=".9"/>
+    <text x="95" y="166" font-family="inherit" font-size="9" font-weight="700" fill="#8b93b8" letter-spacing="2">VISION</text>
+    <!-- papan MUSE (dinding kanan, teks teal) -->
+    <rect x="322" y="100" width="76" height="34" rx="4" fill="#101018" stroke="#3a3a55" stroke-width="1.5"/>
+    <text x="360" y="122" text-anchor="middle" font-family="inherit" font-size="14" font-weight="800" fill="#2dd4bf" letter-spacing="2">MUSE</text>
     <!-- rak buku dinding kiri -->
     <g>
-      <rect x="14" y="42" width="82" height="4" fill="#3a3a4a"/>
-      <rect x="20" y="18" width="7" height="24" fill="#3a4670"/><rect x="29" y="22" width="7" height="20" fill="#2a4a3a"/><rect x="38" y="16" width="7" height="26" fill="#4a3a2a"/><rect x="47" y="20" width="7" height="22" fill="#3a2a4a"/><rect x="56" y="18" width="7" height="24" fill="#4a3a2a"/><rect x="65" y="22" width="7" height="20" fill="#3a4670"/><rect x="74" y="16" width="7" height="26" fill="#2a4a3a"/>
+      <rect x="12" y="44" width="76" height="4" fill="#3a3a4a"/>
+      <rect x="18" y="20" width="7" height="24" fill="#3a4670"/><rect x="27" y="24" width="7" height="20" fill="#2a4a3a"/><rect x="36" y="18" width="7" height="26" fill="#4a3a2a"/><rect x="45" y="22" width="7" height="22" fill="#3a2a4a"/><rect x="54" y="20" width="7" height="24" fill="#4a3a2a"/><rect x="63" y="24" width="7" height="20" fill="#3a4670"/><rect x="72" y="18" width="7" height="26" fill="#2a4a3a"/>
     </g>
     <!-- poster kiri (2 buah) -->
-    <rect x="18" y="66" width="34" height="46" rx="3" fill="#1c1c28" stroke="#2a2a3a" stroke-width="1.5"/>
-    <rect x="22" y="72" width="26" height="20" rx="2" fill="#4a3a2a" opacity=".8"/>
-    <rect x="22" y="96" width="26" height="3" rx="1.5" fill="#2a2a3a"/>
-    <rect x="58" y="66" width="34" height="46" rx="3" fill="#1c1c28" stroke="#2a2a3a" stroke-width="1.5"/>
-    <rect x="62" y="72" width="26" height="20" rx="2" fill="#2a4a3a" opacity=".8"/>
-    <rect x="62" y="96" width="26" height="3" rx="1.5" fill="#2a2a3a"/>
+    <rect x="16" y="70" width="32" height="45" rx="3" fill="#1c1c28" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="20" y="76" width="24" height="19" rx="2" fill="#4a3a2a" opacity=".8"/>
+    <rect x="20" y="99" width="24" height="3" rx="1.5" fill="#2a2a3a"/>
+    <rect x="52" y="70" width="32" height="45" rx="3" fill="#1c1c28" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="56" y="76" width="24" height="19" rx="2" fill="#2a4a3a" opacity=".8"/>
+    <rect x="56" y="99" width="24" height="3" rx="1.5" fill="#2a2a3a"/>
     <!-- lampu lantai kanan -->
     <g>
-      <ellipse cx="545" cy="232" rx="10" ry="3" fill="#3a3a48"/>
-      <line x1="545" y1="232" x2="545" y2="148" stroke="#565680" stroke-width="3"/>
-      <path d="M533 148 L557 148 L551 128 L539 128 Z" fill="#ffd75e" opacity=".9"/>
-      <circle cx="545" cy="138" r="16" fill="#ffd75e" opacity=".12"/>
+      <ellipse cx="392" cy="240" rx="10" ry="3" fill="#3a3a48"/>
+      <line x1="392" y1="240" x2="392" y2="155" stroke="#565680" stroke-width="3"/>
+      <path d="M380 155 L404 155 L398 135 L386 135 Z" fill="#ffd75e" opacity=".9"/>
+      <circle cx="392" cy="145" r="16" fill="#ffd75e" opacity=".12"/>
     </g>
     <!-- tanaman kanan -->
     <g>
-      <path d="M566 470 L594 470 L590 492 L570 492 Z" fill="#2e2a26" stroke="#453e36" stroke-width="1"/>
-      <g fill="#2a4a3a"><ellipse cx="572" cy="452" rx="7" ry="16" transform="rotate(-18 572 452)"/><ellipse cx="580" cy="446" rx="7" ry="18"/><ellipse cx="588" cy="452" rx="7" ry="16" transform="rotate(18 588 452)"/></g>
+      <path d="M384 575 L406 575 L402 595 L388 595 Z" fill="#2e2a26" stroke="#453e36" stroke-width="1"/>
+      <g fill="#2a4a3a"><ellipse cx="390" cy="560" rx="7" ry="16" transform="rotate(-18 390 560)"/><ellipse cx="396" cy="554" rx="7" ry="18"/><ellipse cx="402" cy="560" rx="7" ry="16" transform="rotate(18 402 560)"/></g>
     </g>
   </svg>
-  <div class="bubble" id="bub-leviathan" style="left:22%;top:44%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
-  <div class="bubble b2" id="bub-mark_v" style="left:31%;top:58%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
-  <div class="bubble b3" id="bub-azhazel" style="left:50%;top:44%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
-  <div class="bubble b4" id="bub-administrator" style="left:78%;top:44%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
-  <!-- meja murid abu-abu terang (di depan robot) -->
-  <div class="desk" id="desk-leviathan" style="--c:#39FF14; left:22%; top:62%; width:16%; height:11%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
-  <div class="desk" id="desk-azhazel" style="--c:#FF00FF; left:50%; top:62%; width:16%; height:11%;"><div class="dtop"></div><div class="dmon"><div class="dscr vision"><span>VISION</span></div></div><div class="dkey"></div><div class="dmug"></div></div>
-  <div class="desk" id="desk-administrator" style="--c:#00BFFF; left:78%; top:62%; width:16%; height:11%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
+  <!-- meja utama: DI ATAS karpet, 2 monitor (kode hijau + bar warna), keyboard, mug oranye -->
+  <div class="desk" id="desk-main" style="--c:#888; left:50%; top:74%; width:22%; height:10%;"><div class="dtop"></div><div class="dmon"><div class="dscr code"><i style="width:90%"></i><i style="width:70%"></i><i style="width:45%"></i><i style="width:80%"></i><i style="width:60%"></i></div></div><div class="dmon2"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
   <!-- meja kedua kanan (dekorasi, ala video) -->
-  <div class="desk" style="--c:#888; left:87%; top:64%; width:13%; height:10%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div></div>
-  <!-- kursi di depan meja utama -->
-  <div class="chair" style="left:50%;top:79%"><div class="cback"></div><div class="cseat"></div><div class="cstem"></div><div class="cbase"></div></div>
-  <!-- meja guru (depan, lebih besar) -->
-  <div class="desk teacher" id="desk-mark_v" style="--c:#FFD700; left:31%; top:80%; width:24%; height:12%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
-<div class="robot" id="robot-leviathan" style="--c:#39FF14; left:22%; top:66%;"><div class="robot-inner"><span class="rtag">LEVIATHAN</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div>
-  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:50%; top:66%;"><div class="robot-inner"><span class="rtag">LUCIFER</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div>
-  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:78%; top:66%;"><div class="robot-inner"><span class="rtag">ASMODEUS</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div>
-  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:82%;"><div class="robot-inner"><span class="rtag">ADMIN</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="desk" style="--c:#888; left:84%; top:62%; width:14%; height:9%;"><div class="dtop"></div><div class="dmon" style="left:50%"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div></div>
+  <!-- kursi gelap di depan meja utama -->
+  <div class="chair" style="left:50%;top:86%"><div class="cback"></div><div class="cseat"></div><div class="cstem"></div><div class="cbase"></div></div>
+  <!-- robot kubus putih, berdiri BEBAS di lantai (bukan di belakang meja, bukan sebaris) -->
+  <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:24%; top:54%;"><div class="robot-inner"><span class="rtag"><span class="rdot"></span>LEVIATHAN</span><svg viewBox="0 0 60 80" aria-hidden="true"><polygon points="14,14 46,14 42,6 18,6" fill="#faf8f2"/><polygon points="46,14 42,6 42,50 46,58" fill="#e3e0d5"/><rect x="14" y="14" width="32" height="44" rx="3" fill="#f2f0e8" stroke="#d5d1c2" stroke-width="1.5"/><rect x="20" y="22" width="20" height="12" rx="2" fill="#14141f"/><circle class="eye" cx="26" cy="28" r="2.5" style="fill:var(--c)"/><circle class="eye" cx="34" cy="28" r="2.5" style="fill:var(--c)"/></svg><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:38%; top:49%;"><div class="robot-inner"><span class="rtag"><span class="rdot"></span>LUCIFER</span><svg viewBox="0 0 60 80" aria-hidden="true"><polygon points="14,14 46,14 42,6 18,6" fill="#faf8f2"/><polygon points="46,14 42,6 42,50 46,58" fill="#e3e0d5"/><rect x="14" y="14" width="32" height="44" rx="3" fill="#f2f0e8" stroke="#d5d1c2" stroke-width="1.5"/><rect x="20" y="22" width="20" height="12" rx="2" fill="#14141f"/><circle class="eye" cx="26" cy="28" r="2.5" style="fill:var(--c)"/><circle class="eye" cx="34" cy="28" r="2.5" style="fill:var(--c)"/></svg><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:64%; top:51%;"><div class="robot-inner"><span class="rtag"><span class="rdot"></span>ASMODEUS</span><svg viewBox="0 0 60 80" aria-hidden="true"><polygon points="14,14 46,14 42,6 18,6" fill="#faf8f2"/><polygon points="46,14 42,6 42,50 46,58" fill="#e3e0d5"/><rect x="14" y="14" width="32" height="44" rx="3" fill="#f2f0e8" stroke="#d5d1c2" stroke-width="1.5"/><rect x="20" y="22" width="20" height="12" rx="2" fill="#14141f"/><circle class="eye" cx="26" cy="28" r="2.5" style="fill:var(--c)"/><circle class="eye" cx="34" cy="28" r="2.5" style="fill:var(--c)"/></svg><div class="shadow"></div></div></div>
+  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:78%; top:57%;"><div class="robot-inner"><span class="rtag"><span class="rdot"></span>ADMIN</span><svg viewBox="0 0 60 80" aria-hidden="true"><polygon points="14,14 46,14 42,6 18,6" fill="#faf8f2"/><polygon points="46,14 42,6 42,50 46,58" fill="#e3e0d5"/><rect x="14" y="14" width="32" height="44" rx="3" fill="#f2f0e8" stroke="#d5d1c2" stroke-width="1.5"/><rect x="20" y="22" width="20" height="12" rx="2" fill="#14141f"/><circle class="eye" cx="26" cy="28" r="2.5" style="fill:var(--c)"/><circle class="eye" cx="34" cy="28" r="2.5" style="fill:var(--c)"/></svg><div class="shadow"></div></div></div>
 </div>
-
-<div class="dashstrip" id="dashstrip">
-  <div class="dcard"><div class="dk">Agent online</div><div class="dv" id="dc-online">-/-</div></div>
-  <div class="dcard"><div class="dk">Event 1 jam</div><div class="dv" id="dc-hour">-</div></div>
-  <div class="dcard"><div class="dk">Paling aktif</div><div class="dv" id="dc-active">-</div></div>
-  <div class="dcard"><div class="dk">Robot aktif</div><div class="dv" id="dc-walk">-</div></div>
-</div>
-<div style="background:#000;padding:0 12px 10px"><div class="fresh" title="Waktu sejak data terakhir dimuat"><div class="fresh-bar" id="freshbar"></div></div></div>
 
 </div><!-- /view-kantor -->
 
@@ -312,26 +245,21 @@
     if (d.toDateString() === now.toDateString()) return hh + ':' + mm + ':' + ss + ' WIB';
     return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + ' ' + hh + ':' + mm + ' WIB';
   }
-  function shortAct(a) {
-    var t = (a && a.activity) ? String(a.activity) : 'tidak diketahui';
-    t = t.replace(/\s+/g, ' ').trim();
-    return t.length > 18 ? t.slice(0, 18) + '…' : t;
-  }
-  /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
+  /* ---- robot kubus: jalan-jalan di lantai bebas, ngobrol, kerja, idle ---- */
   var ROBOTS = {
-    leviathan: { home: [22, 66], talk: [22, 66], lounge: [88, 80], spots: [[14, 70], [22, 72], [30, 68], [16, 74], [26, 72]], mode: '' },
-    azhazel: { home: [50, 66], talk: [50, 66], lounge: [92, 80], spots: [[42, 70], [50, 71], [58, 69], [46, 73], [54, 72]], mode: '' },
-    mark_v: { home: [31, 82], talk: [31, 82], lounge: [94, 86], spots: [[48, 82], [58, 86], [68, 82], [52, 90], [62, 88]], mode: '' },
-    administrator: { home: [78, 66], talk: [78, 66], lounge: [88, 86], spots: [[70, 70], [78, 72], [86, 68], [74, 74], [82, 72]], mode: '' }
+    leviathan: { home: [24, 54], talk: [24, 54], spots: [[16, 58], [28, 62], [34, 54], [20, 68], [26, 50]], mode: '' },
+    azhazel: { home: [38, 49], talk: [38, 49], spots: [[30, 54], [44, 52], [36, 58], [46, 46], [28, 46]], mode: '' },
+    mark_v: { home: [78, 57], talk: [78, 57], spots: [[70, 58], [74, 66], [72, 62], [84, 54], [66, 62]], mode: '' },
+    administrator: { home: [64, 51], talk: [64, 51], spots: [[58, 56], [68, 48], [60, 62], [72, 54], [56, 48]], mode: '' }
   };
   function robotEl(id) { return document.getElementById('robot-' + id); }
   function moveRobot(id, pos) {
     var el = robotEl(id); if (!el) return;
     el.style.left = pos[0] + '%'; el.style.top = pos[1] + '%';
-    /* z-index ikut kedalaman (ruang 3D v24): meja murid y 62-73, meja guru
-       y 80-90. Robot yang kakinya di bawah meja tampil DI DEPAN meja. */
+    /* z-index ikut kedalaman: meja utama y 74-84, meja kedua y 62-71.
+       Robot yang kakinya di bawah meja tampil DI DEPAN meja. */
     var y = pos[1];
-    el.style.zIndex = ((y > 70 && y < 80) || y > 90) ? 6 : 4;
+    el.style.zIndex = (y > 80) ? 6 : 4;
     el.classList.add('moving');
     setTimeout(function () { el.classList.remove('moving'); }, 1900);
   }
@@ -341,12 +269,9 @@
     if (r.mode === mode) return;
     r.mode = mode;
     el.classList.remove('talking', 'working', 'idle');
-    /* monitor di meja nyala kalau robot lagi kerja/ngobrol (lagi di mejanya) */
-    var desk = document.getElementById('desk-' + id);
-    if (desk) desk.classList.toggle('working', mode === 'working' || mode === 'talking');
     if (mode === 'talking') { el.classList.add('talking'); moveRobot(id, r.talk); }
     else if (mode === 'working') { el.classList.add('working'); moveRobot(id, r.home); }
-    else if (mode === 'idle') { el.classList.add('idle'); moveRobot(id, r.lounge); }
+    else if (mode === 'idle') { el.classList.add('idle'); }
     /* mode 'walk': dibiarkan jalan-jalan oleh interval wander di bawah */
   }
   /* jalan-jalan: tiap 12 detik, robot yang lagi mode 'walk' pindah spot */
@@ -366,46 +291,19 @@
     var agents = (data && data.agents) || [];
     var byId = {};
     agents.forEach(function (a) { byId[a.id] = a; });
-    var online = agents.filter(function (a) { return (a.status||'').toLowerCase() === 'online'; }).length;
     var feed = (data && data.feed) || [];
-    var lastFeed = feed.length ? feed[feed.length - 1] : null;
-    /* strip dashboard bawah ruangan (referensi video): angka live dari data */
-    var hourAgo = Date.now() - 3600000;
-    var hourCount = feed.filter(function (f) { var d = parseTime(f.time); return d && d.getTime() >= hourAgo; }).length;
-    var mostActive = null, mostActiveT = 0;
-    agents.forEach(function (a) {
-      var d = a.last_active ? parseTime(a.last_active) : null;
-      if (d && d.getTime() > mostActiveT) { mostActiveT = d.getTime(); mostActive = a; }
-    });
-    var robotActive = 0;
-    var dcOnline = document.getElementById('dc-online');
-    if (dcOnline) { dcOnline.textContent = online + '/' + agents.length; dcOnline.className = 'dv ' + (online === agents.length ? 'good' : 'warn'); }
-    var dcHour = document.getElementById('dc-hour');
-    if (dcHour) { dcHour.textContent = hourCount; dcHour.className = 'dv' + (hourCount > 0 ? ' good' : ''); }
-    var dcActive = document.getElementById('dc-active');
-    if (dcActive) { dcActive.textContent = mostActive ? (mostActive.name || mostActive.id) : '-'; dcActive.className = 'dv'; }
-    var dcWalk = document.getElementById('dc-walk');
-    if (dcWalk) { dcWalk.textContent = robotActive + '/4'; dcWalk.className = 'dv' + (robotActive > 0 ? ' good' : ''); }
-    var crewchip = document.getElementById('crewchip');
-    if (crewchip) { crewchip.textContent = 'CREW ' + online + '/' + agents.length; crewchip.className = 'crewchip' + (online === agents.length ? '' : ' warn'); }
-    document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtWIB(data.generated_at) : '--:--:--');
-    // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
-    // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
-    // jadi kelihatan agent-nya lagi ngetik beneran. Tanpa indikator titik.
-    // ATURAN: bubble HILANG kalau agent sudah >1 menit tanpa aktivitas
-    // (last_active lebih dari 60 detik yang lalu, atau tidak ada).
+    var upd = document.getElementById('updline');
+    if (upd) upd.textContent = 'Diperbarui ' + (data && data.generated_at ? fmtWIB(data.generated_at) : '--:--:--');
+    /* mode robot dari data nyata, bukan asal gerak:
+       ngobrol = ada aktivitas <1 menit,
+       kerja = online + ada aktivitas <10 menit (is_talking),
+       jalan-jalan = online tapi lagi nggak ada kerjaan,
+       idle = offline/standby. Bubble dihapus v25 (di video nggak ada);
+       aktivitas lengkap ada di halaman Riwayat. */
     ['leviathan', 'mark_v', 'azhazel', 'administrator'].forEach(function (id) {
-      var el = document.getElementById('bub-' + id);
-      if (!el) return;
       var a = byId[id];
-      var btxt = el.querySelector('.btxt');
       var last = a && a.last_active ? parseTime(a.last_active) : null;
       var fresh = !!(last && a.activity && (Date.now() - last.getTime() < 60000));
-      /* robot hidup — mode dari data nyata, bukan asal gerak:
-         ngobrol = ada aktivitas <1 menit (bubble muncul),
-         kerja = online + ada aktivitas <10 menit (is_talking),
-         jalan-jalan = online tapi lagi nggak ada kerjaan,
-         idle = offline/standby. */
       var rmode;
       var online = a && (a.status || '').toLowerCase() === 'online';
       if (fresh) rmode = 'talking';
@@ -413,45 +311,7 @@
       else if (a && a.is_talking) rmode = 'working';
       else rmode = 'walk';
       setRobotMode(id, rmode);
-      var aname = (a && a.name) || id;
-      /* bubble PERSISTEN (referensi video): tampilkan aktivitas kalau robot
-         lagi ngobrol/kerja; kalau standby/offline tampil redup + statusnya. */
-      var showAct = (rmode === 'talking' || rmode === 'working');
-      if (!showAct) {
-        if (btxt._tw) { clearInterval(btxt._tw); btxt._tw = null; }
-        var stateTxt = rmode === 'walk' ? 'standby' : (a && a.status ? a.status.toLowerCase() : 'offline');
-        var idleTxt = aname + ': ' + stateTxt;
-        if (btxt.getAttribute('data-full') !== idleTxt) {
-          btxt.setAttribute('data-full', idleTxt);
-          btxt.textContent = idleTxt;
-        }
-        el.classList.add('dim');
-        el.style.display = '';
-        return;
-      }
-      el.classList.remove('dim');
-      el.style.display = '';
-      var txt = aname + ': ' + shortAct(a);
-      if (btxt.getAttribute('data-full') !== txt) {
-        btxt.setAttribute('data-full', txt);
-        if (btxt._tw) clearInterval(btxt._tw);
-        var i = 0;
-        var cur = document.createElement('span');
-        cur.className = 'cursor';
-        btxt.textContent = '';
-        btxt.appendChild(cur);
-        btxt._tw = setInterval(function () {
-          i++;
-          btxt.textContent = txt.slice(0, i);
-          btxt.appendChild(cur);
-          if (i >= txt.length) { clearInterval(btxt._tw); btxt._tw = null; cur.remove(); }
-        }, 28);
-      }
     });
-    /* hitung robot aktif SETELAH mode robot di-update di atas (biar akurat) */
-    var robotActive = Object.keys(ROBOTS).filter(function (id) { return ROBOTS[id].mode === 'walk' || ROBOTS[id].mode === 'talking' || ROBOTS[id].mode === 'working'; }).length;
-    var dcWalk2 = document.getElementById('dc-walk');
-    if (dcWalk2) { dcWalk2.textContent = robotActive + '/4'; dcWalk2.className = 'dv' + (robotActive > 0 ? ' good' : ''); }
     // feed -> layar Riwayat Log (terpisah dari layar animasi)
     var feedEl = document.getElementById('logfeed');
     var fhtml = '';
@@ -508,18 +368,11 @@
   document.getElementById('close-log').addEventListener('click', function () { showView('kantor'); });
   function tickClock() {
     var now = new Date();
-    document.getElementById('liveclock').textContent =
+    var el = document.getElementById('liveclock');
+    if (el) el.textContent =
       String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
   }
   tickClock(); setInterval(tickClock, 1000);
-  var lastGood = null;
-  /* bar kesegaran: penuh tiap data baru masuk, habis pelan selama 15 detik */
-  function resetFresh() {
-    var bar = document.getElementById('freshbar'); if (!bar) return;
-    bar.style.transition = 'none'; bar.style.width = '100%';
-    void bar.offsetWidth;
-    bar.style.transition = 'width 10s linear'; bar.style.width = '0%';
-  }
   /* Sumber data (berurutan, pakai yang pertama berhasil):
      1) raw.githubusercontent — langsung dari commit terbaru, TANPA nunggu
         GitHub Pages build (Pages ngantre kalau di-push tiap menit, jadi
@@ -538,10 +391,11 @@
     var bust = Date.now();
     var chain = Promise.reject();
     DATA_SOURCES.forEach(function (src) { chain = chain.catch(function () { return fetchSource(src, bust); }); });
-    chain.then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); resetFresh(); })
+    chain.then(function (data) { document.getElementById('err').style.display = 'none'; render(data); })
     .catch(function () {
-      if (lastGood) { document.getElementById('err').style.display = 'block'; render(lastGood); }
-      else { document.getElementById('err').style.display = 'block'; document.getElementById('updline').textContent = 'Diperbarui --:--'; }
+      document.getElementById('err').style.display = 'block';
+      var upd = document.getElementById('updline');
+      if (upd) upd.textContent = 'Diperbarui --:--';
     });
   }
   load(); setInterval(load, 10000);
