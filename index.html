@@ -70,6 +70,48 @@
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
+  .robot { position: absolute; width: 11%; z-index: 4; transform: translate(-50%, -100%); transition: left 1.8s ease-in-out, top 1.8s ease-in-out; }
+  .robot.teacher { width: 13%; }
+  .robot-inner { position: relative; animation: idleFloat 5s ease-in-out infinite; }
+  .robot svg { display: block; width: 100%; height: auto; }
+  .robot .shadow { position: absolute; left: 50%; bottom: -4%; width: 70%; height: 6%; transform: translateX(-50%); background: rgba(0,0,0,.45); border-radius: 50%; }
+  .robot .eye { transform-box: fill-box; transform-origin: center; animation: eyeBlink 4.2s ease-in-out infinite; }
+  .robot .mouth { transform-box: fill-box; transform-origin: center; }
+  .robot .leg { transform-box: fill-box; transform-origin: 50% 0; }
+  @keyframes eyeBlink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+  @keyframes idleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2%); } }
+  @keyframes walkBob { 0%,100% { transform: translateY(0); } 25% { transform: translateY(-6%); } 75% { transform: translateY(-2%); } }
+  @keyframes legSwingL { 0%,100% { transform: rotate(24deg); } 50% { transform: rotate(-24deg); } }
+  @keyframes legSwingR { 0%,100% { transform: rotate(-24deg); } 50% { transform: rotate(24deg); } }
+  @keyframes armSwingL { 0%,100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }
+  @keyframes armSwingR { 0%,100% { transform: rotate(18deg); } 50% { transform: rotate(-18deg); } }
+  .robot.moving .robot-inner { animation: walkBob .45s ease-in-out infinite; }
+  .robot.moving .leg-l { animation: legSwingL .45s ease-in-out infinite; }
+  .robot.moving .leg-r { animation: legSwingR .45s ease-in-out infinite; }
+  .robot.moving .arm-l { animation: armSwingL .45s ease-in-out infinite; }
+  .robot.moving .arm-r { animation: armSwingR .45s ease-in-out infinite; }
+  /* ngobrol: mulut buka-tutup + robot mantul pelan */
+  @keyframes talkMouth { 0%,100% { transform: scaleY(.4); } 30% { transform: scaleY(1.6); } 60% { transform: scaleY(.7); } }
+  @keyframes talkBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4%); } }
+  .robot.talking .mouth { animation: talkMouth .38s ease-in-out infinite; }
+  .robot.talking .robot-inner { animation: talkBounce .55s ease-in-out infinite; }
+  /* kerja: laptop di depan + titik ngetik */
+  .robot .laptop { display: none; position: absolute; left: 50%; bottom: -2%; transform: translateX(-50%); width: 78%; }
+  .robot .laptop .screen { background: #0b0f1e; border: 1.5px solid var(--c); border-radius: 3px 3px 0 0; padding: 2px 3px; display: flex; gap: 2px; justify-content: center; }
+  .robot .laptop .screen span { width: 3px; height: 3px; border-radius: 50%; background: var(--c); animation: typeDot 1s ease-in-out infinite; }
+  .robot .laptop .screen span:nth-child(2) { animation-delay: .18s; }
+  .robot .laptop .screen span:nth-child(3) { animation-delay: .36s; }
+  .robot .laptop .base { height: 2px; background: var(--c); border-radius: 0 0 2px 2px; opacity: .8; }
+  @keyframes typeDot { 0%,100% { opacity: .25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+  .robot.working .laptop { display: block; }
+  .robot.working .arm-l, .robot.working .arm-r { transform-box: fill-box; transform-origin: 50% 0; }
+  .robot.working .arm-l { animation: typeTap .5s ease-in-out infinite; }
+  .robot.working .arm-r { animation: typeTap .5s ease-in-out .25s infinite; }
+  @keyframes typeTap { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(28deg); } }
+  /* idle/offline: redup, diam di tempat */
+  .robot.idle { opacity: .5; }
+  .robot.idle .robot-inner { animation: idleFloat 8s ease-in-out infinite; }
   /* ---- halaman-halaman monitor (pindah via bottom nav) ---- */
   .view { display: none; }
   .view.active { display: block; }
@@ -147,6 +189,10 @@
   <div class="desklab" style="left:58%;top:76%">Lucifer · Murid</div>
   <div class="desklab" style="left:88%;top:76%">Asmodeus · Murid</div>
   <div class="desklab" style="left:31%;top:95%">Administrator · Guru</div>
+  <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:29%; top:55%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:56%; top:51%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:88%; top:55%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:78%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
 </div>
 
 </div><!-- /view-kantor -->
@@ -208,6 +254,44 @@
     t = t.replace(/\s+/g, ' ').trim();
     return t.length > 18 ? t.slice(0, 18) + '…' : t;
   }
+  /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
+  var ROBOTS = {
+    leviathan: { home: [29, 55], talk: [29, 55], spots: [[22, 52], [29, 55], [36, 58], [25, 60], [33, 50]], mode: '' },
+    azhazel: { home: [56, 51], talk: [56, 51], spots: [[48, 48], [56, 51], [64, 54], [52, 56], [60, 47]], mode: '' },
+    mark_v: { home: [31, 78], talk: [31, 78], spots: [[20, 75], [31, 78], [42, 80], [25, 82], [38, 74]], mode: '' },
+    administrator: { home: [88, 55], talk: [88, 55], spots: [[80, 52], [88, 55], [94, 58], [84, 60], [92, 50]], mode: '' }
+  };
+  function robotEl(id) { return document.getElementById('robot-' + id); }
+  function moveRobot(id, pos) {
+    var el = robotEl(id); if (!el) return;
+    el.style.left = pos[0] + '%'; el.style.top = pos[1] + '%';
+    el.classList.add('moving');
+    setTimeout(function () { el.classList.remove('moving'); }, 1900);
+  }
+  function setRobotMode(id, mode) {
+    var el = robotEl(id); if (!el) return;
+    var r = ROBOTS[id]; if (!r) return;
+    if (r.mode === mode) return;
+    r.mode = mode;
+    el.classList.remove('talking', 'working', 'idle');
+    if (mode === 'talking') { el.classList.add('talking'); moveRobot(id, r.talk); }
+    else if (mode === 'working') { el.classList.add('working'); moveRobot(id, r.home); }
+    else if (mode === 'idle') { el.classList.add('idle'); moveRobot(id, r.home); }
+    /* mode 'walk': dibiarkan jalan-jalan oleh interval wander di bawah */
+  }
+  /* jalan-jalan: tiap 12 detik, robot yang lagi mode 'walk' pindah spot */
+  setInterval(function () {
+    Object.keys(ROBOTS).forEach(function (id) {
+      var r = ROBOTS[id];
+      if (r.mode !== 'walk') return;
+      var el = robotEl(id); if (!el) return;
+      var curL = parseFloat(el.style.left) || r.home[0];
+      var curT = parseFloat(el.style.top) || r.home[1];
+      var choices = r.spots.filter(function (s) { return Math.abs(s[0] - curL) > 2 || Math.abs(s[1] - curT) > 2; });
+      if (!choices.length) return;
+      moveRobot(id, choices[Math.floor(Math.random() * choices.length)]);
+    });
+  }, 12000);
   function render(data) {
     var agents = (data && data.agents) || [];
     var byId = {};
@@ -246,6 +330,18 @@
       var btxt = el.querySelector('.btxt');
       var last = a && a.last_active ? parseTime(a.last_active) : null;
       var fresh = !!(last && a.activity && (Date.now() - last.getTime() < 60000));
+      /* robot hidup — mode dari data nyata, bukan asal gerak:
+         ngobrol = ada aktivitas <1 menit (bubble muncul),
+         kerja = online + ada aktivitas <10 menit (is_talking),
+         jalan-jalan = online tapi lagi nggak ada kerjaan,
+         idle = offline/standby. */
+      var rmode;
+      var online = a && (a.status || '').toLowerCase() === 'online';
+      if (fresh) rmode = 'talking';
+      else if (!online) rmode = 'idle';
+      else if (a && a.is_talking) rmode = 'working';
+      else rmode = 'walk';
+      setRobotMode(id, rmode);
       if (!fresh) {
         if (btxt._tw) { clearInterval(btxt._tw); btxt._tw = null; }
         btxt.setAttribute('data-full', '');
