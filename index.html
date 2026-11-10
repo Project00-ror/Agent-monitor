@@ -59,11 +59,6 @@
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
-  /* ---- tombol riwayat log (terpisah dari layar animasi) ---- */
-  .logbtn-wrap { padding: 14px 16px 0; }
-  .logbtn { display: flex; align-items: center; justify-content: space-between; width: 100%; background: #151515; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
-  .logbtn span.sub { display: block; font-size: 12px; color: #9aa3c7; font-weight: 400; margin-top: 2px; }
-  .logbtn .chev { color: #FFD700; font-size: 18px; }
   /* ---- halaman-halaman monitor (pindah via bottom nav) ---- */
   .view { display: none; }
   .view.active { display: block; }
@@ -142,12 +137,6 @@
   <div class="desklab" style="left:31%;top:95%">Mark V · Guru</div>
 </div>
 
-<div class="logbtn-wrap">
-  <button class="logbtn" id="open-log" type="button">
-    <span>Riwayat Log<span class="sub" id="log-count">memuat…</span></span>
-    <span class="chev">›</span>
-  </button>
-</div>
 </div><!-- /view-kantor -->
 
 <div class="view" id="view-agen">
@@ -282,7 +271,6 @@
         + '<div class="ft">' + esc(f.text || '') + '</div></div>';
     });
     feedEl.innerHTML = fhtml || '<div class="empty">belum ada aktivitas</div>';
-    document.getElementById('log-count').textContent = feed.length ? feed.length + ' event · terakhir ' + fmtWIB(lastFeed.time) : 'belum ada aktivitas';
     // kartu agen -> halaman Agen
     var order = ['mark_v', 'leviathan', 'azhazel', 'administrator'];
     var names = { mark_v: 'Mark V · Guru', leviathan: 'Leviathan · Murid', azhazel: 'Azhazel · Murid', administrator: 'Administrator · Murid' };
@@ -316,7 +304,6 @@
   document.querySelectorAll('.tabbar .tab').forEach(function (t) {
     t.addEventListener('click', function () { showView(t.getAttribute('data-view')); });
   });
-  document.getElementById('open-log').addEventListener('click', function () { showView('riwayat'); });
   document.getElementById('close-log').addEventListener('click', function () { showView('kantor'); });
   function tickClock() {
     var now = new Date();
