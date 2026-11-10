@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T20:37:03.458913+07:00",
+  "generated_at": "2026-11-10T20:38:07.805818+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -21,7 +21,7 @@
       "activity": "relay terakhir: tes cepat: jawab dengan satu kata saja, 2+2 berapa... [2026-11-10 20:27:26]",
       "last_active": "2026-11-10 20:27:26",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "mark_v",
