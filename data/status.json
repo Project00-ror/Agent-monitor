@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T21:50:09.471686+07:00",
+  "generated_at": "2026-11-10T21:51:08.353805+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -39,7 +39,7 @@
       "name": "Asmodeus",
       "role": "Admin Bot",
       "color": "#00BFFF",
-      "status": "offline",
+      "status": "online",
       "activity": "menggunakan model: step-5 (nine-router)",
       "last_active": "2026-11-09T18:26:31.992000+00:00",
       "uptime": "tidak diketahui",
