@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T18:24:09.344376+07:00",
+  "generated_at": "2026-11-10T18:29:26.075367+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,9 +8,9 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-10T10:23:11.345Z",
+      "last_active": "2026-11-10T11:28:43.519Z",
       "uptime": "tidak diketahui",
-      "is_talking": false
+      "is_talking": true
     },
     {
       "id": "azhazel",
@@ -32,7 +32,7 @@
       "activity": "rapihin monitor live",
       "last_active": "2026-11-10T18:15:06.233546+07:00",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "administrator",
