@@ -44,22 +44,33 @@
   .agent .v.bad { color: #ff6b7a; }
   .agent .v.dim { color: #c9cfe8; }
   /* ---- scene kelas ---- */
-  .scene-wrap { position: relative; overflow: hidden; background: #000; }
-  .scene-wrap img.scene-img { display: block; width: 100%; height: auto; }
+  .scene-wrap { position: relative; overflow: hidden; background: #000; aspect-ratio: 3 / 2; }
+  .scene-wrap img.scene-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
   .scene-wrap img.scene-img.alt { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .2s ease; z-index: 1; }
   .scene-wrap img.scene-img.alt.on { opacity: 1; }
-  .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
+  .bubble { position: absolute; transform: translate(-50%, -100%); background: rgba(23,27,51,.92); color: #fff; border: 1px solid; border-radius: 999px; padding: 3px 7px; font-size: 10px; font-weight: 700; white-space: nowrap; max-width: 46%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
   .bubble.b2 { animation-delay: .7s; }
   .bubble.b3 { animation-delay: 1.4s; }
   .bubble.b4 { animation-delay: 2.1s; }
   .bubble.fading { opacity: 0; }
-  @keyframes bubbleFloat { 0%,100% { transform: translate(-50%, -100%) translateY(0); } 50% { transform: translate(-50%, -100%) translateY(-6px); } }
-  .cursor { display: inline-block; width: 2px; height: 13px; background: #fff; margin-left: 1px; vertical-align: -1px; animation: blink 1s step-end infinite; }
-  .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+  @keyframes bubbleFloat { 0%,100% { transform: translate(-50%, -100%) translateY(0); } 50% { transform: translate(-50%, -100%) translateY(-3px); } }
+  .cursor { display: inline-block; width: 2px; height: 9px; background: #fff; margin-left: 1px; vertical-align: -1px; animation: blink 1s step-end infinite; }
+  .bubble .bdot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
-  /* ---- feed ---- */
+  /* ---- tombol riwayat log (terpisah dari layar animasi) ---- */
+  .logbtn-wrap { padding: 14px 16px 0; }
+  .logbtn { display: flex; align-items: center; justify-content: space-between; width: 100%; background: #151515; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .logbtn span.sub { display: block; font-size: 12px; color: #9aa3c7; font-weight: 400; margin-top: 2px; }
+  .logbtn .chev { color: #FFD700; font-size: 18px; }
+  /* ---- layar riwayat log (layar sendiri, bukan gabung animasi) ---- */
+  .logsheet { display: none; position: fixed; inset: 0; z-index: 50; background: #05050a; overflow-y: auto; padding: 0 0 28px; }
+  .logsheet.open { display: block; }
+  .logsheet .ls-head { position: sticky; top: 0; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #1c1c2e; z-index: 2; }
+  .logsheet .ls-head h2 { font-size: 17px; font-weight: 800; color: #fff; }
+  .logsheet .ls-head .ls-close { background: #1c1c2e; color: #fff; border: none; border-radius: 999px; width: 34px; height: 34px; font-size: 18px; cursor: pointer; }
+  .logsheet .ls-sub { font-size: 12px; color: #9aa3c7; padding: 10px 16px 0; }
   h2.feed-h { font-size: 13px; color: #FFD700; margin: 18px 16px 10px; letter-spacing: 1px; }
   .feed { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
   .fb { background: #151515; border: 1px solid #222; border-left: 3px solid #888; border-radius: 8px; padding: 9px 11px; }
@@ -91,24 +102,37 @@
 </div>
 
 <div class="scene-wrap" id="scene">
-  <img class="scene-img" src="office-3d.webp?v=3" alt="Kelas Agent">
-  <img class="scene-img alt" id="scene-alt1" src="office-3d.webp?v=3" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt2" src="office-3d.webp?v=3" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt3" src="office-3d.webp?v=3" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt4" src="office-3d.webp?v=3" alt="" aria-hidden="true">
-  <div class="bubble" id="bub-leviathan" style="left:32%;top:30%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
-  <div class="bubble b2" id="bub-mark_v" style="left:34%;top:52%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
-  <div class="bubble b3" id="bub-azhazel" style="left:55%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
-  <div class="bubble b4" id="bub-administrator" style="left:82%;top:30%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
-  <div class="desklab" style="left:20%;top:76%">Leviathan · Murid</div>
-  <div class="desklab" style="left:57%;top:76%">Azhazel · Murid</div>
-  <div class="desklab" style="left:82%;top:76%">Administrator · Murid</div>
-  <div class="desklab" style="left:34%;top:95%">Mark V · Guru</div>
+  <img class="scene-img" src="office-3d.webp?v=4" alt="Kelas Agent">
+  <img class="scene-img alt" id="scene-alt1" src="office-3d.webp?v=4" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt2" src="office-3d.webp?v=4" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt3" src="office-3d.webp?v=4" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt4" src="office-3d.webp?v=4" alt="" aria-hidden="true">
+  <div class="bubble" id="bub-leviathan" style="left:29%;top:30%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
+  <div class="bubble b2" id="bub-mark_v" style="left:31%;top:52%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
+  <div class="bubble b3" id="bub-azhazel" style="left:56%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="bubble b4" id="bub-administrator" style="left:88%;top:30%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
+  <div class="desklab" style="left:15%;top:76%">Leviathan · Murid</div>
+  <div class="desklab" style="left:58%;top:76%">Azhazel · Murid</div>
+  <div class="desklab" style="left:88%;top:76%">Administrator · Murid</div>
+  <div class="desklab" style="left:31%;top:95%">Mark V · Guru</div>
 </div>
 
-<h2 class="feed-h">FEED AKTIVITAS</h2>
-<div id="err">data live belum bisa dimuat, menampilkan data terakhir</div>
-<div class="feed" id="feed"></div>
+<div class="logbtn-wrap">
+  <button class="logbtn" id="open-log" type="button">
+    <span>Riwayat Log<span class="sub" id="log-count">memuat…</span></span>
+    <span class="chev">›</span>
+  </button>
+</div>
+
+<div class="logsheet" id="logsheet" role="dialog" aria-label="Riwayat Log">
+  <div class="ls-head">
+    <h2>Riwayat Log</h2>
+    <button class="ls-close" id="close-log" type="button" aria-label="Tutup">✕</button>
+  </div>
+  <div class="ls-sub">Aktivitas agent, terbaru di atas.</div>
+  <div id="err">data live belum bisa dimuat, menampilkan data terakhir</div>
+  <div class="feed" id="logfeed" style="margin-top:10px"></div>
+</div>
 
 <script>
 (function () {
@@ -141,7 +165,7 @@
   function shortAct(a) {
     var t = (a && a.activity) ? String(a.activity) : 'tidak diketahui';
     t = t.replace(/\s+/g, ' ').trim();
-    return t.length > 28 ? t.slice(0, 28) + '…' : t;
+    return t.length > 18 ? t.slice(0, 18) + '…' : t;
   }
   function render(data) {
     var agents = (data && data.agents) || [];
@@ -193,8 +217,8 @@
         }, 28);
       }
     });
-    // feed
-    var feedEl = document.getElementById('feed');
+    // feed -> layar Riwayat Log (terpisah dari layar animasi)
+    var feedEl = document.getElementById('logfeed');
     var fhtml = '';
     feed.slice(-8).reverse().forEach(function (f) {
       var who = f.agent || 'unknown';
@@ -205,7 +229,10 @@
         + '<div class="ft">' + esc(f.text || '') + '</div></div>';
     });
     feedEl.innerHTML = fhtml || '<div class="empty">belum ada aktivitas</div>';
+    document.getElementById('log-count').textContent = feed.length ? feed.length + ' event · terakhir ' + fmtWIB(lastFeed.time) : 'belum ada aktivitas';
   }
+  document.getElementById('open-log').addEventListener('click', function () { document.getElementById('logsheet').classList.add('open'); });
+  document.getElementById('close-log').addEventListener('click', function () { document.getElementById('logsheet').classList.remove('open'); });
   function tickClock() {
     var now = new Date();
     document.getElementById('liveclock').textContent =
