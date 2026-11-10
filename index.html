@@ -4,9 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Agent Office — Live Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { color: #E8E8E8; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  html, body { color: #E8E8E8; font-family: "Plus Jakarta Sans", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
   body {
     padding: 0 0 84px; max-width: 720px; margin: 0 auto;
     background:
@@ -81,14 +84,15 @@
   .ag-card .ag-status.good { color: #2ee59d; background: rgba(46,229,157,.12); }
   .ag-card .ag-status.bad { color: #ff6b7a; background: rgba(255,107,122,.12); }
   .ag-card .ag-status.dim { color: #c9cfe8; background: rgba(201,207,232,.12); }
-  .ag-card .ag-act { font-size: 13px; color: #ddd; line-height: 1.45; word-break: break-word; }
-  .ag-card .ag-time { font-size: 11px; color: #9aa3c7; margin-top: 6px; }
+  .ag-card .ag-prof { display: flex; gap: 10px; font-size: 13px; line-height: 1.45; padding: 3px 0; }
+  .ag-card .ag-prof span { color: #9aa3c7; min-width: 76px; flex-shrink: 0; }
+  .ag-card .ag-prof b { color: #fff; font-weight: 600; word-break: break-word; }
   /* ---- bottom navigation bar gaya mini app (tetap di bawah, semua halaman) ---- */
   .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; background: rgba(16,16,22,.97); border-top: 1px solid #262633; padding: 6px 4px calc(8px + env(safe-area-inset-bottom)); backdrop-filter: blur(6px); }
-  .tabbar .tab { flex: 1; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0 2px; color: #8b93b8; font-size: 11px; font-weight: 600; font-family: inherit; border-radius: 12px; }
-  .tabbar .tab .ticon { font-size: 21px; line-height: 1; }
-  .tabbar .tab.active { color: #FFD700; background: rgba(255,215,0,.10); }
-  .tabbar .tab.active .ticon { filter: drop-shadow(0 0 6px rgba(255,215,0,.55)); }
+  .tabbar .tab { flex: 1; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 7px 0 3px; color: #6f7692; font-size: 12px; font-weight: 600; letter-spacing: .02em; font-family: inherit; border-radius: 14px; }
+  .tabbar .tab .ticon { line-height: 0; }
+  .tabbar .tab .ticon svg { width: 23px; height: 23px; display: block; }
+  .tabbar .tab.active { color: #dfe3f2; background: rgba(154,163,199,.14); }
   .logsheet .ls-sub { font-size: 12px; color: #9aa3c7; padding: 10px 16px 0; }
   h2.feed-h { font-size: 13px; color: #FFD700; margin: 18px 16px 10px; letter-spacing: 1px; }
   .feed { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
@@ -142,7 +146,7 @@
 <div class="view" id="view-agen">
   <div class="ag-head">
     <h2>Agent</h2>
-    <p>Status dan aktivitas terakhir tiap agent.</p>
+    <p>Profil tiap agent.</p>
   </div>
   <div class="ag-cards" id="agent-cards"></div>
 </div>
@@ -158,9 +162,9 @@
 </div>
 
 <nav class="tabbar" aria-label="Navigasi monitor">
-  <button class="tab active" type="button" data-view="kantor"><span class="ticon">🏠</span>Kantor</button>
-  <button class="tab" type="button" data-view="agen"><span class="ticon">🤖</span>Agen</button>
-  <button class="tab" type="button" data-view="riwayat"><span class="ticon">📜</span>Riwayat</button>
+  <button class="tab active" type="button" data-view="kantor"><span class="ticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V21h14V9.8"/><path d="M10 21v-6h4v6"/></svg></span>Kantor</button>
+  <button class="tab" type="button" data-view="agen"><span class="ticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1" fill="currentColor" stroke="none"/><path d="M9 13.5h.01M15 13.5h.01"/><path d="M9.5 16.5h5"/></svg></span>Agen</button>
+  <button class="tab" type="button" data-view="riwayat"><span class="ticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="3.5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="3.5" cy="18" r="1" fill="currentColor" stroke="none"/></svg></span>Riwayat</button>
 </nav>
 
 <script>
@@ -271,22 +275,30 @@
         + '<div class="ft">' + esc(f.text || '') + '</div></div>';
     });
     feedEl.innerHTML = fhtml || '<div class="empty">belum ada aktivitas</div>';
-    // kartu agen -> halaman Agen
+    // kartu agen -> halaman Agen: profil (Nama / Model / Provider / Keahlian),
+    // bukan log aktivitas. Update PROFILES di sini kalau otak agent ganti.
     var order = ['mark_v', 'leviathan', 'azhazel', 'administrator'];
     var names = { mark_v: 'Mark V · Guru', leviathan: 'Leviathan · Murid', azhazel: 'Azhazel · Murid', administrator: 'Administrator · Murid' };
+    var PROFILES = {
+      mark_v: { nama: 'Mark V', model: 'Muse Spark 1.3', provider: 'Meta', keahlian: 'Eksekusi & verifikasi, otomasi' },
+      leviathan: { nama: 'Leviathan', model: 'GLM 4.5-flash', provider: '9Router · Zhipu AI', keahlian: 'Riset bug bounty & node LLM gratis' },
+      azhazel: { nama: 'Azhazel', model: 'free-kimi-k3', provider: 'Apinex via 9Router', keahlian: 'Riset & monitoring, buru kode angpau' },
+      administrator: { nama: 'Administrator', model: 'step-5', provider: 'ClaudePeak via 9Router', keahlian: 'Koordinasi agent & rekap harian' }
+    };
     var cards = '';
     order.forEach(function (id) {
       var a = byId[id]; if (!a) return;
       var s = (a.status || '').toLowerCase();
       var stxt = s === 'online' ? 'ONLINE' : s === 'offline' ? 'OFFLINE' : s === 'standby' ? 'STANDBY' : (s || '-').toUpperCase();
       var scls = s === 'online' ? 'good' : s === 'offline' ? 'bad' : 'dim';
-      var act = (a.activity || 'tidak diketahui').toString().replace(/\s+/g, ' ').trim();
-      var last = a.last_active ? fmtWIB(a.last_active) : 'tidak diketahui';
+      var p = PROFILES[id] || { nama: id, model: '-', provider: '-', keahlian: '-' };
       cards += '<div class="ag-card" style="border-left-color:' + (COLORS[id] || '#888') + '">'
         + '<div class="ag-top"><span class="ag-name"><span class="ag-dot" style="background:' + (COLORS[id] || '#888') + '"></span>' + esc(names[id] || id) + '</span>'
         + '<span class="ag-status ' + scls + '">' + stxt + '</span></div>'
-        + '<div class="ag-act">' + esc(act) + '</div>'
-        + '<div class="ag-time">Terakhir aktif: ' + esc(last) + '</div></div>';
+        + '<div class="ag-prof"><span>Nama</span><b>' + esc(p.nama) + '</b></div>'
+        + '<div class="ag-prof"><span>Model</span><b>' + esc(p.model) + '</b></div>'
+        + '<div class="ag-prof"><span>Provider</span><b>' + esc(p.provider) + '</b></div>'
+        + '<div class="ag-prof"><span>Keahlian</span><b>' + esc(p.keahlian) + '</b></div></div>';
     });
     document.getElementById('agent-cards').innerHTML = cards || '<div class="empty">belum ada data agent</div>';
   }
