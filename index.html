@@ -201,7 +201,7 @@
   <div class="bubble" id="bub-leviathan" style="left:29%;top:30%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
   <div class="bubble b2" id="bub-mark_v" style="left:31%;top:52%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
   <div class="bubble b3" id="bub-azhazel" style="left:56%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
-  <div class="bubble b4" id="bub-administrator" style="left:88%;top:30%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
+  <div class="bubble b4" id="bub-administrator" style="left:80%;top:30%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
   <div class="lounge"><span class="lounge-tag">LOUNGE</span></div>
   <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:29%; top:55%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
   <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:56%; top:51%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
@@ -500,17 +500,28 @@
     void bar.offsetWidth;
     bar.style.transition = 'width 10s linear'; bar.style.width = '0%';
   }
+  /* Sumber data (berurutan, pakai yang pertama berhasil):
+     1) raw.githubusercontent — langsung dari commit terbaru, TANPA nunggu
+        GitHub Pages build (Pages ngantre kalau di-push tiap menit, jadi
+        datanya ketinggalan 5+ menit). Ini sumber paling fresh.
+     2) data/status.json (GitHub Pages) — cadangan.
+     3) status.json (Cloudflare Worker/KV) — cadangan kalau Worker hidup. */
+  var DATA_SOURCES = [
+    'https://raw.githubusercontent.com/Project00-ror/Agent-monitor/main/data/status.json',
+    'data/status.json',
+    'status.json'
+  ];
+  function fetchSource(url, bust) {
+    return fetch(url + '?_=' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+  }
   function load() {
-    var bust = '_=' + Date.now();
-    fetch('data/status.json?' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); resetFresh(); })
+    var bust = Date.now();
+    var chain = Promise.reject();
+    DATA_SOURCES.forEach(function (src) { chain = chain.catch(function () { return fetchSource(src, bust); }); });
+    chain.then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); resetFresh(); })
     .catch(function () {
-      fetch('status.json?' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); resetFresh(); })
-      .catch(function () {
-        if (lastGood) { document.getElementById('err').style.display = 'block'; render(lastGood); }
-        else { document.getElementById('err').style.display = 'block'; document.getElementById('updline').textContent = 'Diperbarui --:--'; }
-      });
+      if (lastGood) { document.getElementById('err').style.display = 'block'; render(lastGood); }
+      else { document.getElementById('err').style.display = 'block'; document.getElementById('updline').textContent = 'Diperbarui --:--'; }
     });
   }
   load(); setInterval(load, 10000);
