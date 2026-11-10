@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T21:38:06.183281+07:00",
+  "generated_at": "2026-11-10T21:42:07.438137+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -10,7 +10,7 @@
       "activity": "menggunakan model: muse-spark",
       "last_active": "2026-11-10T14:31:50.088Z",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "azhazel",
@@ -39,7 +39,7 @@
       "name": "Asmodeus",
       "role": "Admin Bot",
       "color": "#00BFFF",
-      "status": "online",
+      "status": "offline",
       "activity": "menggunakan model: step-5 (nine-router)",
       "last_active": "2026-11-09T18:26:31.992000+00:00",
       "uptime": "tidak diketahui",
