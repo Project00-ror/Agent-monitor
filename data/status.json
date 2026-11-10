@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T21:56:07.970159+07:00",
+  "generated_at": "2026-11-10T21:57:08.645594+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -7,10 +7,10 @@
       "role": "Builder Agent",
       "color": "#39FF14",
       "status": "online",
-      "activity": "menggunakan model: muse-spark",
-      "last_active": "2026-11-10T14:31:50.088Z",
+      "activity": "menggunakan model: glm-4.5-flash",
+      "last_active": "2026-11-10T14:56:52.793Z",
       "uptime": "tidak diketahui",
-      "is_talking": false
+      "is_talking": true
     },
     {
       "id": "azhazel",
