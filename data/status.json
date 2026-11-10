@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T20:43:05.779776+07:00",
+  "generated_at": "2026-11-10T20:45:02.761654+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -25,7 +25,7 @@
     },
     {
       "id": "mark_v",
-      "name": "Mark V",
+      "name": "Administrator",
       "role": "Operator",
       "color": "#FFD700",
       "status": "online",
