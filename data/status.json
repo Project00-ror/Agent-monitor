@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T19:34:09.394824+07:00",
+  "generated_at": "2026-11-10T19:39:10.567297+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -7,14 +7,14 @@
       "role": "Builder Agent",
       "color": "#39FF14",
       "status": "online",
-      "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-10T12:29:43.903Z",
+      "activity": "menggunakan model: glm-4.5-flash",
+      "last_active": "2026-11-10T12:38:21.643Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
     {
       "id": "azhazel",
-      "name": "Azhazel",
+      "name": "Lucifer",
       "role": "Master Bot",
       "color": "#FF00FF",
       "status": "online",
