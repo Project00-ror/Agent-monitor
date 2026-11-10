@@ -1,10 +1,9 @@
 /* Watch — service worker. App shell di-cache, data live SELALU dari network. */
-var CACHE = 'watch-v20';
+var CACHE = 'watch-v21';
 var SHELL = [
   './',
   'index.html',
   'manifest.json',
-  'office-3d.webp',
   'icon-192.png',
   'icon-512.png',
   'apple-touch-icon.png'
@@ -33,9 +32,11 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(fetch(e.request, { cache: 'no-store' }));
     return;
   }
-  /* app shell: cache dulu, fallback ke network */
+  /* app shell: cache dulu, fallback ke network.
+     PENTING: jangan ignoreSearch — ?v=N harus dianggap URL beda, biar
+     link ?v=baru beneran ambil halaman baru, bukan cache lama. */
   e.respondWith(
-    caches.match(e.request, { ignoreSearch: true }).then(function (hit) {
+    caches.match(e.request).then(function (hit) {
       if (hit) return hit;
       return fetch(e.request).then(function (res) {
         if (res && res.ok && e.request.method === 'GET') {
