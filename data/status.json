@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T20:58:11.058595+07:00",
+  "generated_at": "2026-11-10T20:59:20.199627+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: step-5",
-      "last_active": "2026-11-10T13:57:47.430Z",
+      "last_active": "2026-11-10T13:59:16.946Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
