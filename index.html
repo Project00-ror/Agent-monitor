@@ -8,7 +8,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { color: #E8E8E8; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
   body {
-    padding: 0 0 28px; max-width: 720px; margin: 0 auto;
+    padding: 0 0 84px; max-width: 720px; margin: 0 auto;
     background:
       radial-gradient(420px 260px at 12% -4%, rgba(57,255,20,.07), transparent 70%),
       radial-gradient(420px 260px at 88% 8%, rgba(255,0,255,.06), transparent 70%),
@@ -64,12 +64,36 @@
   .logbtn { display: flex; align-items: center; justify-content: space-between; width: 100%; background: #151515; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
   .logbtn span.sub { display: block; font-size: 12px; color: #9aa3c7; font-weight: 400; margin-top: 2px; }
   .logbtn .chev { color: #FFD700; font-size: 18px; }
-  /* ---- layar riwayat log (layar sendiri, bukan gabung animasi) ---- */
-  .logsheet { display: none; position: fixed; inset: 0; z-index: 50; background: #05050a; overflow-y: auto; padding: 0 0 28px; }
-  .logsheet.open { display: block; }
+  /* ---- halaman-halaman monitor (pindah via bottom nav) ---- */
+  .view { display: none; }
+  .view.active { display: block; }
+  /* ---- layar riwayat log (halaman sendiri, bukan gabung animasi) ---- */
+  .logsheet { background: #05050a; }
   .logsheet .ls-head { position: sticky; top: 0; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #1c1c2e; z-index: 2; }
   .logsheet .ls-head h2 { font-size: 17px; font-weight: 800; color: #fff; }
   .logsheet .ls-head .ls-close { background: #1c1c2e; color: #fff; border: none; border-radius: 999px; width: 34px; height: 34px; font-size: 18px; cursor: pointer; }
+  .logsheet .ls-sub { font-size: 12px; color: #9aa3c7; padding: 10px 16px 0; }
+  /* ---- kartu agen (halaman Agen) ---- */
+  .ag-head { padding: 16px 16px 4px; }
+  .ag-head h2 { font-size: 17px; font-weight: 800; color: #fff; }
+  .ag-head p { font-size: 12px; color: #9aa3c7; margin-top: 3px; }
+  .ag-cards { display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 0; }
+  .ag-card { background: #151515; border: 1px solid #222; border-left: 3px solid #888; border-radius: 10px; padding: 12px 14px; }
+  .ag-card .ag-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .ag-card .ag-name { font-size: 15px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+  .ag-card .ag-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .ag-card .ag-status { font-size: 11px; font-weight: 800; letter-spacing: 1px; padding: 3px 9px; border-radius: 999px; }
+  .ag-card .ag-status.good { color: #2ee59d; background: rgba(46,229,157,.12); }
+  .ag-card .ag-status.bad { color: #ff6b7a; background: rgba(255,107,122,.12); }
+  .ag-card .ag-status.dim { color: #c9cfe8; background: rgba(201,207,232,.12); }
+  .ag-card .ag-act { font-size: 13px; color: #ddd; line-height: 1.45; word-break: break-word; }
+  .ag-card .ag-time { font-size: 11px; color: #9aa3c7; margin-top: 6px; }
+  /* ---- bottom navigation bar gaya mini app (tetap di bawah, semua halaman) ---- */
+  .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; background: rgba(16,16,22,.97); border-top: 1px solid #262633; padding: 6px 4px calc(8px + env(safe-area-inset-bottom)); backdrop-filter: blur(6px); }
+  .tabbar .tab { flex: 1; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0 2px; color: #8b93b8; font-size: 11px; font-weight: 600; font-family: inherit; border-radius: 12px; }
+  .tabbar .tab .ticon { font-size: 21px; line-height: 1; }
+  .tabbar .tab.active { color: #FFD700; background: rgba(255,215,0,.10); }
+  .tabbar .tab.active .ticon { filter: drop-shadow(0 0 6px rgba(255,215,0,.55)); }
   .logsheet .ls-sub { font-size: 12px; color: #9aa3c7; padding: 10px 16px 0; }
   h2.feed-h { font-size: 13px; color: #FFD700; margin: 18px 16px 10px; letter-spacing: 1px; }
   .feed { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
@@ -84,6 +108,7 @@
 </head>
 <body>
 
+<div class="view active" id="view-kantor">
 <div class="office-head">
   <div>
     <h2>Kantor Agent</h2>
@@ -123,8 +148,17 @@
     <span class="chev">›</span>
   </button>
 </div>
+</div><!-- /view-kantor -->
 
-<div class="logsheet" id="logsheet" role="dialog" aria-label="Riwayat Log">
+<div class="view" id="view-agen">
+  <div class="ag-head">
+    <h2>Agent</h2>
+    <p>Status dan aktivitas terakhir tiap agent.</p>
+  </div>
+  <div class="ag-cards" id="agent-cards"></div>
+</div>
+
+<div class="view logsheet" id="view-riwayat" role="dialog" aria-label="Riwayat Log">
   <div class="ls-head">
     <h2>Riwayat Log</h2>
     <button class="ls-close" id="close-log" type="button" aria-label="Tutup">✕</button>
@@ -133,6 +167,12 @@
   <div id="err">data live belum bisa dimuat, menampilkan data terakhir</div>
   <div class="feed" id="logfeed" style="margin-top:10px"></div>
 </div>
+
+<nav class="tabbar" aria-label="Navigasi monitor">
+  <button class="tab active" type="button" data-view="kantor"><span class="ticon">🏠</span>Kantor</button>
+  <button class="tab" type="button" data-view="agen"><span class="ticon">🤖</span>Agen</button>
+  <button class="tab" type="button" data-view="riwayat"><span class="ticon">📜</span>Riwayat</button>
+</nav>
 
 <script>
 (function () {
@@ -243,9 +283,41 @@
     });
     feedEl.innerHTML = fhtml || '<div class="empty">belum ada aktivitas</div>';
     document.getElementById('log-count').textContent = feed.length ? feed.length + ' event · terakhir ' + fmtWIB(lastFeed.time) : 'belum ada aktivitas';
+    // kartu agen -> halaman Agen
+    var order = ['mark_v', 'leviathan', 'azhazel', 'administrator'];
+    var names = { mark_v: 'Mark V · Guru', leviathan: 'Leviathan · Murid', azhazel: 'Azhazel · Murid', administrator: 'Administrator · Murid' };
+    var cards = '';
+    order.forEach(function (id) {
+      var a = byId[id]; if (!a) return;
+      var s = (a.status || '').toLowerCase();
+      var stxt = s === 'online' ? 'ONLINE' : s === 'offline' ? 'OFFLINE' : s === 'standby' ? 'STANDBY' : (s || '-').toUpperCase();
+      var scls = s === 'online' ? 'good' : s === 'offline' ? 'bad' : 'dim';
+      var act = (a.activity || 'tidak diketahui').toString().replace(/\s+/g, ' ').trim();
+      var last = a.last_active ? fmtWIB(a.last_active) : 'tidak diketahui';
+      cards += '<div class="ag-card" style="border-left-color:' + (COLORS[id] || '#888') + '">'
+        + '<div class="ag-top"><span class="ag-name"><span class="ag-dot" style="background:' + (COLORS[id] || '#888') + '"></span>' + esc(names[id] || id) + '</span>'
+        + '<span class="ag-status ' + scls + '">' + stxt + '</span></div>'
+        + '<div class="ag-act">' + esc(act) + '</div>'
+        + '<div class="ag-time">Terakhir aktif: ' + esc(last) + '</div></div>';
+    });
+    document.getElementById('agent-cards').innerHTML = cards || '<div class="empty">belum ada data agent</div>';
   }
-  document.getElementById('open-log').addEventListener('click', function () { document.getElementById('logsheet').classList.add('open'); });
-  document.getElementById('close-log').addEventListener('click', function () { document.getElementById('logsheet').classList.remove('open'); });
+  // pindah halaman di dalam monitor (bottom nav gaya mini app)
+  function showView(name) {
+    ['kantor', 'agen', 'riwayat'].forEach(function (v) {
+      var el = document.getElementById('view-' + v);
+      if (el) el.classList.toggle('active', v === name);
+    });
+    document.querySelectorAll('.tabbar .tab').forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-view') === name);
+    });
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('.tabbar .tab').forEach(function (t) {
+    t.addEventListener('click', function () { showView(t.getAttribute('data-view')); });
+  });
+  document.getElementById('open-log').addEventListener('click', function () { showView('riwayat'); });
+  document.getElementById('close-log').addEventListener('click', function () { showView('kantor'); });
   function tickClock() {
     var now = new Date();
     document.getElementById('liveclock').textContent =
