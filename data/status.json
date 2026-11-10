@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T19:09:09.330522+07:00",
+  "generated_at": "2026-11-10T19:14:26.246476+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "offline",
       "activity": "menggunakan model: free-kimi-k3",
-      "last_active": "2026-11-10T12:07:19.243Z",
+      "last_active": "2026-11-10T12:14:23.479Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
