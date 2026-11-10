@@ -6,53 +6,59 @@
 <title>Agent Office — Live Monitor</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: #0b0b14; color: #E8E8E8; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-  body { padding: 0 0 28px; max-width: 720px; margin: 0 auto; }
-  /* ---- header gelap ---- */
-  .appbar { background: #101736; padding: 14px 16px 12px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #232a52; }
-  .appbar .x { font-size: 22px; color: #cfd4ff; line-height: 1; }
-  .appbar h1 { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: .3px; flex: 1; }
-  .appbar .chev { font-size: 18px; color: #cfd4ff; }
+  html, body { color: #E8E8E8; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  body {
+    padding: 0 0 28px; max-width: 720px; margin: 0 auto;
+    background:
+      radial-gradient(420px 260px at 12% -4%, rgba(57,255,20,.07), transparent 70%),
+      radial-gradient(420px 260px at 88% 8%, rgba(255,0,255,.06), transparent 70%),
+      radial-gradient(520px 320px at 50% 108%, rgba(0,191,255,.06), transparent 70%),
+      linear-gradient(180deg, #05050a, #0b0b14 55%, #05050a);
+    background-attachment: fixed;
+    animation: aurora 26s ease-in-out infinite alternate;
+  }
+  @keyframes aurora { from { background-position: 0 0, 0 0, 0 0, 0 0; } to { background-position: 40px 30px, -30px 20px, 20px -30px, 0 0; } }
+  /* ---- judul kantor (hitam, ringkas) ---- */
+  .office-head { background: #000; padding: 12px 16px 6px; display: flex; align-items: flex-start; justify-content: space-between; }
+  .office-head h2 { font-size: 22px; font-weight: 800; color: #fff; }
+  .office-head .upd { font-size: 12px; color: #9aa3c7; margin-top: 3px; }
   .livepill { border: 1px solid #3a4670; color: #dfe4ff; border-radius: 999px; padding: 5px 12px; font-size: 12px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px; }
   .livepill .dot { width: 8px; height: 8px; border-radius: 50%; background: #39FF14; box-shadow: 0 0 8px #39FF14; animation: pulse 1.6s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
-  /* ---- judul kantor ---- */
-  .office-head { background: linear-gradient(180deg, #171d42, #12172f); padding: 16px 16px 10px; display: flex; align-items: flex-start; justify-content: space-between; }
-  .office-head h2 { font-size: 26px; font-weight: 800; color: #fff; }
-  .office-head .upd { font-size: 13px; color: #9aa3c7; margin-top: 4px; }
-  /* ---- papan kinerja ---- */
-  .board { background: #12172f; padding: 4px 16px 16px; }
-  .board .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .board .label { font-size: 13px; letter-spacing: 2px; color: #8b93b8; font-weight: 700; }
-  .board .liveclock { font-size: 14px; color: #3ddc84; font-weight: 700; display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+  /* ---- papan kinerja (hitam, ringkas) ---- */
+  .board { background: #000; padding: 2px 16px 12px; }
+  .board .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .board .label { font-size: 12px; letter-spacing: 2px; color: #8b93b8; font-weight: 700; }
+  .board .liveclock { font-size: 13px; color: #3ddc84; font-weight: 700; display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
   .board .liveclock .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: pulse 1.6s infinite; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
-  .stat .k { font-size: 12px; color: #9aa3c7; margin-bottom: 3px; }
-  .stat .v { font-size: 24px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat .k { font-size: 11px; color: #9aa3c7; margin-bottom: 2px; }
+  .stat .v { font-size: 20px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
   .stat .v.good { color: #2ee59d; }
   .stat .v.bad { color: #ff6b7a; }
-  .stat .v.dim { color: #c9cfe8; font-size: 18px; }
-  /* ---- scene kantor isometrik ---- */
-  .scene-wrap { position: relative; overflow: hidden; background: #8b85cc; }
+  .stat .v.dim { color: #c9cfe8; font-size: 16px; }
+  .agents { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #1c1c2e; }
+  .agent .k { font-size: 11px; color: #9aa3c7; margin-bottom: 2px; }
+  .agent .v { font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .agent .v.good { color: #2ee59d; }
+  .agent .v.bad { color: #ff6b7a; }
+  .agent .v.dim { color: #c9cfe8; }
+  /* ---- scene kelas ---- */
+  .scene-wrap { position: relative; overflow: hidden; background: #000; }
   .scene-wrap img.scene-img { display: block; width: 100%; height: auto; }
-  /* frame kedua (pose ngetik beda) ditumpuk di atas frame utama; crossfade = robot kelihatan ngetik */
   .scene-wrap img.scene-img.alt { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .2s ease; z-index: 1; }
   .scene-wrap img.scene-img.alt.on { opacity: 1; }
-  .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
+  .bubble { position: absolute; transform: translate(-50%, -100%); background: #171b33; color: #fff; border: 1.5px solid; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 14px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
   .bubble.b2 { animation-delay: .7s; }
   .bubble.b3 { animation-delay: 1.4s; }
+  .bubble.b4 { animation-delay: 2.1s; }
   .bubble.fading { opacity: 0; }
   @keyframes bubbleFloat { 0%,100% { transform: translate(-50%, -100%) translateY(0); } 50% { transform: translate(-50%, -100%) translateY(-6px); } }
   .cursor { display: inline-block; width: 2px; height: 13px; background: #fff; margin-left: 1px; vertical-align: -1px; animation: blink 1s step-end infinite; }
   .bubble .bdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   .desklab { position: absolute; transform: translate(-50%, 0); font-size: 10px; color: #5b5480; background: rgba(255,255,255,.75); border-radius: 6px; padding: 2px 7px; white-space: nowrap; z-index: 2; }
-  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-  .robot { animation: bob 2.6s ease-in-out infinite; }
-  .robot.r2 { animation-delay: .5s; }
-  .robot.r3 { animation-delay: 1s; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
-  .screen { animation: blink 2.2s infinite; }
   /* ---- feed ---- */
   h2.feed-h { font-size: 13px; color: #FFD700; margin: 18px 16px 10px; letter-spacing: 1px; }
   .feed { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; }
@@ -66,12 +72,6 @@
 </style>
 </head>
 <body>
-<div class="appbar">
-  <span class="x">&#10005;</span>
-  <h1>Agent Office</h1>
-  <span class="chev">&#8964;</span>
-  <span class="chev">&#8942;</span>
-</div>
 
 <div class="office-head">
   <div>
@@ -87,20 +87,23 @@
     <span class="liveclock"><span class="dot"></span>LIVE <span id="liveclock">--:--:--</span></span>
   </div>
   <div class="stats" id="stats"></div>
+  <div class="agents" id="agents"></div>
 </div>
 
 <div class="scene-wrap" id="scene">
-  <img class="scene-img" src="office-3d.webp" alt="Kantor Agent">
-  <img class="scene-img alt" id="scene-alt1" src="office-frame-1.webp" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt2" src="office-frame-2.webp" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt3" src="office-frame-3.webp" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt4" src="office-frame-4.webp" alt="" aria-hidden="true">
-  <div class="bubble" id="bub-leviathan" style="left:24%;top:57%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
-  <div class="bubble b2" id="bub-mark_v" style="left:58%;top:45%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
-  <div class="bubble b3" id="bub-azhazel" style="left:80%;top:55%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
-  <div class="desklab" style="left:24%;top:93%">Leviathan · Builder Agent</div>
-  <div class="desklab" style="left:58%;top:85%">Mark V · Operator</div>
-  <div class="desklab" style="left:84%;top:93%">Azhazel · Master Bot</div>
+  <img class="scene-img" src="office-3d.webp" alt="Kelas Agent">
+  <img class="scene-img alt" id="scene-alt1" src="office-3d.webp" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt2" src="office-3d.webp" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt3" src="office-3d.webp" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt4" src="office-3d.webp" alt="" aria-hidden="true">
+  <div class="bubble" id="bub-leviathan" style="left:30%;top:30%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
+  <div class="bubble b2" id="bub-mark_v" style="left:49%;top:44%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
+  <div class="bubble b3" id="bub-azhazel" style="left:54%;top:24%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="bubble b4" id="bub-administrator" style="left:84%;top:30%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
+  <div class="desklab" style="left:29%;top:80%">Leviathan · Murid</div>
+  <div class="desklab" style="left:63%;top:82%">Azhazel · Murid</div>
+  <div class="desklab" style="left:78%;top:80%">Administrator · Murid</div>
+  <div class="desklab" style="left:49%;top:93%">Mark V · Guru</div>
 </div>
 
 <h2 class="feed-h">FEED AKTIVITAS</h2>
@@ -138,13 +141,12 @@
   function shortAct(a) {
     var t = (a && a.activity) ? String(a.activity) : 'tidak diketahui';
     t = t.replace(/\s+/g, ' ').trim();
-    return t.length > 42 ? t.slice(0, 42) + '…' : t;
+    return t.length > 28 ? t.slice(0, 28) + '…' : t;
   }
   function render(data) {
     var agents = (data && data.agents) || [];
     var byId = {};
     agents.forEach(function (a) { byId[a.id] = a; });
-    // papan kinerja (data nyata)
     var online = agents.filter(function (a) { return (a.status||'').toLowerCase() === 'online'; }).length;
     var feed = (data && data.feed) || [];
     var lastFeed = feed.length ? feed[feed.length - 1] : null;
@@ -156,20 +158,21 @@
       if (s === 'standby') return ['STANDBY', 'dim'];
       return [s.toUpperCase(), 'dim'];
     }
-    var lv = st('leviathan'), az = st('azhazel'), mv = st('mark_v'), ad = st('administrator');
     document.getElementById('stats').innerHTML =
         '<div class="stat"><div class="k">Agent online</div><div class="v">' + online + '/' + agents.length + '</div></div>'
       + '<div class="stat"><div class="k">Event feed</div><div class="v">' + feed.length + '</div></div>'
-      + '<div class="stat"><div class="k">Event terakhir</div><div class="v dim">' + (lastFeed ? fmtWIB(lastFeed.time) : '-') + '</div></div>'
-      + '<div class="stat"><div class="k">Leviathan</div><div class="v ' + lv[1] + '">' + lv[0] + '</div></div>'
-      + '<div class="stat"><div class="k">Azhazel</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
-      + '<div class="stat"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
-      + '<div class="stat"><div class="k">Administrator</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
+      + '<div class="stat"><div class="k">Event terakhir</div><div class="v dim">' + (lastFeed ? fmtWIB(lastFeed.time) : '-') + '</div></div>';
+    var lv = st('leviathan'), az = st('azhazel'), mv = st('mark_v'), ad = st('administrator');
+    document.getElementById('agents').innerHTML =
+        '<div class="agent"><div class="k">Leviathan</div><div class="v ' + lv[1] + '">' + lv[0] + '</div></div>'
+      + '<div class="agent"><div class="k">Azhazel</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
+      + '<div class="agent"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
+      + '<div class="agent"><div class="k">Administrator</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtClock(data.generated_at) : '--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
     // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
     // jadi kelihatan agent-nya lagi ngetik beneran. Tanpa indikator titik.
-    ['leviathan', 'mark_v', 'azhazel'].forEach(function (id) {
+    ['leviathan', 'mark_v', 'azhazel', 'administrator'].forEach(function (id) {
       var el = document.getElementById('bub-' + id);
       if (!el) return;
       var txt = shortAct(byId[id]);
@@ -209,9 +212,8 @@
       String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
   }
   tickClock(); setInterval(tickClock, 1000);
-  // flipbook ngetik: 5 frame pose (0–4) bergantian tiap 300ms, crossfade 200ms.
-  // Frame 0 = office-3d.webp, 1–4 = office-frame-N.webp. Makin banyak frame
-  // + makin cepat ganti = lompatan pose makin kecil = gerakan makin halus.
+  // flipbook: semua frame sekarang gambar kelas yang sama (pose ngetik
+  // menyusul kalau ada frame varian); crossfade tetap jalan tanpa kedip aneh.
   (function () {
     var alts = [1, 2, 3, 4].map(function (n) { return document.getElementById('scene-alt' + n); });
     if (alts.some(function (el) { return !el; })) return;
