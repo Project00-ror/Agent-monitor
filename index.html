@@ -38,39 +38,32 @@
   .crewchip.warn { border-color: #6b4d12; color: #ffb020; background: rgba(255,176,32,.08); }
   .livepill .dot { width: 8px; height: 8px; border-radius: 50%; background: #39FF14; box-shadow: 0 0 8px #39FF14; animation: pulse 1.6s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
-  /* ---- papan kinerja (hitam, ringkas) ---- */
-  .board { background: #000; padding: 2px 16px 12px; }
-  .board .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-  .board .label { font-size: 12px; letter-spacing: 2px; color: #8b93b8; font-weight: 700; }
-  .board .liveclock { font-size: 13px; color: #3ddc84; font-weight: 700; display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
-  .board .liveclock .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: pulse 1.6s infinite; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .stat .k { font-size: 11px; color: #9aa3c7; margin-bottom: 2px; }
-  .stat .v { font-size: 20px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
-  .stat .v.good { color: #2ee59d; }
-  .stat .v.bad { color: #ff6b7a; }
-  .stat .v.dim { color: #c9cfe8; font-size: 16px; }
-  .agents { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #1c1c2e; }
-  .agent .k { font-size: 11px; color: #9aa3c7; margin-bottom: 2px; }
-  .agent .v { font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
-  .agent .v.good { color: #2ee59d; }
-  .agent .v.bad { color: #ff6b7a; }
-  .agent .v.dim { color: #c9cfe8; }
-  /* ---- scene kantor 3D v23: ruangan isometrik (referensi video MUSE) — robot duduk di meja ---- */
-  .scene-wrap { position: relative; overflow: hidden; background: #000; aspect-ratio: 3 / 2; }
+  /* ---- jam live kecil di header (board PAPAN KINERJA dihapus v24, ruangan jadi besar) ---- */
+  .liveclock { font-size: 12px; color: #3ddc84; font-weight: 700; display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .liveclock .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 8px #3ddc84; animation: pulse 1.6s infinite; }
+  /* ---- scene kantor 3D v24: ruangan besar sama kayak video MUSE — robot berdiri di lantai ---- */
+  .scene-wrap { position: relative; overflow: hidden; background: #000; aspect-ratio: 60 / 64; }
   .room-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
-  /* meja 3D isometrik di DEPAN robot (z 5 > robot z 4) — robot kelihatan duduk di belakang meja */
-  .desk { position: absolute; transform: translate(-50%, 0); background: linear-gradient(180deg, #2a2521, #1d1917); border: 1px solid #453e36; border-radius: 4px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,.5); }
-  .desk .dtop { position: absolute; left: -10%; right: -10%; top: -32%; height: 36%; background: linear-gradient(135deg, #4a4238, #33291f); border: 1px solid #5a5142; border-radius: 3px; transform: skewX(-28deg); }
-  .desk .dlaptop { display: none; position: absolute; left: 50%; top: -78%; transform: translateX(-50%); width: 44%; height: 36%; background: #0b0f1e; border: 1.5px solid var(--c, #888); border-radius: 3px 3px 0 0; box-shadow: 0 0 8px var(--c, #888); }
-  .desk .dlaptop:after { content: ""; position: absolute; left: 15%; right: 15%; top: 30%; bottom: 30%; background: var(--c, #888); opacity: .55; border-radius: 2px; }
-  .desk.working .dlaptop { display: block; }
+  /* meja abu-abu terang ala video (z 5 > robot z 4) — robot berdiri di belakang meja */
+  .desk { position: absolute; transform: translate(-50%, 0); background: linear-gradient(180deg, #b0b0b9, #8f8f99); border: 1px solid #6f6f7a; border-radius: 4px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,.5); }
+  .desk .dtop { position: absolute; left: -8%; right: -8%; top: -30%; height: 34%; background: linear-gradient(135deg, #d8d8de, #bdbdc6); border: 1px solid #8a8a96; border-radius: 3px; transform: skewX(-18deg); }
+  .desk .dmon { position: absolute; left: 50%; top: -62%; transform: translateX(-50%); width: 44%; height: 48%; background: #0b0f1e; border: 1.5px solid #4a4a5a; border-radius: 3px; padding: 1.5px; }
+  .desk .dmon:after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); width: 26%; height: 22%; background: #4a4a5a; }
+  .desk .dscr { width: 100%; height: 100%; background: #0a0a18; border-radius: 2px; overflow: hidden; }
+  .desk .dscr.bars { display: flex; align-items: flex-end; gap: 2px; padding: 2px; }
+  .desk .dscr.bars i { flex: 1; border-radius: 1px; display: block; }
+  .desk .dscr.vision { display: flex; align-items: center; justify-content: center; }
+  .desk .dscr.vision span { font-size: 6px; font-weight: 800; letter-spacing: 1px; color: #8b93b8; }
+  .desk .dkey { position: absolute; left: 50%; top: -16%; transform: translateX(-50%); width: 52%; height: 9%; background: #1c1c26; border: 1px solid #3a3a4a; border-radius: 2px; }
+  .desk .dmug { position: absolute; right: 7%; top: -28%; width: 7%; height: 13%; background: #e07830; border-radius: 2px 2px 1px 1px; }
+  .desk.working .dmon { border-color: var(--c, #888); box-shadow: 0 0 10px var(--c, #888); }
   .desk.teacher { box-shadow: 0 6px 14px rgba(0,0,0,.6); }
-  /* sofa lounge — robot idle duduk di sini */
-  .sofa { position: absolute; transform: translate(-50%, 0); width: 17%; height: 11%; background: linear-gradient(180deg, #2a2a40, #1d1d2e); border: 1px solid #3a3a55; border-radius: 10px 10px 4px 4px; z-index: 2; }
-  .sofa:before { content: ""; position: absolute; left: 8%; right: 8%; top: 18%; height: 45%; background: #23233a; border-radius: 6px; border: 1px solid #33334f; }
-  .sofa:after { content: ""; position: absolute; left: 50%; top: 18%; width: 2px; height: 45%; background: #33334f; }
-  .sofa .sofa-tag { position: absolute; left: 50%; top: -9px; transform: translateX(-50%); font-size: 8px; letter-spacing: 1px; color: #9aa3c7; background: rgba(0,0,0,.6); border-radius: 999px; padding: 1px 6px; white-space: nowrap; }
+  /* kursi di depan meja utama (ala video) */
+  .chair { position: absolute; transform: translate(-50%, 0); width: 9%; height: 10%; z-index: 3; }
+  .chair .cback { position: absolute; left: 15%; right: 15%; top: 0; height: 45%; background: #8a8a96; border: 1px solid #6f6f7a; border-radius: 4px 4px 2px 2px; }
+  .chair .cseat { position: absolute; left: 8%; right: 8%; top: 48%; height: 22%; background: #9a9aa4; border: 1px solid #6f6f7a; border-radius: 3px; }
+  .chair .cstem { position: absolute; left: 50%; top: 70%; width: 2px; height: 16%; background: #6f6f7a; transform: translateX(-50%); }
+  .chair .cbase { position: absolute; left: 30%; right: 30%; top: 86%; height: 4%; background: #6f6f7a; border-radius: 2px; }
   .bubble { position: absolute; transform: translate(-50%, -100%); background: rgba(23,27,51,.92); color: #fff; border: 1px solid; border-radius: 999px; padding: 3px 7px; font-size: 9px; font-weight: 700; white-space: nowrap; max-width: 26%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0,0,0,.35); z-index: 5; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
   .bubble.dim { background: rgba(23,27,51,.55); opacity: .75; }
   .bubble.b2 { animation-delay: .7s; }
@@ -83,13 +76,13 @@
   .bubble:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #171b33; border-bottom: 0; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
   /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
-  .robot { position: absolute; width: 11%; z-index: 4; transform: translate(-50%, -100%); transition: left 1.8s ease-in-out, top 1.8s ease-in-out; }
-  .robot.teacher { width: 13%; }
+  .robot { position: absolute; width: 13%; z-index: 4; transform: translate(-50%, -100%); transition: left 1.8s ease-in-out, top 1.8s ease-in-out; }
+  .robot.teacher { width: 15%; }
+  .robot .rtag { position: absolute; left: 50%; top: -7px; transform: translateX(-50%); font-size: 7px; font-weight: 800; letter-spacing: 1px; color: var(--c); background: rgba(0,0,0,.7); border: 1px solid var(--c); border-radius: 999px; padding: 1px 5px; white-space: nowrap; z-index: 7; }
   .robot-inner { position: relative; animation: idleFloat 5s ease-in-out infinite; }
   .robot svg { display: block; width: 100%; height: auto; }
   .robot .shadow { position: absolute; left: 50%; bottom: -4%; width: 70%; height: 6%; transform: translateX(-50%); background: rgba(0,0,0,.45); border-radius: 50%; }
   .robot .eye { transform-box: fill-box; transform-origin: center; animation: eyeBlink 4.2s ease-in-out infinite; }
-  .robot .mouth { transform-box: fill-box; transform-origin: center; }
   .robot .leg { transform-box: fill-box; transform-origin: 50% 0; }
   @keyframes eyeBlink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
   @keyframes idleFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2%); } }
@@ -103,20 +96,12 @@
   .robot.moving .leg-r { animation: legSwingR .45s ease-in-out infinite; }
   .robot.moving .arm-l { animation: armSwingL .45s ease-in-out infinite; }
   .robot.moving .arm-r { animation: armSwingR .45s ease-in-out infinite; }
-  /* ngobrol: mulut buka-tutup + robot mantul pelan */
-  @keyframes talkMouth { 0%,100% { transform: scaleY(.4); } 30% { transform: scaleY(1.6); } 60% { transform: scaleY(.7); } }
+  /* ngobrol: mata berkedip cepat + robot mantul pelan (tanpa mulut, ala video) */
+  @keyframes talkEye { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(.3); } }
   @keyframes talkBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4%); } }
-  .robot.talking .mouth { animation: talkMouth .38s ease-in-out infinite; }
+  .robot.talking .eye { animation: talkEye .38s ease-in-out infinite; }
   .robot.talking .robot-inner { animation: talkBounce .55s ease-in-out infinite; }
-  /* kerja: laptop di depan + titik ngetik */
-  .robot .laptop { display: none; position: absolute; left: 50%; bottom: -2%; transform: translateX(-50%); width: 78%; }
-  .robot .laptop .screen { background: #0b0f1e; border: 1.5px solid var(--c); border-radius: 3px 3px 0 0; padding: 2px 3px; display: flex; gap: 2px; justify-content: center; }
-  .robot .laptop .screen span { width: 3px; height: 3px; border-radius: 50%; background: var(--c); animation: typeDot 1s ease-in-out infinite; }
-  .robot .laptop .screen span:nth-child(2) { animation-delay: .18s; }
-  .robot .laptop .screen span:nth-child(3) { animation-delay: .36s; }
-  .robot .laptop .base { height: 2px; background: var(--c); border-radius: 0 0 2px 2px; opacity: .8; }
-  @keyframes typeDot { 0%,100% { opacity: .25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
-  .robot.working .laptop { display: block; }
+  /* kerja: lengan ngetik di meja (monitor meja yang nyala, ala video) */
   .robot.working .arm-l, .robot.working .arm-r { transform-box: fill-box; transform-origin: 50% 0; }
   .robot.working .arm-l { animation: typeTap .5s ease-in-out infinite; }
   .robot.working .arm-r { animation: typeTap .5s ease-in-out .25s infinite; }
@@ -132,7 +117,7 @@
   .dcard .dv.good { color: #2ee59d; }
   .dcard .dv.warn { color: #ffb020; }
   /* ---- bar kesegaran data (habis tiap 15 detik, isi ulang tiap load) ---- */
-  .fresh { height: 3px; background: #1c1c2e; border-radius: 2px; margin-top: 10px; overflow: hidden; }
+  .fresh { height: 3px; background: #1c1c2e; border-radius: 2px; overflow: hidden; }
   .fresh-bar { height: 100%; width: 100%; background: #2ee59d; }
   /* ---- halaman-halaman monitor (pindah via bottom nav) ---- */
   .view { display: none; }
@@ -185,108 +170,84 @@
     <h2>Kantor Agent</h2>
     <div class="upd" id="updline">Diperbarui --:--</div>
   </div>
-  <span class="livepill"><span class="dot"></span>LIVE</span>
-  <span class="crewchip" id="crewchip">CREW 4/4</span>
-</div>
-
-<div class="board">
-  <div class="row1">
-    <span class="label">PAPAN KINERJA</span>
-    <span class="liveclock"><span class="dot"></span>LIVE <span id="liveclock">--:--:--</span></span>
+  <div style="text-align:right">
+    <span class="livepill"><span class="dot"></span>LIVE</span>
+    <span class="crewchip" id="crewchip">CREW 4/4</span>
+    <div class="liveclock"><span class="dot"></span>LIVE <span id="liveclock">--:--:--</span></div>
   </div>
-  <div class="stats" id="stats"></div>
-  <div class="agents" id="agents"></div>
-  <div class="fresh" title="Waktu sejak data terakhir dimuat"><div class="fresh-bar" id="freshbar"></div></div>
 </div>
 
 <div class="scene-wrap" id="scene">
-  <!-- ruangan 3D isometrik v23: dinding sudut, lantai, layar data, karpet teal, lampu -->
-  <svg class="room-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <!-- dinding belakang + dinding samping (sudut) -->
-    <rect x="0" y="0" width="600" height="192" fill="#1b1b28"/>
-    <rect x="462" y="0" width="138" height="192" fill="#14141f"/>
-    <line x1="462" y1="0" x2="462" y2="192" stroke="#0d0d18" stroke-width="2"/>
-    <rect x="0" y="186" width="600" height="6" fill="#0d0d18"/>
+  <!-- ruangan v24: dinding arang, lantai abu, layar dot-matrix, karpet teal besar, HOMELY OFFICE -->
+  <svg class="room-svg" viewBox="0 0 600 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs><linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5c5c66"/><stop offset="1" stop-color="#48484f"/></linearGradient></defs>
+    <!-- dinding belakang -->
+    <rect x="0" y="0" width="600" height="210" fill="#26262e"/>
+    <!-- dinding kiri (sisi, lebih gelap) -->
+    <rect x="0" y="0" width="110" height="210" fill="#1d1d24"/>
+    <line x1="110" y1="0" x2="110" y2="210" stroke="#121218" stroke-width="2"/>
+    <rect x="0" y="204" width="600" height="6" fill="#14141a"/>
     <!-- lantai -->
-    <rect x="0" y="192" width="600" height="208" fill="#232330"/>
-    <g stroke="#2c2c3e" stroke-width="1">
-      <line x1="0" y1="232" x2="600" y2="232"/><line x1="0" y1="272" x2="600" y2="272"/>
-      <line x1="0" y1="312" x2="600" y2="312"/><line x1="0" y1="352" x2="600" y2="352"/>
-    </g>
-    <g stroke="#262637" stroke-width="1">
-      <line x1="120" y1="192" x2="60" y2="400"/><line x1="300" y1="192" x2="300" y2="400"/><line x1="480" y1="192" x2="540" y2="400"/>
-    </g>
-    <!-- karpet bundar + cincin teal (referensi video) -->
-    <ellipse cx="300" cy="318" rx="180" ry="36" fill="#1d1d2e" opacity=".8"/>
-    <ellipse cx="300" cy="318" rx="180" ry="36" fill="none" stroke="#2dd4bf" stroke-width="2.5" opacity=".85"/>
-    <ellipse cx="300" cy="318" rx="146" ry="27" fill="none" stroke="#2dd4bf" stroke-width="1" opacity=".3"/>
-    <!-- papan WATCH -->
-    <rect x="218" y="14" width="164" height="30" rx="5" fill="#101024" stroke="#3a4670" stroke-width="2"/>
-    <text x="300" y="35" text-anchor="middle" font-family="inherit" font-size="18" font-weight="800" fill="#8b93b8" letter-spacing="4">WATCH</text>
-    <!-- layar dinding besar -->
-    <rect x="150" y="54" width="300" height="104" rx="6" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
-    <g fill="#ffd75e" opacity=".85">
-      <circle cx="170" cy="72" r="2"/><circle cx="186" cy="72" r="2"/><circle cx="202" cy="72" r="2"/><circle cx="218" cy="72" r="2"/><circle cx="234" cy="72" r="2"/><circle cx="250" cy="72" r="2"/><circle cx="266" cy="72" r="2"/><circle cx="282" cy="72" r="2"/>
-      <circle cx="170" cy="86" r="2"/><circle cx="186" cy="86" r="2"/><circle cx="202" cy="86" r="2"/><circle cx="218" cy="86" r="2"/><circle cx="234" cy="86" r="2"/><circle cx="250" cy="86" r="2"/><circle cx="266" cy="86" r="2"/><circle cx="282" cy="86" r="2"/>
-      <circle cx="170" cy="100" r="2"/><circle cx="186" cy="100" r="2"/><circle cx="202" cy="100" r="2"/><circle cx="218" cy="100" r="2"/><circle cx="234" cy="100" r="2"/><circle cx="250" cy="100" r="2"/><circle cx="266" cy="100" r="2"/><circle cx="282" cy="100" r="2"/>
-    </g>
-    <circle cx="420" cy="78" r="11" fill="#c9cfe8" opacity=".85"/>
-    <g fill="#3ddc84" opacity=".75">
-      <rect x="310" y="128" width="10" height="18" rx="2"/><rect x="326" y="120" width="10" height="26" rx="2"/><rect x="342" y="132" width="10" height="14" rx="2"/><rect x="358" y="116" width="10" height="30" rx="2"/><rect x="374" y="124" width="10" height="22" rx="2"/>
-    </g>
-    <text x="170" y="150" font-family="inherit" font-size="10" font-weight="700" fill="#8b93b8" letter-spacing="2">VISION · RESEARCH</text>
-    <!-- jendela kiri -->
-    <rect x="36" y="54" width="70" height="86" rx="4" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
-    <circle cx="88" cy="76" r="9" fill="#c9cfe8" opacity=".8"/>
-    <g fill="#c9cfe8" opacity=".7"><circle cx="50" cy="90" r="1.6"/><circle cx="64" cy="110" r="1.3"/><circle cx="80" cy="98" r="1.5"/><circle cx="94" cy="122" r="1.3"/></g>
-    <line x1="71" y1="54" x2="71" y2="140" stroke="#2a2f4a" stroke-width="2"/>
-    <!-- jendela kanan -->
-    <rect x="494" y="54" width="70" height="86" rx="4" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
-    <g fill="#c9cfe8" opacity=".7"><circle cx="508" cy="80" r="1.5"/><circle cx="526" cy="102" r="1.6"/><circle cx="544" cy="76" r="1.3"/><circle cx="552" cy="114" r="1.5"/></g>
-    <line x1="529" y1="54" x2="529" y2="140" stroke="#2a2f4a" stroke-width="2"/>
-    <!-- jam dinding -->
-    <circle cx="440" cy="34" r="14" fill="#0d0d1a" stroke="#3a4670" stroke-width="2"/>
-    <line x1="440" y1="34" x2="440" y2="24" stroke="#c9cfe8" stroke-width="2" stroke-linecap="round"/>
-    <line x1="440" y1="34" x2="448" y2="37" stroke="#c9cfe8" stroke-width="2" stroke-linecap="round"/>
-    <!-- poster kiri -->
-    <rect x="118" y="66" width="26" height="34" rx="3" fill="#141428" stroke="#2a2f4a" stroke-width="1.5"/>
-    <rect x="122" y="72" width="18" height="12" rx="2" fill="#2a4a3a" opacity=".8"/>
-    <rect x="122" y="88" width="18" height="3" rx="2" fill="#2a2f4a"/>
-    <!-- rak buku kiri -->
+    <rect x="0" y="210" width="600" height="430" fill="url(#floorGrad)"/>
+    <ellipse cx="300" cy="420" rx="260" ry="140" fill="#5e5e68" opacity=".45"/>
+    <!-- karpet bundar BESAR + cincin teal (referensi video) -->
+    <ellipse cx="300" cy="470" rx="200" ry="70" fill="#15151d"/>
+    <ellipse cx="300" cy="470" rx="200" ry="70" fill="none" stroke="#14b8a6" stroke-width="3" opacity=".9"/>
+    <ellipse cx="300" cy="470" rx="168" ry="56" fill="none" stroke="#3a3a48" stroke-width="1.5" opacity=".7"/>
+    <ellipse cx="300" cy="470" rx="136" ry="42" fill="none" stroke="#14b8a6" stroke-width="1" opacity=".35"/>
+    <!-- papan HOMELY OFFICE -->
+    <rect x="400" y="18" width="180" height="28" rx="4" fill="#101018" stroke="#3a3a55" stroke-width="1.5"/>
+    <text x="490" y="37" text-anchor="middle" font-family="inherit" font-size="13" font-weight="800" fill="#dfe3f2" letter-spacing="2">HOMELY OFFICE</text>
+    <!-- layar dinding besar: dot-matrix kuning + bulan (tanpa teks/bar) -->
+    <rect x="170" y="55" width="270" height="110" rx="4" fill="#05050c" stroke="#262640" stroke-width="2"/>
+    <g fill="#ffd75e" opacity=".85"><circle cx="188" cy="105" r="2"/><circle cx="188" cy="120" r="2"/><circle cx="188" cy="135" r="2"/><circle cx="204" cy="90" r="2"/><circle cx="204" cy="105" r="2"/><circle cx="204" cy="120" r="2"/><circle cx="204" cy="135" r="2"/><circle cx="220" cy="75" r="2"/><circle cx="220" cy="90" r="2"/><circle cx="220" cy="105" r="2"/><circle cx="220" cy="120" r="2"/><circle cx="220" cy="135" r="2"/><circle cx="236" cy="90" r="2"/><circle cx="236" cy="105" r="2"/><circle cx="236" cy="120" r="2"/><circle cx="236" cy="135" r="2"/><circle cx="252" cy="105" r="2"/><circle cx="252" cy="120" r="2"/><circle cx="252" cy="135" r="2"/><circle cx="268" cy="75" r="2"/><circle cx="268" cy="90" r="2"/><circle cx="268" cy="105" r="2"/><circle cx="268" cy="120" r="2"/><circle cx="268" cy="135" r="2"/><circle cx="284" cy="90" r="2"/><circle cx="284" cy="105" r="2"/><circle cx="284" cy="120" r="2"/><circle cx="284" cy="135" r="2"/><circle cx="300" cy="105" r="2"/><circle cx="300" cy="120" r="2"/><circle cx="300" cy="135" r="2"/><circle cx="316" cy="90" r="2"/><circle cx="316" cy="105" r="2"/><circle cx="316" cy="120" r="2"/><circle cx="316" cy="135" r="2"/><circle cx="332" cy="75" r="2"/><circle cx="332" cy="90" r="2"/><circle cx="332" cy="105" r="2"/><circle cx="332" cy="120" r="2"/><circle cx="332" cy="135" r="2"/><circle cx="348" cy="105" r="2"/><circle cx="348" cy="120" r="2"/><circle cx="348" cy="135" r="2"/><circle cx="364" cy="90" r="2"/><circle cx="364" cy="105" r="2"/><circle cx="364" cy="120" r="2"/><circle cx="364" cy="135" r="2"/></g>
+    <circle cx="405" cy="78" r="10" fill="#d8dcea" opacity=".9"/>
+    <!-- papan MUSE -->
+    <rect x="470" y="80" width="80" height="34" rx="4" fill="#101018" stroke="#3a3a55" stroke-width="1.5"/>
+    <text x="510" y="102" text-anchor="middle" font-family="inherit" font-size="15" font-weight="800" fill="#dfe3f2" letter-spacing="2">MUSE</text>
+    <!-- rak buku dinding kiri -->
     <g>
-      <rect x="14" y="150" width="56" height="120" fill="#141428" stroke="#262640" stroke-width="1.5"/>
-      <line x1="14" y1="190" x2="70" y2="190" stroke="#262640" stroke-width="1.5"/>
-      <line x1="14" y1="230" x2="70" y2="230" stroke="#262640" stroke-width="1.5"/>
-      <g><rect x="20" y="162" width="7" height="26" fill="#3a4670"/><rect x="29" y="166" width="7" height="22" fill="#2a4a3a"/><rect x="38" y="160" width="7" height="28" fill="#4a3a2a"/><rect x="47" y="168" width="7" height="20" fill="#3a2a4a"/><rect x="20" y="202" width="7" height="26" fill="#4a3a2a"/><rect x="29" y="206" width="7" height="22" fill="#3a4670"/><rect x="38" y="200" width="7" height="28" fill="#2a4a3a"/><rect x="20" y="242" width="7" height="24" fill="#3a2a4a"/><rect x="29" y="246" width="7" height="20" fill="#4a3a2a"/></g>
+      <rect x="14" y="42" width="82" height="4" fill="#3a3a4a"/>
+      <rect x="20" y="18" width="7" height="24" fill="#3a4670"/><rect x="29" y="22" width="7" height="20" fill="#2a4a3a"/><rect x="38" y="16" width="7" height="26" fill="#4a3a2a"/><rect x="47" y="20" width="7" height="22" fill="#3a2a4a"/><rect x="56" y="18" width="7" height="24" fill="#4a3a2a"/><rect x="65" y="22" width="7" height="20" fill="#3a4670"/><rect x="74" y="16" width="7" height="26" fill="#2a4a3a"/>
     </g>
+    <!-- poster kiri (2 buah) -->
+    <rect x="18" y="66" width="34" height="46" rx="3" fill="#1c1c28" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="22" y="72" width="26" height="20" rx="2" fill="#4a3a2a" opacity=".8"/>
+    <rect x="22" y="96" width="26" height="3" rx="1.5" fill="#2a2a3a"/>
+    <rect x="58" y="66" width="34" height="46" rx="3" fill="#1c1c28" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="62" y="72" width="26" height="20" rx="2" fill="#2a4a3a" opacity=".8"/>
+    <rect x="62" y="96" width="26" height="3" rx="1.5" fill="#2a2a3a"/>
     <!-- lampu lantai kanan -->
     <g>
-      <ellipse cx="470" cy="192" rx="10" ry="3" fill="#3a3a55"/>
-      <line x1="470" y1="192" x2="470" y2="122" stroke="#565680" stroke-width="3"/>
-      <path d="M458 122 L482 122 L476 102 L464 102 Z" fill="#ffd75e" opacity=".9"/>
-      <circle cx="470" cy="112" r="15" fill="#ffd75e" opacity=".15"/>
+      <ellipse cx="545" cy="232" rx="10" ry="3" fill="#3a3a48"/>
+      <line x1="545" y1="232" x2="545" y2="148" stroke="#565680" stroke-width="3"/>
+      <path d="M533 148 L557 148 L551 128 L539 128 Z" fill="#ffd75e" opacity=".9"/>
+      <circle cx="545" cy="138" r="16" fill="#ffd75e" opacity=".12"/>
     </g>
     <!-- tanaman kanan -->
     <g>
-      <path d="M566 250 L594 250 L590 272 L570 272 Z" fill="#2e2a26" stroke="#453e36" stroke-width="1"/>
-      <g fill="#2a4a3a"><ellipse cx="572" cy="232" rx="7" ry="16" transform="rotate(-18 572 232)"/><ellipse cx="580" cy="226" rx="7" ry="18"/><ellipse cx="588" cy="232" rx="7" ry="16" transform="rotate(18 588 232)"/></g>
+      <path d="M566 470 L594 470 L590 492 L570 492 Z" fill="#2e2a26" stroke="#453e36" stroke-width="1"/>
+      <g fill="#2a4a3a"><ellipse cx="572" cy="452" rx="7" ry="16" transform="rotate(-18 572 452)"/><ellipse cx="580" cy="446" rx="7" ry="18"/><ellipse cx="588" cy="452" rx="7" ry="16" transform="rotate(18 588 452)"/></g>
     </g>
   </svg>
-  <div class="bubble" id="bub-leviathan" style="left:22%;top:26%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
-  <div class="bubble b2" id="bub-mark_v" style="left:31%;top:34%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
-  <div class="bubble b3" id="bub-azhazel" style="left:50%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
-  <div class="bubble b4" id="bub-administrator" style="left:78%;top:26%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
-  <div class="sofa" style="left:86%;top:86%"><span class="sofa-tag">LOUNGE</span></div>
-  <!-- meja murid (di depan robot) -->
-  <div class="desk" id="desk-leviathan" style="--c:#39FF14; left:22%; top:56%; width:16%; height:9%;"><div class="dtop"></div><div class="dlaptop"></div></div>
-  <div class="desk" id="desk-azhazel" style="--c:#FF00FF; left:50%; top:56%; width:16%; height:9%;"><div class="dtop"></div><div class="dlaptop"></div></div>
-  <div class="desk" id="desk-administrator" style="--c:#00BFFF; left:78%; top:56%; width:16%; height:9%;"><div class="dtop"></div><div class="dlaptop"></div></div>
+  <div class="bubble" id="bub-leviathan" style="left:22%;top:44%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
+  <div class="bubble b2" id="bub-mark_v" style="left:31%;top:58%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
+  <div class="bubble b3" id="bub-azhazel" style="left:50%;top:44%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="bubble b4" id="bub-administrator" style="left:78%;top:44%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
+  <!-- meja murid abu-abu terang (di depan robot) -->
+  <div class="desk" id="desk-leviathan" style="--c:#39FF14; left:22%; top:62%; width:16%; height:11%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
+  <div class="desk" id="desk-azhazel" style="--c:#FF00FF; left:50%; top:62%; width:16%; height:11%;"><div class="dtop"></div><div class="dmon"><div class="dscr vision"><span>VISION</span></div></div><div class="dkey"></div><div class="dmug"></div></div>
+  <div class="desk" id="desk-administrator" style="--c:#00BFFF; left:78%; top:62%; width:16%; height:11%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
+  <!-- meja kedua kanan (dekorasi, ala video) -->
+  <div class="desk" style="--c:#888; left:87%; top:64%; width:13%; height:10%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div></div>
+  <!-- kursi di depan meja utama -->
+  <div class="chair" style="left:50%;top:79%"><div class="cback"></div><div class="cseat"></div><div class="cstem"></div><div class="cbase"></div></div>
   <!-- meja guru (depan, lebih besar) -->
-  <div class="desk teacher" id="desk-mark_v" style="--c:#FFD700; left:31%; top:80%; width:22%; height:11%;"><div class="dtop"></div><div class="dlaptop"></div></div>
-  <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:22%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
-  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:50%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
-  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:78%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
-  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:86%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="desk teacher" id="desk-mark_v" style="--c:#FFD700; left:31%; top:80%; width:24%; height:12%;"><div class="dtop"></div><div class="dmon"><div class="dscr bars"><i style="height:45%;background:#3ddc84"></i><i style="height:70%;background:#ffd75e"></i><i style="height:55%;background:#ff8a5c"></i><i style="height:85%;background:#ff5c8a"></i><i style="height:60%;background:#2ee59d"></i></div></div><div class="dkey"></div><div class="dmug"></div></div>
+<div class="robot" id="robot-leviathan" style="--c:#39FF14; left:22%; top:66%;"><div class="robot-inner"><span class="rtag">LEVIATHAN</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:50%; top:66%;"><div class="robot-inner"><span class="rtag">LUCIFER</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:78%; top:66%;"><div class="robot-inner"><span class="rtag">ASMODEUS</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div>
+  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:82%;"><div class="robot-inner"><span class="rtag">ADMIN</span><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="13" y="8" width="34" height="26" rx="8" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="17" y="12" width="26" height="18" rx="4" fill="#14141f"/><circle class="eye" cx="24" cy="21" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="36" cy="21" r="3.5" style="fill:var(--c)"/><rect x="17" y="38" width="26" height="24" rx="7" fill="#f5f3ec" stroke="#d8d2c0" stroke-width="1.5"/><rect x="22" y="54" width="16" height="2" rx="1" fill="#d8d2c0"/><rect class="arm arm-l" x="9" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="arm arm-r" x="45" y="41" width="6" height="13" rx="3" fill="#ece9df"/><rect class="leg leg-l" x="21" y="63" width="6" height="12" rx="3" fill="#ece9df"/><rect class="leg leg-r" x="33" y="63" width="6" height="12" rx="3" fill="#ece9df"/></svg><div class="shadow"></div></div></div><div class="base"></div></div><div class="shadow"></div></div></div>
 </div>
 
 <div class="dashstrip" id="dashstrip">
@@ -295,6 +256,7 @@
   <div class="dcard"><div class="dk">Paling aktif</div><div class="dv" id="dc-active">-</div></div>
   <div class="dcard"><div class="dk">Robot aktif</div><div class="dv" id="dc-walk">-</div></div>
 </div>
+<div style="background:#000;padding:0 12px 10px"><div class="fresh" title="Waktu sejak data terakhir dimuat"><div class="fresh-bar" id="freshbar"></div></div></div>
 
 </div><!-- /view-kantor -->
 
@@ -357,20 +319,19 @@
   }
   /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
   var ROBOTS = {
-    leviathan: { home: [22, 62], talk: [22, 62], lounge: [80, 88], spots: [[14, 70], [22, 72], [30, 68], [16, 76], [26, 74]], mode: '' },
-    azhazel: { home: [50, 62], talk: [50, 62], lounge: [84, 88], spots: [[42, 70], [50, 72], [58, 68], [46, 76], [54, 74]], mode: '' },
-    mark_v: { home: [31, 86], talk: [31, 86], lounge: [92, 88], spots: [[48, 80], [58, 84], [68, 80], [52, 88], [62, 86]], mode: '' },
-    administrator: { home: [78, 62], talk: [78, 62], lounge: [88, 88], spots: [[70, 70], [78, 72], [86, 68], [74, 76], [82, 74]], mode: '' }
+    leviathan: { home: [22, 66], talk: [22, 66], lounge: [88, 80], spots: [[14, 70], [22, 72], [30, 68], [16, 74], [26, 72]], mode: '' },
+    azhazel: { home: [50, 66], talk: [50, 66], lounge: [92, 80], spots: [[42, 70], [50, 71], [58, 69], [46, 73], [54, 72]], mode: '' },
+    mark_v: { home: [31, 82], talk: [31, 82], lounge: [94, 86], spots: [[48, 82], [58, 86], [68, 82], [52, 90], [62, 88]], mode: '' },
+    administrator: { home: [78, 66], talk: [78, 66], lounge: [88, 86], spots: [[70, 70], [78, 72], [86, 68], [74, 74], [82, 72]], mode: '' }
   };
   function robotEl(id) { return document.getElementById('robot-' + id); }
   function moveRobot(id, pos) {
     var el = robotEl(id); if (!el) return;
     el.style.left = pos[0] + '%'; el.style.top = pos[1] + '%';
-    /* z-index ikut kedalaman (ruang 3D): robot yang kakinya di bawah meja
-       (lagi jalan di lorong depan) tampil DI DEPAN meja; yang di belakang
-       meja tetap ketutup meja. */
+    /* z-index ikut kedalaman (ruang 3D v24): meja murid y 62-73, meja guru
+       y 80-90. Robot yang kakinya di bawah meja tampil DI DEPAN meja. */
     var y = pos[1];
-    el.style.zIndex = ((y > 65 && y < 80) || y > 91) ? 6 : 4;
+    el.style.zIndex = ((y > 70 && y < 80) || y > 90) ? 6 : 4;
     el.classList.add('moving');
     setTimeout(function () { el.classList.remove('moving'); }, 1900);
   }
@@ -380,7 +341,7 @@
     if (r.mode === mode) return;
     r.mode = mode;
     el.classList.remove('talking', 'working', 'idle');
-    /* laptop di meja nyala kalau robot lagi kerja/ngobrol (lagi di mejanya) */
+    /* monitor di meja nyala kalau robot lagi kerja/ngobrol (lagi di mejanya) */
     var desk = document.getElementById('desk-' + id);
     if (desk) desk.classList.toggle('working', mode === 'working' || mode === 'talking');
     if (mode === 'talking') { el.classList.add('talking'); moveRobot(id, r.talk); }
@@ -408,24 +369,6 @@
     var online = agents.filter(function (a) { return (a.status||'').toLowerCase() === 'online'; }).length;
     var feed = (data && data.feed) || [];
     var lastFeed = feed.length ? feed[feed.length - 1] : null;
-    function st(id) {
-      var a = byId[id]; if (!a) return ['-', 'dim'];
-      var s = (a.status||'').toLowerCase();
-      if (s === 'online') return ['ONLINE', 'good'];
-      if (s === 'offline') return ['OFFLINE', 'bad'];
-      if (s === 'standby') return ['STANDBY', 'dim'];
-      return [s.toUpperCase(), 'dim'];
-    }
-    document.getElementById('stats').innerHTML =
-        '<div class="stat"><div class="k">Agent online</div><div class="v">' + online + '/' + agents.length + '</div></div>'
-      + '<div class="stat"><div class="k">Event feed</div><div class="v">' + feed.length + '</div></div>'
-      + '<div class="stat"><div class="k">Event terakhir</div><div class="v dim">' + (lastFeed ? fmtWIB(lastFeed.time) : '-') + '</div></div>';
-    var lv = st('leviathan'), az = st('azhazel'), mv = st('mark_v'), ad = st('administrator');
-    document.getElementById('agents').innerHTML =
-        '<div class="agent"><div class="k">Leviathan</div><div class="v ' + lv[1] + '">' + lv[0] + '</div></div>'
-      + '<div class="agent"><div class="k">Lucifer</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
-      + '<div class="agent"><div class="k">Administrator</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
-      + '<div class="agent"><div class="k">Asmodeus</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
     /* strip dashboard bawah ruangan (referensi video): angka live dari data */
     var hourAgo = Date.now() - 3600000;
     var hourCount = feed.filter(function (f) { var d = parseTime(f.time); return d && d.getTime() >= hourAgo; }).length;
