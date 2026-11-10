@@ -112,6 +112,16 @@
   /* idle/offline: redup, diam di tempat */
   .robot.idle { opacity: .5; }
   .robot.idle .robot-inner { animation: idleFloat 8s ease-in-out infinite; }
+  /* ---- strip dashboard bawah ruangan (referensi video) ---- */
+  .dashstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 12px 12px; background: #000; }
+  .dcard { background: #0d1526; border: 1px solid #1c2b4a; border-radius: 10px; padding: 8px 10px; }
+  .dcard .dk { font-size: 10px; color: #8b93b8; letter-spacing: .5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dcard .dv { font-size: 15px; font-weight: 800; color: #fff; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dcard .dv.good { color: #2ee59d; }
+  .dcard .dv.warn { color: #ffb020; }
+  /* ---- bar kesegaran data (habis tiap 15 detik, isi ulang tiap load) ---- */
+  .fresh { height: 3px; background: #1c1c2e; border-radius: 2px; margin-top: 10px; overflow: hidden; }
+  .fresh-bar { height: 100%; width: 100%; background: #2ee59d; }
   /* ---- halaman-halaman monitor (pindah via bottom nav) ---- */
   .view { display: none; }
   .view.active { display: block; }
@@ -173,6 +183,7 @@
   </div>
   <div class="stats" id="stats"></div>
   <div class="agents" id="agents"></div>
+  <div class="fresh" title="Waktu sejak data terakhir dimuat"><div class="fresh-bar" id="freshbar"></div></div>
 </div>
 
 <div class="scene-wrap" id="scene">
@@ -193,6 +204,13 @@
   <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:56%; top:51%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
   <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:88%; top:55%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
   <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:78%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+</div>
+
+<div class="dashstrip" id="dashstrip">
+  <div class="dcard"><div class="dk">Agent online</div><div class="dv" id="dc-online">-/-</div></div>
+  <div class="dcard"><div class="dk">Event 1 jam</div><div class="dv" id="dc-hour">-</div></div>
+  <div class="dcard"><div class="dk">Paling aktif</div><div class="dv" id="dc-active">-</div></div>
+  <div class="dcard"><div class="dk">Robot aktif</div><div class="dv" id="dc-walk">-</div></div>
 </div>
 
 </div><!-- /view-kantor -->
@@ -317,6 +335,23 @@
       + '<div class="agent"><div class="k">Lucifer</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
       + '<div class="agent"><div class="k">Administrator</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
       + '<div class="agent"><div class="k">Asmodeus</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
+    /* strip dashboard bawah ruangan (referensi video): angka live dari data */
+    var hourAgo = Date.now() - 3600000;
+    var hourCount = feed.filter(function (f) { var d = parseTime(f.time); return d && d.getTime() >= hourAgo; }).length;
+    var mostActive = null, mostActiveT = 0;
+    agents.forEach(function (a) {
+      var d = a.last_active ? parseTime(a.last_active) : null;
+      if (d && d.getTime() > mostActiveT) { mostActiveT = d.getTime(); mostActive = a; }
+    });
+    var robotActive = Object.keys(ROBOTS).filter(function (id) { return ROBOTS[id].mode === 'walk' || ROBOTS[id].mode === 'talking' || ROBOTS[id].mode === 'working'; }).length;
+    var dcOnline = document.getElementById('dc-online');
+    if (dcOnline) { dcOnline.textContent = online + '/' + agents.length; dcOnline.className = 'dv ' + (online === agents.length ? 'good' : 'warn'); }
+    var dcHour = document.getElementById('dc-hour');
+    if (dcHour) { dcHour.textContent = hourCount; dcHour.className = 'dv' + (hourCount > 0 ? ' good' : ''); }
+    var dcActive = document.getElementById('dc-active');
+    if (dcActive) { dcActive.textContent = mostActive ? (mostActive.name || mostActive.id) : '-'; dcActive.className = 'dv'; }
+    var dcWalk = document.getElementById('dc-walk');
+    if (dcWalk) { dcWalk.textContent = robotActive + '/4'; dcWalk.className = 'dv' + (robotActive > 0 ? ' good' : ''); }
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtWIB(data.generated_at) : '--:--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
     // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
@@ -439,13 +474,20 @@
     }, 300);
   })();
   var lastGood = null;
+  /* bar kesegaran: penuh tiap data baru masuk, habis pelan selama 15 detik */
+  function resetFresh() {
+    var bar = document.getElementById('freshbar'); if (!bar) return;
+    bar.style.transition = 'none'; bar.style.width = '100%';
+    void bar.offsetWidth;
+    bar.style.transition = 'width 15s linear'; bar.style.width = '0%';
+  }
   function load() {
     var bust = '_=' + Date.now();
     fetch('data/status.json?' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); })
+    .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); resetFresh(); })
     .catch(function () {
       fetch('status.json?' + bust, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); })
+      .then(function (data) { lastGood = data; document.getElementById('err').style.display = 'none'; render(data); resetFresh(); })
       .catch(function () {
         if (lastGood) { document.getElementById('err').style.display = 'block'; render(lastGood); }
         else { document.getElementById('err').style.display = 'block'; document.getElementById('updline').textContent = 'Diperbarui --:--'; }
