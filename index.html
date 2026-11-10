@@ -146,7 +146,7 @@
   <div class="desklab" style="left:15%;top:76%">Leviathan · Murid</div>
   <div class="desklab" style="left:58%;top:76%">Lucifer · Murid</div>
   <div class="desklab" style="left:88%;top:76%">Asmodeus · Murid</div>
-  <div class="desklab" style="left:31%;top:95%">Mark V · Guru</div>
+  <div class="desklab" style="left:31%;top:95%">Administrator · Guru</div>
 </div>
 
 </div><!-- /view-kantor -->
@@ -231,7 +231,7 @@
     document.getElementById('agents').innerHTML =
         '<div class="agent"><div class="k">Leviathan</div><div class="v ' + lv[1] + '">' + lv[0] + '</div></div>'
       + '<div class="agent"><div class="k">Lucifer</div><div class="v ' + az[1] + '">' + az[0] + '</div></div>'
-      + '<div class="agent"><div class="k">Mark V</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
+      + '<div class="agent"><div class="k">Administrator</div><div class="v ' + mv[1] + '">' + mv[0] + '</div></div>'
       + '<div class="agent"><div class="k">Asmodeus</div><div class="v ' + ad[1] + '">' + ad[0] + '</div></div>';
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtWIB(data.generated_at) : '--:--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
@@ -286,9 +286,9 @@
     // kartu agen -> halaman Agen: profil (Nama / Model / Provider / Keahlian),
     // bukan log aktivitas. Update PROFILES di sini kalau otak agent ganti.
     var order = ['mark_v', 'leviathan', 'azhazel', 'administrator'];
-    var names = { mark_v: 'Mark V · Guru', leviathan: 'Leviathan · Murid', azhazel: 'Lucifer · Murid', administrator: 'Asmodeus · Murid' };
+    var names = { mark_v: 'Administrator · Guru', leviathan: 'Leviathan · Murid', azhazel: 'Lucifer · Murid', administrator: 'Asmodeus · Murid' };
     var PROFILES = {
-      mark_v: { nama: 'Mark V', model: 'Muse Spark 1.3', provider: 'Meta', keahlian: 'Eksekusi & verifikasi, otomasi' },
+      mark_v: { nama: 'Administrator', model: 'Muse Spark 1.3', provider: 'Meta', keahlian: 'Eksekusi & verifikasi, otomasi' },
       leviathan: { nama: 'Leviathan', model: 'GLM 4.5-flash', provider: '9Router · Zhipu AI', keahlian: 'Riset bug bounty & node LLM gratis' },
       azhazel: { nama: 'Lucifer', model: 'free-kimi-k3', provider: 'Apinex via 9Router', keahlian: 'Riset & monitoring, buru kode angpau' },
       administrator: { nama: 'Asmodeus', model: 'step-5', provider: 'ClaudePeak via 9Router', keahlian: 'Koordinasi, rekap harian & ketertiban grup' }
