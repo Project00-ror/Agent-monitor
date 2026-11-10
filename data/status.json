@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T23:59:05.008495+07:00",
+  "generated_at": "2026-11-11T00:00:06.205391+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -7,8 +7,8 @@
       "role": "Builder Agent",
       "color": "#39FF14",
       "status": "online",
-      "activity": "menggunakan model: glm-4.5-flash",
-      "last_active": "2026-11-10T16:59:04.695Z",
+      "activity": "menggunakan model: step-5",
+      "last_active": "2026-11-10T17:00:04.892Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -41,9 +41,9 @@
       "color": "#00BFFF",
       "status": "online",
       "activity": "menggunakan model: step-5 (nine-router)",
-      "last_active": "2026-11-10T16:21:36.342000+00:00",
+      "last_active": "2026-11-10T16:59:59.542000+00:00",
       "uptime": "tidak diketahui",
-      "is_talking": false
+      "is_talking": true
     }
   ],
   "feed": [
