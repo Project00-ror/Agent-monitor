@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T18:39:08.491041+07:00",
+  "generated_at": "2026-11-10T18:44:17.458801+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -32,7 +32,7 @@
       "activity": "bikin bottom nav monitor v6 (Kantor/Agen/Riwayat)",
       "last_active": "2026-11-10T18:34:15.815069+07:00",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "administrator",
