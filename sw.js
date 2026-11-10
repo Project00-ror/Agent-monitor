@@ -1,5 +1,5 @@
 /* Watch — service worker. App shell di-cache, data live SELALU dari network. */
-var CACHE = 'watch-v14';
+var CACHE = 'watch-v15';
 var SHELL = [
   './',
   'index.html',
