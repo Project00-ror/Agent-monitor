@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T22:25:09.008043+07:00",
+  "generated_at": "2026-11-10T22:26:09.427195+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -10,7 +10,7 @@
       "activity": "menggunakan model: step-5",
       "last_active": "2026-11-10T15:15:57.306Z",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "azhazel",
@@ -43,7 +43,7 @@
       "activity": "menggunakan model: step-5 (nine-router)",
       "last_active": "2026-11-10T15:15:51.964000+00:00",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     }
   ],
   "feed": [
