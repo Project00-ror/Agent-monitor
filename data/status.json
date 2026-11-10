@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T21:17:03.977612+07:00",
+  "generated_at": "2026-11-10T21:18:09.386016+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -10,7 +10,7 @@
       "activity": "menggunakan model: glm-4.5-flash",
       "last_active": "2026-11-10T14:07:53.053Z",
       "uptime": "tidak diketahui",
-      "is_talking": true
+      "is_talking": false
     },
     {
       "id": "azhazel",
