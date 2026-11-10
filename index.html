@@ -56,13 +56,13 @@
   .agent .v.good { color: #2ee59d; }
   .agent .v.bad { color: #ff6b7a; }
   .agent .v.dim { color: #c9cfe8; }
-  /* ---- scene kelas v20: ruangan vector (bukan foto) — robot duduk di meja ---- */
+  /* ---- scene kantor 3D v23: ruangan isometrik (referensi video MUSE) — robot duduk di meja ---- */
   .scene-wrap { position: relative; overflow: hidden; background: #000; aspect-ratio: 3 / 2; }
   .room-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
-  /* meja di DEPAN robot (z 5 > robot z 4) — robot kelihatan duduk di belakang meja */
-  .desk { position: absolute; transform: translate(-50%, 0); background: linear-gradient(180deg, #33302c, #241f1c); border: 1px solid #453e36; border-radius: 6px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,.5); }
-  .desk .dtop { position: absolute; left: -4%; right: -4%; top: -6%; height: 14%; background: #3b352f; border: 1px solid #4a4238; border-radius: 5px; }
-  .desk .dlaptop { display: none; position: absolute; left: 50%; top: -22%; transform: translateX(-50%); width: 44%; height: 26%; background: #0b0f1e; border: 1.5px solid var(--c, #888); border-radius: 3px 3px 0 0; box-shadow: 0 0 8px var(--c, #888); }
+  /* meja 3D isometrik di DEPAN robot (z 5 > robot z 4) — robot kelihatan duduk di belakang meja */
+  .desk { position: absolute; transform: translate(-50%, 0); background: linear-gradient(180deg, #2a2521, #1d1917); border: 1px solid #453e36; border-radius: 4px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,.5); }
+  .desk .dtop { position: absolute; left: -10%; right: -10%; top: -32%; height: 36%; background: linear-gradient(135deg, #4a4238, #33291f); border: 1px solid #5a5142; border-radius: 3px; transform: skewX(-28deg); }
+  .desk .dlaptop { display: none; position: absolute; left: 50%; top: -78%; transform: translateX(-50%); width: 44%; height: 36%; background: #0b0f1e; border: 1.5px solid var(--c, #888); border-radius: 3px 3px 0 0; box-shadow: 0 0 8px var(--c, #888); }
   .desk .dlaptop:after { content: ""; position: absolute; left: 15%; right: 15%; top: 30%; bottom: 30%; background: var(--c, #888); opacity: .55; border-radius: 2px; }
   .desk.working .dlaptop { display: block; }
   .desk.teacher { box-shadow: 0 6px 14px rgba(0,0,0,.6); }
@@ -200,46 +200,71 @@
 </div>
 
 <div class="scene-wrap" id="scene">
-  <!-- ruangan vector v20: dinding, lantai, papan, jendela, jam, rak, tanaman -->
+  <!-- ruangan 3D isometrik v23: dinding sudut, lantai, layar data, karpet teal, lampu -->
   <svg class="room-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <rect x="0" y="0" width="600" height="212" fill="#171726"/>
-    <rect x="0" y="212" width="600" height="188" fill="#1e1e30"/>
-    <rect x="0" y="206" width="600" height="6" fill="#0d0d18"/>
-    <g stroke="#262640" stroke-width="1">
-      <line x1="0" y1="250" x2="600" y2="250"/><line x1="0" y1="290" x2="600" y2="290"/>
-      <line x1="0" y1="330" x2="600" y2="330"/><line x1="0" y1="370" x2="600" y2="370"/>
+    <!-- dinding belakang + dinding samping (sudut) -->
+    <rect x="0" y="0" width="600" height="192" fill="#1b1b28"/>
+    <rect x="462" y="0" width="138" height="192" fill="#14141f"/>
+    <line x1="462" y1="0" x2="462" y2="192" stroke="#0d0d18" stroke-width="2"/>
+    <rect x="0" y="186" width="600" height="6" fill="#0d0d18"/>
+    <!-- lantai -->
+    <rect x="0" y="192" width="600" height="208" fill="#232330"/>
+    <g stroke="#2c2c3e" stroke-width="1">
+      <line x1="0" y1="232" x2="600" y2="232"/><line x1="0" y1="272" x2="600" y2="272"/>
+      <line x1="0" y1="312" x2="600" y2="312"/><line x1="0" y1="352" x2="600" y2="352"/>
     </g>
-    <ellipse cx="300" cy="330" rx="230" ry="46" fill="#23233a" opacity=".65"/>
-    <!-- papan tulis -->
-    <rect x="210" y="34" width="180" height="96" rx="6" fill="#101024" stroke="#3a4670" stroke-width="2"/>
-    <text x="300" y="72" text-anchor="middle" font-family="inherit" font-size="22" font-weight="800" fill="#8b93b8" letter-spacing="3">WATCH</text>
-    <g fill="#2a2f4a"><rect x="228" y="88" width="60" height="6" rx="3"/><rect x="228" y="102" width="96" height="6" rx="3"/><rect x="228" y="116" width="78" height="6" rx="3"/></g>
-    <g fill="#3ddc84" opacity=".7"><rect x="330" y="90" width="10" height="26" rx="2"/><rect x="346" y="98" width="10" height="18" rx="2"/><rect x="362" y="84" width="10" height="32" rx="2"/></g>
-    <!-- jendela kiri + kanan (langit malam) -->
-    <g>
-      <rect x="45" y="44" width="72" height="88" rx="4" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
-      <circle cx="98" cy="66" r="10" fill="#c9cfe8" opacity=".8"/>
-      <g fill="#c9cfe8" opacity=".7"><circle cx="60" cy="80" r="1.6"/><circle cx="74" cy="100" r="1.3"/><circle cx="90" cy="88" r="1.5"/><circle cx="104" cy="112" r="1.3"/></g>
-      <line x1="81" y1="44" x2="81" y2="132" stroke="#2a2f4a" stroke-width="2"/>
-      <rect x="485" y="44" width="72" height="88" rx="4" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
-      <g fill="#c9cfe8" opacity=".7"><circle cx="500" cy="70" r="1.5"/><circle cx="518" cy="92" r="1.6"/><circle cx="536" cy="66" r="1.3"/><circle cx="544" cy="104" r="1.5"/></g>
-      <line x1="521" y1="44" x2="521" y2="132" stroke="#2a2f4a" stroke-width="2"/>
+    <g stroke="#262637" stroke-width="1">
+      <line x1="120" y1="192" x2="60" y2="400"/><line x1="300" y1="192" x2="300" y2="400"/><line x1="480" y1="192" x2="540" y2="400"/>
     </g>
+    <!-- karpet bundar + cincin teal (referensi video) -->
+    <ellipse cx="300" cy="318" rx="180" ry="36" fill="#1d1d2e" opacity=".8"/>
+    <ellipse cx="300" cy="318" rx="180" ry="36" fill="none" stroke="#2dd4bf" stroke-width="2.5" opacity=".85"/>
+    <ellipse cx="300" cy="318" rx="146" ry="27" fill="none" stroke="#2dd4bf" stroke-width="1" opacity=".3"/>
+    <!-- papan WATCH -->
+    <rect x="218" y="14" width="164" height="30" rx="5" fill="#101024" stroke="#3a4670" stroke-width="2"/>
+    <text x="300" y="35" text-anchor="middle" font-family="inherit" font-size="18" font-weight="800" fill="#8b93b8" letter-spacing="4">WATCH</text>
+    <!-- layar dinding besar -->
+    <rect x="150" y="54" width="300" height="104" rx="6" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
+    <g fill="#ffd75e" opacity=".85">
+      <circle cx="170" cy="72" r="2"/><circle cx="186" cy="72" r="2"/><circle cx="202" cy="72" r="2"/><circle cx="218" cy="72" r="2"/><circle cx="234" cy="72" r="2"/><circle cx="250" cy="72" r="2"/><circle cx="266" cy="72" r="2"/><circle cx="282" cy="72" r="2"/>
+      <circle cx="170" cy="86" r="2"/><circle cx="186" cy="86" r="2"/><circle cx="202" cy="86" r="2"/><circle cx="218" cy="86" r="2"/><circle cx="234" cy="86" r="2"/><circle cx="250" cy="86" r="2"/><circle cx="266" cy="86" r="2"/><circle cx="282" cy="86" r="2"/>
+      <circle cx="170" cy="100" r="2"/><circle cx="186" cy="100" r="2"/><circle cx="202" cy="100" r="2"/><circle cx="218" cy="100" r="2"/><circle cx="234" cy="100" r="2"/><circle cx="250" cy="100" r="2"/><circle cx="266" cy="100" r="2"/><circle cx="282" cy="100" r="2"/>
+    </g>
+    <circle cx="420" cy="78" r="11" fill="#c9cfe8" opacity=".85"/>
+    <g fill="#3ddc84" opacity=".75">
+      <rect x="310" y="128" width="10" height="18" rx="2"/><rect x="326" y="120" width="10" height="26" rx="2"/><rect x="342" y="132" width="10" height="14" rx="2"/><rect x="358" y="116" width="10" height="30" rx="2"/><rect x="374" y="124" width="10" height="22" rx="2"/>
+    </g>
+    <text x="170" y="150" font-family="inherit" font-size="10" font-weight="700" fill="#8b93b8" letter-spacing="2">VISION · RESEARCH</text>
+    <!-- jendela kiri -->
+    <rect x="36" y="54" width="70" height="86" rx="4" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
+    <circle cx="88" cy="76" r="9" fill="#c9cfe8" opacity=".8"/>
+    <g fill="#c9cfe8" opacity=".7"><circle cx="50" cy="90" r="1.6"/><circle cx="64" cy="110" r="1.3"/><circle cx="80" cy="98" r="1.5"/><circle cx="94" cy="122" r="1.3"/></g>
+    <line x1="71" y1="54" x2="71" y2="140" stroke="#2a2f4a" stroke-width="2"/>
+    <!-- jendela kanan -->
+    <rect x="494" y="54" width="70" height="86" rx="4" fill="#0a0a18" stroke="#2a2f4a" stroke-width="2"/>
+    <g fill="#c9cfe8" opacity=".7"><circle cx="508" cy="80" r="1.5"/><circle cx="526" cy="102" r="1.6"/><circle cx="544" cy="76" r="1.3"/><circle cx="552" cy="114" r="1.5"/></g>
+    <line x1="529" y1="54" x2="529" y2="140" stroke="#2a2f4a" stroke-width="2"/>
     <!-- jam dinding -->
-    <circle cx="442" cy="62" r="17" fill="#0d0d1a" stroke="#3a4670" stroke-width="2"/>
-    <line x1="442" y1="62" x2="442" y2="50" stroke="#c9cfe8" stroke-width="2" stroke-linecap="round"/>
-    <line x1="442" y1="62" x2="451" y2="66" stroke="#c9cfe8" stroke-width="2" stroke-linecap="round"/>
-    <!-- poster -->
-    <rect x="140" y="52" width="44" height="58" rx="3" fill="#141428" stroke="#2a2f4a" stroke-width="1.5"/>
-    <rect x="148" y="62" width="28" height="20" rx="2" fill="#2a4a3a" opacity=".8"/>
-    <rect x="148" y="88" width="28" height="4" rx="2" fill="#2a2f4a"/>
-    <rect x="416" y="52" width="0" height="0"/>
+    <circle cx="440" cy="34" r="14" fill="#0d0d1a" stroke="#3a4670" stroke-width="2"/>
+    <line x1="440" y1="34" x2="440" y2="24" stroke="#c9cfe8" stroke-width="2" stroke-linecap="round"/>
+    <line x1="440" y1="34" x2="448" y2="37" stroke="#c9cfe8" stroke-width="2" stroke-linecap="round"/>
+    <!-- poster kiri -->
+    <rect x="118" y="66" width="26" height="34" rx="3" fill="#141428" stroke="#2a2f4a" stroke-width="1.5"/>
+    <rect x="122" y="72" width="18" height="12" rx="2" fill="#2a4a3a" opacity=".8"/>
+    <rect x="122" y="88" width="18" height="3" rx="2" fill="#2a2f4a"/>
     <!-- rak buku kiri -->
     <g>
-      <rect x="14" y="120" width="56" height="150" fill="#141428" stroke="#262640" stroke-width="1.5"/>
-      <line x1="14" y1="170" x2="70" y2="170" stroke="#262640" stroke-width="1.5"/>
-      <line x1="14" y1="220" x2="70" y2="220" stroke="#262640" stroke-width="1.5"/>
-      <g><rect x="20" y="138" width="7" height="30" fill="#3a4670"/><rect x="29" y="142" width="7" height="26" fill="#2a4a3a"/><rect x="38" y="136" width="7" height="32" fill="#4a3a2a"/><rect x="47" y="144" width="7" height="24" fill="#3a2a4a"/><rect x="20" y="188" width="7" height="30" fill="#4a3a2a"/><rect x="29" y="192" width="7" height="26" fill="#3a4670"/><rect x="38" y="186" width="7" height="32" fill="#2a4a3a"/><rect x="20" y="238" width="7" height="30" fill="#3a2a4a"/><rect x="29" y="242" width="7" height="26" fill="#4a3a2a"/></g>
+      <rect x="14" y="150" width="56" height="120" fill="#141428" stroke="#262640" stroke-width="1.5"/>
+      <line x1="14" y1="190" x2="70" y2="190" stroke="#262640" stroke-width="1.5"/>
+      <line x1="14" y1="230" x2="70" y2="230" stroke="#262640" stroke-width="1.5"/>
+      <g><rect x="20" y="162" width="7" height="26" fill="#3a4670"/><rect x="29" y="166" width="7" height="22" fill="#2a4a3a"/><rect x="38" y="160" width="7" height="28" fill="#4a3a2a"/><rect x="47" y="168" width="7" height="20" fill="#3a2a4a"/><rect x="20" y="202" width="7" height="26" fill="#4a3a2a"/><rect x="29" y="206" width="7" height="22" fill="#3a4670"/><rect x="38" y="200" width="7" height="28" fill="#2a4a3a"/><rect x="20" y="242" width="7" height="24" fill="#3a2a4a"/><rect x="29" y="246" width="7" height="20" fill="#4a3a2a"/></g>
+    </g>
+    <!-- lampu lantai kanan -->
+    <g>
+      <ellipse cx="470" cy="192" rx="10" ry="3" fill="#3a3a55"/>
+      <line x1="470" y1="192" x2="470" y2="122" stroke="#565680" stroke-width="3"/>
+      <path d="M458 122 L482 122 L476 102 L464 102 Z" fill="#ffd75e" opacity=".9"/>
+      <circle cx="470" cy="112" r="15" fill="#ffd75e" opacity=".15"/>
     </g>
     <!-- tanaman kanan -->
     <g>
@@ -248,8 +273,8 @@
     </g>
   </svg>
   <div class="bubble" id="bub-leviathan" style="left:22%;top:26%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
-  <div class="bubble b2" id="bub-mark_v" style="left:31%;top:52%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
-  <div class="bubble b3" id="bub-azhazel" style="left:50%;top:34%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
+  <div class="bubble b2" id="bub-mark_v" style="left:31%;top:34%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
+  <div class="bubble b3" id="bub-azhazel" style="left:50%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
   <div class="bubble b4" id="bub-administrator" style="left:78%;top:26%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
   <div class="sofa" style="left:86%;top:86%"><span class="sofa-tag">LOUNGE</span></div>
   <!-- meja murid (di depan robot) -->
@@ -258,10 +283,10 @@
   <div class="desk" id="desk-administrator" style="--c:#00BFFF; left:78%; top:56%; width:16%; height:9%;"><div class="dtop"></div><div class="dlaptop"></div></div>
   <!-- meja guru (depan, lebih besar) -->
   <div class="desk teacher" id="desk-mark_v" style="--c:#FFD700; left:31%; top:80%; width:22%; height:11%;"><div class="dtop"></div><div class="dlaptop"></div></div>
-  <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:22%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
-  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:50%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
-  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:78%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
-  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:86%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:22%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:50%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:78%; top:62%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
+  <div class="robot teacher" id="robot-mark_v" style="--c:#FFD700; left:31%; top:86%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><rect x="16" y="14" width="28" height="18" rx="4" fill="#171b33"/><circle class="eye" cx="23" cy="23" r="3.5" style="fill:var(--c)"/><circle class="eye" cx="37" cy="23" r="3.5" style="fill:var(--c)"/><rect class="mouth" x="25" y="28" width="10" height="2.5" rx="1.25" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#f2f0ea" stroke="#cfc9b8" stroke-width="1.5"/><circle cx="30" cy="48" r="3" style="fill:var(--c)"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" fill="#e8e4da"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" fill="#e8e4da"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" fill="#e8e4da"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
 </div>
 
 <div class="dashstrip" id="dashstrip">
@@ -334,13 +359,18 @@
   var ROBOTS = {
     leviathan: { home: [22, 62], talk: [22, 62], lounge: [80, 88], spots: [[14, 70], [22, 72], [30, 68], [16, 76], [26, 74]], mode: '' },
     azhazel: { home: [50, 62], talk: [50, 62], lounge: [84, 88], spots: [[42, 70], [50, 72], [58, 68], [46, 76], [54, 74]], mode: '' },
-    mark_v: { home: [31, 86], talk: [31, 86], lounge: [92, 88], spots: [[20, 82], [31, 84], [42, 82], [25, 88], [38, 86]], mode: '' },
+    mark_v: { home: [31, 86], talk: [31, 86], lounge: [92, 88], spots: [[48, 80], [58, 84], [68, 80], [52, 88], [62, 86]], mode: '' },
     administrator: { home: [78, 62], talk: [78, 62], lounge: [88, 88], spots: [[70, 70], [78, 72], [86, 68], [74, 76], [82, 74]], mode: '' }
   };
   function robotEl(id) { return document.getElementById('robot-' + id); }
   function moveRobot(id, pos) {
     var el = robotEl(id); if (!el) return;
     el.style.left = pos[0] + '%'; el.style.top = pos[1] + '%';
+    /* z-index ikut kedalaman (ruang 3D): robot yang kakinya di bawah meja
+       (lagi jalan di lorong depan) tampil DI DEPAN meja; yang di belakang
+       meja tetap ketutup meja. */
+    var y = pos[1];
+    el.style.zIndex = ((y > 65 && y < 80) || y > 91) ? 6 : 4;
     el.classList.add('moving');
     setTimeout(function () { el.classList.remove('moving'); }, 1900);
   }
