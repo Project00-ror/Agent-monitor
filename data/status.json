@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T22:49:07.443252+07:00",
+  "generated_at": "2026-11-10T22:50:09.556731+07:00",
   "agents": [
     {
       "id": "leviathan",
@@ -8,7 +8,7 @@
       "color": "#39FF14",
       "status": "online",
       "activity": "menggunakan model: step-5",
-      "last_active": "2026-11-10T15:49:03.682Z",
+      "last_active": "2026-11-10T15:50:03.483Z",
       "uptime": "tidak diketahui",
       "is_talking": true
     },
@@ -41,7 +41,7 @@
       "color": "#00BFFF",
       "status": "online",
       "activity": "menggunakan model: step-5 (nine-router)",
-      "last_active": "2026-11-10T15:48:46.999000+00:00",
+      "last_active": "2026-11-10T15:50:01.030000+00:00",
       "uptime": "tidak diketahui",
       "is_talking": true
     }
