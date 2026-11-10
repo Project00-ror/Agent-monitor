@@ -346,7 +346,7 @@
       var d = a.last_active ? parseTime(a.last_active) : null;
       if (d && d.getTime() > mostActiveT) { mostActiveT = d.getTime(); mostActive = a; }
     });
-    var robotActive = Object.keys(ROBOTS).filter(function (id) { return ROBOTS[id].mode === 'walk' || ROBOTS[id].mode === 'talking' || ROBOTS[id].mode === 'working'; }).length;
+    var robotActive = 0;
     var dcOnline = document.getElementById('dc-online');
     if (dcOnline) { dcOnline.textContent = online + '/' + agents.length; dcOnline.className = 'dv ' + (online === agents.length ? 'good' : 'warn'); }
     var dcHour = document.getElementById('dc-hour');
@@ -383,11 +383,13 @@
       else rmode = 'walk';
       setRobotMode(id, rmode);
       var aname = (a && a.name) || id;
-      if (!fresh) {
-        /* bubble PERSISTEN (referensi video): selalu tampil — nama + status.
-           Kalau lagi nggak ada aktivitas <1 menit, tampil redup: "Nama: idle". */
+      /* bubble PERSISTEN (referensi video): tampilkan aktivitas kalau robot
+         lagi ngobrol/kerja; kalau standby/offline tampil redup + statusnya. */
+      var showAct = (rmode === 'talking' || rmode === 'working');
+      if (!showAct) {
         if (btxt._tw) { clearInterval(btxt._tw); btxt._tw = null; }
-        var idleTxt = aname + ': ' + ((a && (a.status || '').toLowerCase() === 'online') ? 'idle' : (a && a.status ? a.status.toLowerCase() : 'offline'));
+        var stateTxt = rmode === 'walk' ? 'standby' : (a && a.status ? a.status.toLowerCase() : 'offline');
+        var idleTxt = aname + ': ' + stateTxt;
         if (btxt.getAttribute('data-full') !== idleTxt) {
           btxt.setAttribute('data-full', idleTxt);
           btxt.textContent = idleTxt;
@@ -415,6 +417,10 @@
         }, 28);
       }
     });
+    /* hitung robot aktif SETELAH mode robot di-update di atas (biar akurat) */
+    var robotActive = Object.keys(ROBOTS).filter(function (id) { return ROBOTS[id].mode === 'walk' || ROBOTS[id].mode === 'talking' || ROBOTS[id].mode === 'working'; }).length;
+    var dcWalk2 = document.getElementById('dc-walk');
+    if (dcWalk2) { dcWalk2.textContent = robotActive + '/4'; dcWalk2.className = 'dv' + (robotActive > 0 ? ' good' : ''); }
     // feed -> layar Riwayat Log (terpisah dari layar animasi)
     var feedEl = document.getElementById('logfeed');
     var fhtml = '';
