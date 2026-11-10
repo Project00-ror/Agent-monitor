@@ -34,6 +34,8 @@
   .office-head h2 { font-size: 22px; font-weight: 800; color: #fff; }
   .office-head .upd { font-size: 12px; color: #9aa3c7; margin-top: 3px; }
   .livepill { border: 1px solid #3a4670; color: #dfe4ff; border-radius: 999px; padding: 5px 12px; font-size: 12px; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px; }
+  .crewchip { border: 1px solid #1e5c3a; color: #2ee59d; background: rgba(46,229,157,.08); border-radius: 999px; padding: 5px 10px; font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-left: 6px; white-space: nowrap; }
+  .crewchip.warn { border-color: #6b4d12; color: #ffb020; background: rgba(255,176,32,.08); }
   .livepill .dot { width: 8px; height: 8px; border-radius: 50%; background: #39FF14; box-shadow: 0 0 8px #39FF14; animation: pulse 1.6s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
   /* ---- papan kinerja (hitam, ringkas) ---- */
@@ -59,7 +61,8 @@
   .scene-wrap img.scene-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
   .scene-wrap img.scene-img.alt { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .2s ease; z-index: 1; }
   .scene-wrap img.scene-img.alt.on { opacity: 1; }
-  .bubble { position: absolute; transform: translate(-50%, -100%); background: rgba(23,27,51,.92); color: #fff; border: 1px solid; border-radius: 999px; padding: 3px 7px; font-size: 10px; font-weight: 700; white-space: nowrap; max-width: 46%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0,0,0,.35); z-index: 3; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
+  .bubble { position: absolute; transform: translate(-50%, -100%); background: rgba(23,27,51,.92); color: #fff; border: 1px solid; border-radius: 999px; padding: 3px 7px; font-size: 10px; font-weight: 700; white-space: nowrap; max-width: 52%; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0,0,0,.35); z-index: 5; animation: bubbleFloat 3.2s ease-in-out infinite; transition: opacity .45s ease; }
+  .bubble.dim { background: rgba(23,27,51,.55); opacity: .75; }
   .bubble.b2 { animation-delay: .7s; }
   .bubble.b3 { animation-delay: 1.4s; }
   .bubble.b4 { animation-delay: 2.1s; }
@@ -111,6 +114,9 @@
   /* idle/offline: redup, diam di tempat */
   .robot.idle { opacity: .5; }
   .robot.idle .robot-inner { animation: idleFloat 8s ease-in-out infinite; }
+  /* ---- lounge: sudut istirahat — status = lokasi (referensi Ruang) ---- */
+  .lounge { position: absolute; left: 82%; top: 84%; width: 16%; height: 12%; transform: translate(-50%, -50%); background: rgba(0,0,0,.28); border: 1px dashed rgba(255,255,255,.22); border-radius: 12px; z-index: 2; }
+  .lounge .lounge-tag { position: absolute; left: 50%; top: -8px; transform: translateX(-50%); font-size: 8px; letter-spacing: 1px; color: #9aa3c7; background: rgba(0,0,0,.6); border-radius: 999px; padding: 1px 6px; white-space: nowrap; }
   /* ---- strip dashboard bawah ruangan (referensi video) ---- */
   .dashstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 12px 12px; background: #000; }
   .dcard { background: #0d1526; border: 1px solid #1c2b4a; border-radius: 10px; padding: 8px 10px; }
@@ -173,6 +179,7 @@
     <div class="upd" id="updline">Diperbarui --:--</div>
   </div>
   <span class="livepill"><span class="dot"></span>LIVE</span>
+  <span class="crewchip" id="crewchip">CREW 4/4</span>
 </div>
 
 <div class="board">
@@ -195,6 +202,7 @@
   <div class="bubble b2" id="bub-mark_v" style="left:31%;top:52%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
   <div class="bubble b3" id="bub-azhazel" style="left:56%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
   <div class="bubble b4" id="bub-administrator" style="left:88%;top:30%;border-color:#00BFFF"><span class="bdot" style="background:#00BFFF"></span><span class="btxt">…</span></div>
+  <div class="lounge"><span class="lounge-tag">LOUNGE</span></div>
   <div class="robot" id="robot-leviathan" style="--c:#39FF14; left:29%; top:55%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
   <div class="robot" id="robot-azhazel" style="--c:#FF00FF; left:56%; top:51%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
   <div class="robot" id="robot-administrator" style="--c:#00BFFF; left:88%; top:55%;"><div class="robot-inner"><svg viewBox="0 0 60 80" aria-hidden="true"><line x1="30" y1="10" x2="30" y2="3" style="stroke:var(--c)" stroke-width="2"/><circle cx="30" cy="3" r="2.5" style="fill:var(--c)"/><rect x="12" y="10" width="36" height="26" rx="7" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><circle class="eye" cx="22" cy="22" r="4" style="fill:var(--c)"/><circle class="eye" cx="38" cy="22" r="4" style="fill:var(--c)"/><rect class="mouth" x="24" y="29" width="12" height="3" rx="1.5" style="fill:var(--c)"/><rect x="16" y="40" width="28" height="22" rx="6" fill="#171b33" style="stroke:var(--c)" stroke-width="2"/><rect class="arm arm-l" x="8" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="arm arm-r" x="46" y="43" width="6" height="14" rx="3" style="fill:var(--c)"/><rect class="leg leg-l" x="20" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/><rect class="leg leg-r" x="34" y="64" width="6" height="12" rx="3" style="fill:var(--c)"/></svg><div class="laptop"><div class="screen"><span></span><span></span><span></span></div><div class="base"></div></div><div class="shadow"></div></div></div>
@@ -269,10 +277,10 @@
   }
   /* ---- robot hidup: jalan-jalan, ngobrol, kerja ---- */
   var ROBOTS = {
-    leviathan: { home: [29, 55], talk: [29, 55], spots: [[22, 52], [29, 55], [36, 58], [25, 60], [33, 50]], mode: '' },
-    azhazel: { home: [56, 51], talk: [56, 51], spots: [[48, 48], [56, 51], [64, 54], [52, 56], [60, 47]], mode: '' },
-    mark_v: { home: [31, 78], talk: [31, 78], spots: [[20, 75], [31, 78], [42, 80], [25, 82], [38, 74]], mode: '' },
-    administrator: { home: [88, 55], talk: [88, 55], spots: [[80, 52], [88, 55], [94, 58], [84, 60], [92, 50]], mode: '' }
+    leviathan: { home: [29, 55], talk: [29, 55], lounge: [78, 88], spots: [[22, 52], [29, 55], [36, 58], [25, 60], [33, 50]], mode: '' },
+    azhazel: { home: [56, 51], talk: [56, 51], lounge: [84, 88], spots: [[48, 48], [56, 51], [64, 54], [52, 56], [60, 47]], mode: '' },
+    mark_v: { home: [31, 78], talk: [31, 78], lounge: [90, 88], spots: [[20, 75], [31, 78], [42, 80], [25, 82], [38, 74]], mode: '' },
+    administrator: { home: [88, 55], talk: [88, 55], lounge: [86, 84], spots: [[80, 52], [88, 55], [94, 58], [84, 60], [92, 50]], mode: '' }
   };
   function robotEl(id) { return document.getElementById('robot-' + id); }
   function moveRobot(id, pos) {
@@ -289,7 +297,7 @@
     el.classList.remove('talking', 'working', 'idle');
     if (mode === 'talking') { el.classList.add('talking'); moveRobot(id, r.talk); }
     else if (mode === 'working') { el.classList.add('working'); moveRobot(id, r.home); }
-    else if (mode === 'idle') { el.classList.add('idle'); moveRobot(id, r.home); }
+    else if (mode === 'idle') { el.classList.add('idle'); moveRobot(id, r.lounge); }
     /* mode 'walk': dibiarkan jalan-jalan oleh interval wander di bawah */
   }
   /* jalan-jalan: tiap 12 detik, robot yang lagi mode 'walk' pindah spot */
@@ -347,6 +355,8 @@
     if (dcActive) { dcActive.textContent = mostActive ? (mostActive.name || mostActive.id) : '-'; dcActive.className = 'dv'; }
     var dcWalk = document.getElementById('dc-walk');
     if (dcWalk) { dcWalk.textContent = robotActive + '/4'; dcWalk.className = 'dv' + (robotActive > 0 ? ' good' : ''); }
+    var crewchip = document.getElementById('crewchip');
+    if (crewchip) { crewchip.textContent = 'CREW ' + online + '/' + agents.length; crewchip.className = 'crewchip' + (online === agents.length ? '' : ' warn'); }
     document.getElementById('updline').textContent = 'Diperbarui ' + (data && data.generated_at ? fmtWIB(data.generated_at) : '--:--:--');
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
     // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
@@ -372,15 +382,23 @@
       else if (a && a.is_talking) rmode = 'working';
       else rmode = 'walk';
       setRobotMode(id, rmode);
+      var aname = (a && a.name) || id;
       if (!fresh) {
+        /* bubble PERSISTEN (referensi video): selalu tampil — nama + status.
+           Kalau lagi nggak ada aktivitas <1 menit, tampil redup: "Nama: idle". */
         if (btxt._tw) { clearInterval(btxt._tw); btxt._tw = null; }
-        btxt.setAttribute('data-full', '');
-        btxt.textContent = '…';
-        el.style.display = 'none';
+        var idleTxt = aname + ': ' + ((a && (a.status || '').toLowerCase() === 'online') ? 'idle' : (a && a.status ? a.status.toLowerCase() : 'offline'));
+        if (btxt.getAttribute('data-full') !== idleTxt) {
+          btxt.setAttribute('data-full', idleTxt);
+          btxt.textContent = idleTxt;
+        }
+        el.classList.add('dim');
+        el.style.display = '';
         return;
       }
+      el.classList.remove('dim');
       el.style.display = '';
-      var txt = shortAct(a);
+      var txt = aname + ': ' + shortAct(a);
       if (btxt.getAttribute('data-full') !== txt) {
         btxt.setAttribute('data-full', txt);
         if (btxt._tw) clearInterval(btxt._tw);
@@ -474,7 +492,7 @@
     var bar = document.getElementById('freshbar'); if (!bar) return;
     bar.style.transition = 'none'; bar.style.width = '100%';
     void bar.offsetWidth;
-    bar.style.transition = 'width 15s linear'; bar.style.width = '0%';
+    bar.style.transition = 'width 10s linear'; bar.style.width = '0%';
   }
   function load() {
     var bust = '_=' + Date.now();
@@ -489,7 +507,7 @@
       });
     });
   }
-  load(); setInterval(load, 15000);
+  load(); setInterval(load, 10000);
   /* balik ke aplikasi (layar nyala / tab aktif lagi) -> langsung refresh,
      jangan nunggu giliran 15 detik berikutnya (browser HP suka nge-pause timer). */
   document.addEventListener('visibilitychange', function () {
