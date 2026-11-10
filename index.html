@@ -102,11 +102,11 @@
 </div>
 
 <div class="scene-wrap" id="scene">
-  <img class="scene-img" src="office-3d.webp?v=4" alt="Kelas Agent">
-  <img class="scene-img alt" id="scene-alt1" src="office-3d.webp?v=4" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt2" src="office-3d.webp?v=4" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt3" src="office-3d.webp?v=4" alt="" aria-hidden="true">
-  <img class="scene-img alt" id="scene-alt4" src="office-3d.webp?v=4" alt="" aria-hidden="true">
+  <img class="scene-img" src="office-3d.webp?v=5" alt="Kelas Agent">
+  <img class="scene-img alt" id="scene-alt1" src="office-3d.webp?v=5" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt2" src="office-3d.webp?v=5" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt3" src="office-3d.webp?v=5" alt="" aria-hidden="true">
+  <img class="scene-img alt" id="scene-alt4" src="office-3d.webp?v=5" alt="" aria-hidden="true">
   <div class="bubble" id="bub-leviathan" style="left:29%;top:30%;border-color:#39FF14"><span class="bdot" style="background:#39FF14"></span><span class="btxt">…</span></div>
   <div class="bubble b2" id="bub-mark_v" style="left:31%;top:52%;border-color:#FFD700"><span class="bdot" style="background:#FFD700"></span><span class="btxt">…</span></div>
   <div class="bubble b3" id="bub-azhazel" style="left:56%;top:26%;border-color:#FF00FF"><span class="bdot" style="background:#FF00FF"></span><span class="btxt">…</span></div>
@@ -196,11 +196,24 @@
     // speech bubble = aktivitas TERKINI tiap agen saja (bukan riwayat).
     // Teks muncul dengan EFEK MENGETIK (char per char + kursor kedip),
     // jadi kelihatan agent-nya lagi ngetik beneran. Tanpa indikator titik.
+    // ATURAN: bubble HILANG kalau agent sudah >1 menit tanpa aktivitas
+    // (last_active lebih dari 60 detik yang lalu, atau tidak ada).
     ['leviathan', 'mark_v', 'azhazel', 'administrator'].forEach(function (id) {
       var el = document.getElementById('bub-' + id);
       if (!el) return;
-      var txt = shortAct(byId[id]);
+      var a = byId[id];
       var btxt = el.querySelector('.btxt');
+      var last = a && a.last_active ? parseTime(a.last_active) : null;
+      var fresh = !!(last && a.activity && (Date.now() - last.getTime() < 60000));
+      if (!fresh) {
+        if (btxt._tw) { clearInterval(btxt._tw); btxt._tw = null; }
+        btxt.setAttribute('data-full', '');
+        btxt.textContent = '…';
+        el.style.display = 'none';
+        return;
+      }
+      el.style.display = '';
+      var txt = shortAct(a);
       if (btxt.getAttribute('data-full') !== txt) {
         btxt.setAttribute('data-full', txt);
         if (btxt._tw) clearInterval(btxt._tw);
